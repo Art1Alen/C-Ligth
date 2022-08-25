@@ -6,7 +6,7 @@
         {
             string name;
             string zodiacSign;
-            string areYouWork;
+            string placeOfWork;
 
             int age;
 
@@ -17,9 +17,9 @@
             Console.WriteLine("Какой ваш знак зодиака");
             zodiacSign = Console.ReadLine();
             Console.WriteLine("Где вы работаете?.");
-            areYouWork = Console.ReadLine();
+            placeOfWork = Console.ReadLine();
             Console.Clear();      
-            Console.WriteLine($"Вас зовуд {name} вам {age} год.  Ваш знак Зодиака {zodiacSign} и работаете в {areYouWork}");
+            Console.WriteLine($"Вас зовуд {name} вам {age} год.  Ваш знак Зодиака {zodiacSign} и работаете в {placeOfWork}");
         }
     }
 }
