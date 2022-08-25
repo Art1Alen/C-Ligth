@@ -9,6 +9,7 @@
             string areYouWork;
 
             int age;
+
             Console.WriteLine("Как вас завуд.");
             name = Console.ReadLine();                
             Console.WriteLine("Сколько вам лет.");
@@ -17,9 +18,7 @@
             zodiacSign = Console.ReadLine();
             Console.WriteLine("Где вы работаете?.");
             areYouWork = Console.ReadLine();
-            Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.BackgroundColor = ConsoleColor.Yellow;
+            Console.Clear();      
             Console.WriteLine($"Вас зовуд {name} вам {age} год.  Ваш знак Зодиака {zodiacSign} и работаете в {areYouWork}");
         }
     }
