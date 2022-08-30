@@ -4,13 +4,13 @@
     {
         static void Main(string[] strings)
         {
-            int x, y;
-            x = 52;
-            y = 3;
+            int wallpaper = 52;
+            int rowWallpaper = 3;
+            int cointWallpaper;
 
-            float result = x / y;
+            cointWallpaper = wallpaper / rowWallpaper;
 
-            Console.WriteLine(result);
+            Console.WriteLine(cointWallpaper);
         }
     }
 }
