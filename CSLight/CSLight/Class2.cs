@@ -4,13 +4,13 @@
     {
         static void Main(string[] strings)
         {
-            int wallpaper = 52;
-            int rowWallpaper = 3;
-            int cointWallpaper;
+            int numberOfPictures = 52;
+            int numberOfPicturesInRow = 3;
+            int numberOfRows;
 
-            cointWallpaper = wallpaper / rowWallpaper;
+            numberOfRows = numberOfPictures % numberOfPicturesInRow;
 
-            Console.WriteLine(cointWallpaper);
+            Console.WriteLine(numberOfRows);
         }
     }
 }
