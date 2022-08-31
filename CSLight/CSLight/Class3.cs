@@ -11,21 +11,17 @@ namespace CSLight
 
         static void Main(string[] strg)
         {
-            string name = "Владимир";
-            string surname = "Пунтин";
+            string name = "Пунтин";
+            string surname = "Владимир";
+            string name1;
+            string surname1;
 
-            Console.WriteLine($"Ваша Имя {name} {surname} Верно?");
-            Console.WriteLine("Если не верно то ведите новое Имя");
+            name1 = surname;
+            surname1 = name;
+
+
+            Console.WriteLine($"Ваша Имя {name1} {surname1}");
             Console.ReadKey();
-            Console.WriteLine("Как вас завут?");
-            name = Console.ReadLine();
-            Console.WriteLine("Ваша фамилия?");
-            surname = Console.ReadLine();
-            Console.WriteLine($"Ваша Имя {name} {surname} Верно?");
-            Console.ReadKey();
-
-
-
         }
     }
 }
