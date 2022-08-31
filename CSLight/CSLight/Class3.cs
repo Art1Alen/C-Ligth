@@ -8,7 +8,6 @@ namespace CSLight
 {
     class Class3
     {
-
         static void Main(string[] strg)
         {
             string name = "Пунтин";
@@ -18,7 +17,6 @@ namespace CSLight
 
             name1 = surname;
             surname1 = name;
-
 
             Console.WriteLine($"Ваша Имя {name1} {surname1}");
             Console.ReadKey();
