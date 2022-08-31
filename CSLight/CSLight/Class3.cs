@@ -12,13 +12,10 @@ namespace CSLight
         {
             string name = "Пунтин";
             string surname = "Владимир";
-            string name1;
-            string surname1;
 
-            name1 = surname;
-            surname1 = name;
+            surname += name;
 
-            Console.WriteLine($"Ваша Имя {name1} {surname1}");
+            Console.WriteLine($"Ваша Имя \n{surname}");
             Console.ReadKey();
         }
     }
