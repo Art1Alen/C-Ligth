@@ -6,10 +6,10 @@
         {
             int numberOfPictures = 52;
             int numberOfPicturesInRow = 3;
-            int numberOfPaintings = numberOfPictures / numberOfPicturesInRow;
-            int extraPictures = numberOfPictures % numberOfPicturesInRow;
+            int numberOfRows = numberOfPictures / numberOfPicturesInRow;
+            int restOfThePaintings = numberOfPictures % numberOfPicturesInRow;
 
-            Console.WriteLine($"{extraPictures} Осталось картинок\n{numberOfPaintings} картин в ряд");
+            Console.WriteLine($"{RestOfThePaintings} Осталось картинок\n{numberOfRows} картин в ряд");
         }
     }
 }
