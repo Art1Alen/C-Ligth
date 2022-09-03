@@ -10,16 +10,20 @@ namespace CSLight
     {
         static void Main(string[] strings)
         {
-            int coint; 
+            int loopRepeat;
+
+            string outputText;
 
             Console.WriteLine("Введите количесво операци");
-            coint = Convert.ToInt32(Console.ReadLine());
+            loopRepeat = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Введите текс вывода");
+            outputText = Console.ReadLine();
 
             Console.Clear();
 
-            for (int i = 0; i < coint; i++)
-            {             
-                Console.WriteLine(coint);
+            for (int i = 0; i < loopRepeat; i++)
+            {
+                Console.WriteLine(outputText);
             }
         }
     }
