@@ -13,19 +13,21 @@ namespace CSLight
             int grandmothers;
 
             int timeOfReceipt = 10;
-            int hour;
-            int minute;
+            int minutesOfWaiting = 60;
+
+            int hourExpectation;
+            int minutEexpectation;
 
             Console.WriteLine("Добро пожаловать в Поликлинике");
             Console.WriteLine("Введите количество людей в очереди");
 
             grandmothers = Convert.ToInt32(Console.ReadLine());
 
-            timeOfReceipt += grandmothers * 10 - 10;
-            hour = timeOfReceipt / 60;
-            minute = timeOfReceipt % 60;
+            timeOfReceipt += grandmothers * timeOfReceipt - timeOfReceipt;
+            hourExpectation = timeOfReceipt / minutesOfWaiting;
+            minutEexpectation = timeOfReceipt % minutesOfWaiting;
 
-            Console.WriteLine($"Вы должны отстоять в очереди {hour} час и {minute} минут");
+            Console.WriteLine($"Вы должны отстоять в очереди {hourExpectation} час и {minutEexpectation} минут");
         }
     }
 }
