@@ -23,9 +23,12 @@ namespace CSLight
             Console.WriteLine("Добро пожаловать в Поликлинике");
             Console.WriteLine("Введите количество людей в очереди");
 
-            serviceTime = grandmothers = Convert.ToInt32(Console.ReadLine());
+            grandmothers = Convert.ToInt32(Console.ReadLine());
 
-            timeOfReceipt += grandmothers * serviceTime - serviceTime;
+            serviceTime = grandmothers;
+
+
+            timeOfReceipt += serviceTime * timeOfReceipt - timeOfReceipt;
             hourExpectation = timeOfReceipt / minutesInHour;
             minutEexpectation = timeOfReceipt % minutesInHour;
 
