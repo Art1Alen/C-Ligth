@@ -25,9 +25,7 @@ namespace CSLight
 
             grandmothers = Convert.ToInt32(Console.ReadLine());
 
-            serviceTime = grandmothers;
-
-            serviceTime = timeOfReceipt * serviceTime;
+            serviceTime = timeOfReceipt * grandmothers;
             hourExpectation = serviceTime / minutesInHour;
             minutEexpectation = serviceTime % minutesInHour;
 
