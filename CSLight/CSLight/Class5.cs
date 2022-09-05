@@ -27,10 +27,9 @@ namespace CSLight
 
             serviceTime = grandmothers;
 
-
-            timeOfReceipt += serviceTime * timeOfReceipt - timeOfReceipt;
-            hourExpectation = timeOfReceipt / minutesInHour;
-            minutEexpectation = timeOfReceipt % minutesInHour;
+            serviceTime = timeOfReceipt * serviceTime;
+            hourExpectation = serviceTime / minutesInHour;
+            minutEexpectation = serviceTime % minutesInHour;
 
             Console.WriteLine($"Вы должны отстоять в очереди {hourExpectation} час и {minutEexpectation} минут");
         }
