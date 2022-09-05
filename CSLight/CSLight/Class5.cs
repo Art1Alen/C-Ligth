@@ -10,24 +10,17 @@ namespace CSLight
     {
         static void Main(string[] strg)
         {
-            int grandmothers;
-
             int timeOfReceipt = 10;
-            int serviceTime;
-
             int minutesInHour = 60;
-
-            int hourExpectation;
-            int minutEexpectation;
 
             Console.WriteLine("Добро пожаловать в Поликлинике");
             Console.WriteLine("Введите количество людей в очереди");
 
-            grandmothers = Convert.ToInt32(Console.ReadLine());
+            int grandmothers = Convert.ToInt32(Console.ReadLine());
 
-            serviceTime = timeOfReceipt * grandmothers;
-            hourExpectation = serviceTime / minutesInHour;
-            minutEexpectation = serviceTime % minutesInHour;
+            int serviceTime = timeOfReceipt * grandmothers;
+            int hourExpectation = serviceTime / minutesInHour;
+            int minutEexpectation = serviceTime % minutesInHour;
 
             Console.WriteLine($"Вы должны отстоять в очереди {hourExpectation} час и {minutEexpectation} минут");
         }
