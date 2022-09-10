@@ -10,9 +10,8 @@ namespace CSLight
     {
         static void Main()
         {
-            bool appState = true;
 
-            while (appState)
+            while (true)
             {
                 Console.WriteLine("Для выхода из приложение Введите exit");
                 Console.WriteLine("Как дела?");
@@ -23,7 +22,7 @@ namespace CSLight
 
                 if (appExit == "exit")
                 {
-                    appState = false;
+                    break;
                 }
             }
         }
