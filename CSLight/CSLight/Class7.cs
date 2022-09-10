@@ -10,25 +10,20 @@ namespace CSLight
     {
         static void Main()
         {
-            int timerTicking = 1;
+            bool appState = true;
 
-            bool isExit;
-
-            if (isExit = true)
+            while (appState)
             {
-                Console.WriteLine("Для выхода из таймера Введите exit");
+                Console.WriteLine("Для выхода из приложение Введите exit");
+                Console.WriteLine("Как дела?");
 
-                for (int i = 0; i < timerTicking; i++)
+                string appExit = Console.ReadLine();
+
+                Console.Clear();
+
+                if (appExit == "exit")
                 {
-                    Console.WriteLine($"{timerTicking++}");                   
-                    string textExit = Console.ReadLine();
-                    Console.ReadLine();
-
-                    if (textExit == "exit")
-                    {
-                        isExit = false;
-                        break;
-                    }
+                    appState = false;
                 }
             }
         }
