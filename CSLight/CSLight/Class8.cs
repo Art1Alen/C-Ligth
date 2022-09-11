@@ -10,7 +10,11 @@ namespace CSLight
     {
         static void Main()
         {
-            for (int i = 5; i < 100; i+=7)
+            int maximumValue = 96;
+            int initialValue = 5;
+            int add = 7;
+
+            for (int i = initialValue; i <= maximumValue; i += add)
             {
                 Console.WriteLine(i);
             }
