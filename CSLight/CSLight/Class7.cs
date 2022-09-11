@@ -10,22 +10,12 @@ namespace CSLight
     {
         static void Main()
         {
-            string appExit = "exit";
+            string userInputExit = "";
 
-            while (appExit != null)
+            while (userInputExit != "exit")
             {
-                Console.WriteLine("Для выхода из приложение Введите exit");
-                Console.WriteLine("Как дела?");
-
-                appExit = Console.ReadLine();
-
-                Console.Clear();
-
-                if (appExit == "exit")
-                {
-                    Console.WriteLine("Выход из приложение");
-                    break;
-                }
+                Console.WriteLine("Для выхода программы Введите exit");
+                userInputExit = Console.ReadLine();
             }
         }
     }
