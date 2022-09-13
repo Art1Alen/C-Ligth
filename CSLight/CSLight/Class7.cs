@@ -11,8 +11,9 @@ namespace CSLight
         static void Main()
         {
             string userInputExit = "";
+            string exit = "exit";
 
-            while (userInputExit != "exit")
+            while (userInputExit != exit)
             {
                 Console.WriteLine("Для выхода программы Введите exit");
                 userInputExit = Console.ReadLine();
