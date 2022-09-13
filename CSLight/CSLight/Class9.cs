@@ -19,7 +19,7 @@ namespace CSLight
 
             int number = random.Next(minValue, maxValue);
             
-            int summ = number;
+            int sum = number;
 
             Console.WriteLine(number);
 
@@ -27,11 +27,11 @@ namespace CSLight
             {
                 if (i % multiples1 == 0 || i % multiples2 == 0)
                 {
-                    summ += i;
+                    sum += i;
                     Console.Write(i + " ");
                 }
             }
-            Console.WriteLine(summ);
+            Console.WriteLine();
         }
     }
 }
