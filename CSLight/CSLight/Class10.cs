@@ -36,6 +36,7 @@ namespace CSLight
             Console.WriteLine("Введите 5 для обмена Евро на Доллар");
             Console.WriteLine("Введите 6 для обмена Евро на Рубл");
             Console.WriteLine("Введите 7 для выхода из банка");
+
             string userInput = Console.ReadLine();
 
             switch (userInput)
@@ -43,10 +44,11 @@ namespace CSLight
                 case "1":
                     Console.WriteLine("Сколько вы хотите обменять?");
                     currencyCount = Convert.ToSingle(Console.ReadLine());
+
                     if (currencyRubles >= currencyCount)
                     {
                         currencyRubles -= currencyCount;
-                        currencyRubles += currencyCount / rublesToDollar;
+                        currencyRubles += currencyCount * rublesToDollar;
                     }
                     else
                     {
@@ -57,6 +59,7 @@ namespace CSLight
                 case "2":
                     Console.WriteLine("Сколько вы хотите обменять?");
                     currencyCount = Convert.ToSingle(Console.ReadLine());
+
                     if (currencyRubles >= currencyCount)
                     {
                         currencyRubles -= currencyCount;
@@ -71,10 +74,11 @@ namespace CSLight
                 case "3":
                     Console.WriteLine("Сколько вы хотите обменять?");
                     currencyCount = Convert.ToSingle(Console.ReadLine());
+
                     if (currencyDollar >= currencyCount)
                     {
                         currencyDollar -= currencyCount;
-                        currencyDollar += currencyCount * dollarToRubles;
+                        currencyDollar += currencyCount / dollarToRubles;
                     }
                     else
                     {
@@ -85,6 +89,7 @@ namespace CSLight
                 case "4":
                     Console.WriteLine("Сколько вы хотите обменять?");
                     currencyCount = Convert.ToSingle(Console.ReadLine());
+
                     if (currencyDollar >= currencyCount)
                     {
                         currencyDollar -= currencyCount;
@@ -95,22 +100,26 @@ namespace CSLight
                         Console.WriteLine("Недопустимая сумма");
                     }
                     break;
+
                 case "5":
                     Console.WriteLine("Сколько вы хотите обменять?");
                     currencyCount = Convert.ToSingle(Console.ReadLine());
+
                     if (currencyEuro >= currencyCount)
                     {
                         currencyEuro -= currencyCount;
-                        currencyEuro += currencyCount * euroToRubles;
+                        currencyEuro += currencyCount / euroToRubles;
                     }
                     else
                     {
                         Console.WriteLine("Недопустимая сумма");
                     }
                     break;
+
                 case "6":
                     Console.WriteLine("Сколько вы хотите обменять?");
                     currencyCount = Convert.ToSingle(Console.ReadLine());
+
                     if (currencyEuro >= currencyCount)
                     {
                         currencyEuro -= currencyCount;
@@ -121,11 +130,14 @@ namespace CSLight
                         Console.WriteLine("Недопустимая сумма");
                     }
                     break;
+
                 case "7":
+
+                    Console.WriteLine("Выход из приложение");
+
                     break;
             }
             Console.WriteLine($"Ваш баланс {currencyRubles} рублей {currencyDollar} долларов {currencyEuro} евро");
-
         }
     }
 }
