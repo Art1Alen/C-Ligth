@@ -18,10 +18,10 @@ namespace CSLight
 
             int euroToRubles = 40;
             int euroToDollar = 45;
-           
+
             float currencyCount;
 
-            Console.WriteLine("СберБанк обмен валютами\n");          
+            Console.WriteLine("СберБанк обмен валютами\n");
             Console.WriteLine("Введите баланс Рублей");
             float currencyRubles = Convert.ToSingle(Console.ReadLine());
             Console.WriteLine("Введите баланс Доллара");
@@ -35,14 +35,15 @@ namespace CSLight
             Console.WriteLine("Введите 4 для обмена Доллар на Евро");
             Console.WriteLine("Введите 5 для обмена Евро на Доллар");
             Console.WriteLine("Введите 6 для обмена Евро на Рубл");
-            string userInput = Console.ReadLine();                      
+            Console.WriteLine("Введите 7 для выхода из банка");
+            string userInput = Console.ReadLine();
 
             switch (userInput)
             {
                 case "1":
                     Console.WriteLine("Сколько вы хотите обменять?");
                     currencyCount = Convert.ToSingle(Console.ReadLine());
-                    if(currencyRubles >= currencyCount)
+                    if (currencyRubles >= currencyCount)
                     {
                         currencyRubles -= currencyCount;
                         currencyRubles += currencyCount / rublesToDollar;
@@ -119,6 +120,8 @@ namespace CSLight
                     {
                         Console.WriteLine("Недопустимая сумма");
                     }
+                    break;
+                case "7":
                     break;
             }
             Console.WriteLine($"Ваш баланс {currencyRubles} рублей {currencyDollar} долларов {currencyEuro} евро");
