@@ -29,32 +29,35 @@ namespace CSLight
             Console.WriteLine("Введите баланс Евро");
             float currencyEuro = Convert.ToSingle(Console.ReadLine());
 
-            Console.WriteLine("Введите 1 для обмена Рубл");
-            Console.WriteLine("Введите 2 для обмена Доллар");
-            Console.WriteLine("Введите 3 для обмена Евро");
-            Console.WriteLine("Введите 7 для выхода из банка");
-
             const string ExchangeRubles = "1";
             const string ExchangeDollar = "2";
             const string ExchangeEuro = "3";
+            const string ExitBank = "4";
+
+            Console.WriteLine("Введите 1 для обмена Рубл");
+            Console.WriteLine("Введите 2 для обмена Доллар");
+            Console.WriteLine("Введите 3 для обмена Евро");
+            Console.WriteLine("Введите 4 для выхода из банка");
 
             string userInput = Console.ReadLine();
 
             switch (userInput)
             {
                 case ExchangeRubles:
-                    Console.WriteLine("Выберите на что хотите обменять");
-                    Console.WriteLine("Введите 1 для обмена Доллар");
-                    Console.WriteLine("Введите 2 для обмена Евро");
 
                     const string ExchangeRublesToDollar = "1";
                     const string ExchangeRublesToEuro = "2";
+
+                    Console.WriteLine("Выберите на что хотите обменять");
+                    Console.WriteLine("Введите 1 для обмена Доллар");
+                    Console.WriteLine("Введите 2 для обмена Евро");
 
                     string rubleExchange = Console.ReadLine();
 
                     switch (rubleExchange)
                     {
                         case ExchangeRublesToDollar:
+
                             Console.WriteLine("Сколько вы хотите обменять?");
                             currencyCount = Convert.ToSingle(Console.ReadLine());
 
@@ -70,6 +73,7 @@ namespace CSLight
                             break;
 
                         case ExchangeRublesToEuro:
+
                             Console.WriteLine("Сколько вы хотите обменять?");
                             currencyCount = Convert.ToSingle(Console.ReadLine());
 
@@ -88,18 +92,20 @@ namespace CSLight
                     break;
 
                 case ExchangeDollar:
-                    Console.WriteLine("Выберите на что хотите обменять");
-                    Console.WriteLine("Введите 1 для обмена Рубл");
-                    Console.WriteLine("Введите 2 для обмена Евро");
 
                     const string ExchangeDollarToRubles = "1";
                     const string ExchangeDollarToEuro = "2";
+
+                    Console.WriteLine("Выберите на что хотите обменять");
+                    Console.WriteLine("Введите 1 для обмена Рубл");
+                    Console.WriteLine("Введите 2 для обмена Евро");
 
                     string dollarExchange = Console.ReadLine();
 
                     switch (dollarExchange)
                     {
                         case ExchangeDollarToRubles:
+
                             Console.WriteLine("Сколько вы хотите обменять?");
                             currencyCount = Convert.ToSingle(Console.ReadLine());
 
@@ -115,6 +121,7 @@ namespace CSLight
                             break;
 
                         case ExchangeDollarToEuro:
+
                             Console.WriteLine("Сколько вы хотите обменять?");
                             currencyCount = Convert.ToSingle(Console.ReadLine());
 
@@ -131,19 +138,22 @@ namespace CSLight
                     }
                     Console.WriteLine($"Ваш баланс {currencyRubles} рублей {currencyDollar} долларов {currencyEuro} евро");
                     break;
+
                 case ExchangeEuro:
-                    Console.WriteLine("Выберите на что хотите обменять");
-                    Console.WriteLine("Введите 1 для обмена Рубл");
-                    Console.WriteLine("Введите 2 для обмена Доллар");
 
                     const string ExchangeEuroToRubles = "1";
                     const string ExchangeEuroToDollar = "2";
+
+                    Console.WriteLine("Выберите на что хотите обменять");
+                    Console.WriteLine("Введите 1 для обмена Рубл");
+                    Console.WriteLine("Введите 2 для обмена Доллар");
 
                     string euroExchange = Console.ReadLine();
 
                     switch (euroExchange)
                     {
                         case ExchangeEuroToRubles:
+
                             Console.WriteLine("Сколько вы хотите обменять?");
                             currencyCount = Convert.ToSingle(Console.ReadLine());
 
@@ -159,6 +169,7 @@ namespace CSLight
                             break;
 
                         case ExchangeEuroToDollar:
+
                             Console.WriteLine("Сколько вы хотите обменять?");
                             currencyCount = Convert.ToSingle(Console.ReadLine());
 
@@ -174,6 +185,12 @@ namespace CSLight
                             break;
                     }
                     Console.WriteLine($"Ваш баланс {currencyRubles} рублей {currencyDollar} долларов {currencyEuro} евро");
+                    break;
+
+                case ExitBank:
+
+                    Console.WriteLine("Выход из банка");
+
                     break;
             }
         }
