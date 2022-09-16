@@ -29,15 +29,15 @@ namespace CSLight
             Console.WriteLine("Введите баланс Евро");
             float currencyEuro = Convert.ToSingle(Console.ReadLine());
 
-            const string ExchangeRubles = "1";
-            const string ExchangeDollar = "2";
-            const string ExchangeEuro = "3";
-            const string ExitBank = "4";
+            const string ExchangeRubles = "Rubles";
+            const string ExchangeDollar = "Dollar";
+            const string ExchangeEuro = "Euro";
+            const string ExitBank = "Exit";
 
-            Console.WriteLine("Введите 1 для обмена Рубл");
-            Console.WriteLine("Введите 2 для обмена Доллар");
-            Console.WriteLine("Введите 3 для обмена Евро");
-            Console.WriteLine("Введите 4 для выхода из банка");
+            Console.WriteLine("Введите Rubles для обмена Рубл");
+            Console.WriteLine("Введите Dollar для обмена Доллар");
+            Console.WriteLine("Введите Euro для обмена Евро");
+            Console.WriteLine("Введите Exit для выхода из банка");
 
             string userInput = Console.ReadLine();
 
