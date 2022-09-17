@@ -36,14 +36,14 @@ namespace CSLight
             Console.WriteLine("Введите баланс Евро");
             float currencyEuro = Convert.ToSingle(Console.ReadLine());
 
-            Console.WriteLine($"Введите {ExchangeRubles} для обмена Рубл");
-            Console.WriteLine($"Введите {ExchangeDollar} для обмена Доллар");
-            Console.WriteLine($"Введите {ExchangeEuro} для обмена Евро");
-
-            string userInput = Console.ReadLine();
-
             while (userInputExit != exit)
             {
+                Console.WriteLine($"Введите {ExchangeRubles} для обмена Рубл");
+                Console.WriteLine($"Введите {ExchangeDollar} для обмена Доллар");
+                Console.WriteLine($"Введите {ExchangeEuro} для обмена Евро");
+
+                string userInput = Console.ReadLine();
+
                 switch (userInput)
                 {
                     case ExchangeRubles:
