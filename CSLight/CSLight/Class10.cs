@@ -13,16 +13,18 @@ namespace CSLight
             const string ExchangeRubles = "1";
             const string ExchangeDollar = "2";
             const string ExchangeEuro = "3";
-            const string ExitBank = "4";
 
-            float rublesToDollar = 25f;
-            float rublesToEuro = 45f;
+            string userInputExit = "";
+            string exit = "exit";
 
-            float dollarToRubles = 65f;
-            float dollarToEuro = 20f;
+            float rublesToDollar = 1 / 60f;
+            float rublesToEuro = 1 / 61f;
 
-            float euroToRubles = 85f;
-            float euroToDollar = 40f;
+            float dollarToRubles = 60f;
+            float dollarToEuro = 1f;
+
+            float euroToRubles = 61f;
+            float euroToDollar = 1f;
 
             float currencyCount;
 
@@ -37,152 +39,154 @@ namespace CSLight
             Console.WriteLine($"Введите {ExchangeRubles} для обмена Рубл");
             Console.WriteLine($"Введите {ExchangeDollar} для обмена Доллар");
             Console.WriteLine($"Введите {ExchangeEuro} для обмена Евро");
-            Console.WriteLine($"Введите {ExitBank} для выхода из банка");
 
             string userInput = Console.ReadLine();
 
-            switch (userInput)
+            while (userInputExit != exit)
             {
-                case ExchangeRubles:
+                switch (userInput)
+                {
+                    case ExchangeRubles:
 
-                    Console.WriteLine("Выберите на что хотите обменять");
-                    Console.WriteLine($"Введите {ExchangeRubles} для обмена в Доллар");
-                    Console.WriteLine($"Введите {ExchangeEuro} для обмена в Евро");
+                        Console.WriteLine("Выберите на что хотите обменять");
+                        Console.WriteLine($"Введите {ExchangeDollar} для обмена в Доллар");
+                        Console.WriteLine($"Введите {ExchangeEuro} для обмена в Евро");
 
-                    string rubleExchange = Console.ReadLine();
+                        string rubleExchange = Console.ReadLine();
 
-                    switch (rubleExchange)
-                    {
-                        case ExchangeRubles:
 
-                            Console.WriteLine("Сколько вы хотите обменять?");
-                            currencyCount = Convert.ToSingle(Console.ReadLine());
+                        switch (rubleExchange)
+                        {
+                            case ExchangeDollar:
 
-                            if (currencyRubles >= currencyCount)
-                            {
-                                currencyRubles -= currencyCount;
-                                currencyRubles += currencyCount * rublesToDollar;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Недопустимая сумма");
-                            }
-                            break;
+                                Console.WriteLine("Сколько вы хотите обменять?");
+                                currencyCount = Convert.ToSingle(Console.ReadLine());
 
-                        case ExchangeEuro:
+                                if (currencyRubles >= currencyCount)
+                                {
+                                    currencyRubles -= currencyCount;
+                                    currencyDollar += currencyCount * rublesToDollar;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Недопустимая сумма");
+                                }
+                                break;
 
-                            Console.WriteLine("Сколько вы хотите обменять?");
-                            currencyCount = Convert.ToSingle(Console.ReadLine());
+                            case ExchangeEuro:
 
-                            if (currencyRubles >= currencyCount)
-                            {
-                                currencyRubles -= currencyCount;
-                                currencyRubles += currencyCount * rublesToEuro;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Недопустимая сумма");
-                            }
-                            break;
-                    }
-                    Console.WriteLine($"Ваш баланс {currencyRubles} рублей {currencyDollar} долларов {currencyEuro} евро");
-                    break;
+                                Console.WriteLine("Сколько вы хотите обменять?");
+                                currencyCount = Convert.ToSingle(Console.ReadLine());
 
-                case ExchangeDollar:
+                                if (currencyRubles >= currencyCount)
+                                {
+                                    currencyRubles -= currencyCount;
+                                    currencyEuro += currencyCount * rublesToEuro;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Недопустимая сумма");
+                                }
+                                break;
+                        }
+                        Console.WriteLine($"Ваш баланс {currencyRubles} рублей {currencyDollar} долларов {currencyEuro} евро");
+                        break;
 
-                    Console.WriteLine("Выберите на что хотите обменять");
-                    Console.WriteLine($"Введите {ExchangeDollar} для обмена в Рубл");
-                    Console.WriteLine($"Введите {ExchangeEuro} для обмена в Евро");
+                    case ExchangeDollar:
 
-                    string dollarExchange = Console.ReadLine();
+                        Console.WriteLine("Выберите на что хотите обменять");
+                        Console.WriteLine($"Введите {ExchangeRubles} для обмена в Рубл");
+                        Console.WriteLine($"Введите {ExchangeEuro} для обмена в Евро");
 
-                    switch (dollarExchange)
-                    {
-                        case ExchangeDollar:
+                        string dollarExchange = Console.ReadLine();
 
-                            Console.WriteLine("Сколько вы хотите обменять?");
-                            currencyCount = Convert.ToSingle(Console.ReadLine());
+                        switch (dollarExchange)
+                        {
+                            case ExchangeRubles:
 
-                            if (currencyDollar >= currencyCount)
-                            {
-                                currencyDollar -= currencyCount;
-                                currencyDollar += currencyCount * dollarToRubles;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Недопустимая сумма");
-                            }
-                            break;
+                                Console.WriteLine("Сколько вы хотите обменять?");
+                                currencyCount = Convert.ToSingle(Console.ReadLine());
 
-                        case ExchangeEuro:
+                                if (currencyDollar >= currencyCount)
+                                {
+                                    currencyDollar -= currencyCount;
+                                    currencyRubles += currencyCount * dollarToRubles;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Недопустимая сумма");
+                                }
+                                break;
 
-                            Console.WriteLine("Сколько вы хотите обменять?");
-                            currencyCount = Convert.ToSingle(Console.ReadLine());
+                            case ExchangeEuro:
 
-                            if (currencyDollar >= currencyCount)
-                            {
-                                currencyDollar -= currencyCount;
-                                currencyDollar += currencyCount * dollarToEuro;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Недопустимая сумма");
-                            }
-                            break;
-                    }
-                    Console.WriteLine($"Ваш баланс {currencyRubles} рублей {currencyDollar} долларов {currencyEuro} евро");
-                    break;
+                                Console.WriteLine("Сколько вы хотите обменять?");
+                                currencyCount = Convert.ToSingle(Console.ReadLine());
 
-                case ExchangeEuro:
+                                if (currencyDollar >= currencyCount)
+                                {
+                                    currencyDollar -= currencyCount;
+                                    currencyEuro += currencyCount * dollarToEuro;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Недопустимая сумма");
+                                }
+                                break;
+                        }
+                        Console.WriteLine($"Ваш баланс {currencyRubles} рублей {currencyDollar} долларов {currencyEuro} евро");
+                        break;
 
-                    Console.WriteLine("Выберите на что хотите обменять");
-                    Console.WriteLine($"Введите {ExchangeRubles} для обмена в Рубл");
-                    Console.WriteLine($"Введите {ExchangeDollar} для обмена в Доллар");
+                    case ExchangeEuro:
 
-                    string euroExchange = Console.ReadLine();
+                        Console.WriteLine("Выберите на что хотите обменять");
+                        Console.WriteLine($"Введите {ExchangeRubles} для обмена в Рубл");
+                        Console.WriteLine($"Введите {ExchangeDollar} для обмена в Доллар");
 
-                    switch (euroExchange)
-                    {
-                        case ExchangeRubles:
+                        string euroExchange = Console.ReadLine();
 
-                            Console.WriteLine("Сколько вы хотите обменять?");
-                            currencyCount = Convert.ToSingle(Console.ReadLine());
+                        switch (euroExchange)
+                        {
+                            case ExchangeRubles:
 
-                            if (currencyEuro >= currencyCount)
-                            {
-                                currencyEuro -= currencyCount;
-                                currencyEuro += currencyCount * euroToRubles;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Недопустимая сумма");
-                            }
-                            break;
+                                Console.WriteLine("Сколько вы хотите обменять?");
+                                currencyCount = Convert.ToSingle(Console.ReadLine());
 
-                        case ExchangeDollar:
+                                if (currencyEuro >= currencyCount)
+                                {
+                                    currencyEuro -= currencyCount;
+                                    currencyRubles += currencyCount * euroToRubles;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Недопустимая сумма");
+                                }
+                                break;
 
-                            Console.WriteLine("Сколько вы хотите обменять?");
-                            currencyCount = Convert.ToSingle(Console.ReadLine());
+                            case ExchangeDollar:
 
-                            if (currencyEuro >= currencyCount)
-                            {
-                                currencyEuro -= currencyCount;
-                                currencyEuro += currencyCount * euroToDollar;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Недопустимая сумма");
-                            }
-                            break;
-                    }
-                    Console.WriteLine($"Ваш баланс {currencyRubles} рублей {currencyDollar} долларов {currencyEuro} евро");
-                    break;
+                                Console.WriteLine("Сколько вы хотите обменять?");
+                                currencyCount = Convert.ToSingle(Console.ReadLine());
 
-                case ExitBank:
+                                if (currencyEuro >= currencyCount)
+                                {
+                                    currencyEuro -= currencyCount;
+                                    currencyDollar += currencyCount * euroToDollar;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Недопустимая сумма");
+                                }
+                                break;
+                        }
 
-                    Console.WriteLine("Выход из банка");
+                        Console.WriteLine("Для выхода программы Введите exit");
+                        userInputExit = Console.ReadLine();
 
-                    break;
+                        Console.WriteLine($"Ваш баланс {currencyRubles} рублей {currencyDollar} долларов {currencyEuro} евро");
+
+                        break;
+                }
             }
         }
     }
