@@ -13,9 +13,10 @@ namespace CSLight
             const string ExchangeRubles = "1";
             const string ExchangeDollar = "2";
             const string ExchangeEuro = "3";
+            const string CommandExit = "Exit";
 
-            string userInputExit = "";
             string exit = "exit";
+            string userInput = "";
 
             float rublesToDollar = 1 / 60f;
             float rublesToEuro = 1 / 61f;
@@ -36,13 +37,13 @@ namespace CSLight
             Console.WriteLine("Введите баланс Евро");
             float currencyEuro = Convert.ToSingle(Console.ReadLine());
 
-            while (userInputExit != exit)
+            while (userInput != exit)
             {
                 Console.WriteLine($"Введите {ExchangeRubles} для обмена Рубл");
                 Console.WriteLine($"Введите {ExchangeDollar} для обмена Доллар");
                 Console.WriteLine($"Введите {ExchangeEuro} для обмена Евро");
-
-                string userInput = Console.ReadLine();
+                Console.WriteLine($"Для выхода программы Введите {CommandExit}");
+                userInput = Console.ReadLine();
 
                 switch (userInput)
                 {
@@ -179,9 +180,6 @@ namespace CSLight
                                 }
                                 break;
                         }
-
-                        Console.WriteLine("Для выхода программы Введите exit");
-                        userInputExit = Console.ReadLine();
 
                         Console.WriteLine($"Ваш баланс {currencyRubles} рублей {currencyDollar} долларов {currencyEuro} евро");
 
