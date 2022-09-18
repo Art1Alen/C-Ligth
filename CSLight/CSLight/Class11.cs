@@ -14,9 +14,9 @@ namespace CSLight
             const string SetconsolecolorYello = "2";
             const string SetconsolecolorBlue = "3";
 
-            bool exitApp = true;
+            bool isExitApp = true;
 
-            while (exitApp)
+            while (isExitApp)
             {
                 Console.WriteLine("Введите имя пользователя?");
                 string userName = Console.ReadLine();
