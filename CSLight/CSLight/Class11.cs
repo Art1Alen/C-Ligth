@@ -14,7 +14,7 @@ namespace CSLight
             const string SetconsolecolorYello = "2";
             const string SetconsolecolorBlue = "3";
 
-            bool isExitApp = true;
+            bool ExitApp = true;
 
             while (isExitApp)
             {
@@ -25,7 +25,7 @@ namespace CSLight
                 string password = Console.ReadLine();
 
                 Console.WriteLine($"Доступные команды: " +
-                    $"\n {Setconsolecolor} setconsolecolor - Меняет цвет фона консоли. " +                 
+                    $"\n {Setconsolecolor} setconsolecolor - Меняет цвет фона консоли. " +
                     $"\n {Exit} exit - завершение работы приложения. " +
                     $"\n {Clear} clear - очистить консоль.");
 
@@ -57,7 +57,7 @@ namespace CSLight
                                 Console.WriteLine("Цвет не найден.");
                                 break;
                         }
-                        break;                                         
+                        break;
 
                     case Exit:
 
@@ -69,7 +69,7 @@ namespace CSLight
 
                         Console.Clear();
 
-                        break;                                                                    
+                        break;
                 }
             }
         }
