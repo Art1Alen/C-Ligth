@@ -14,9 +14,9 @@ namespace CSLight
             const string SetconsolecolorYello = "2";
             const string SetconsolecolorBlue = "3";
 
-            bool ExitApp = true;
+            string userInputExit = "";
 
-            while (isExitApp)
+            while (userInputExit != "exit")
             {
                 Console.WriteLine("Введите имя пользователя?");
                 string userName = Console.ReadLine();
@@ -61,14 +61,12 @@ namespace CSLight
 
                     case Exit:
 
-                        exitApp = false;
-
+                        userInputExit = "exit";
                         break;
 
                     case Clear:
 
                         Console.Clear();
-
                         break;
                 }
             }
