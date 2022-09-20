@@ -10,7 +10,7 @@ namespace CSLight
     {
         static void Main()
         {
-            string lateral = "";        
+            string lateral = " ";
 
             Console.Write("Введите имя: ");
             string name = Console.ReadLine();
@@ -20,20 +20,19 @@ namespace CSLight
             Console.Write("Введите символ: ");
             string simbol = Console.ReadLine();
 
-            int additionToLength = 4;
-            string emptySpaceForSecondLine = " ";
+            int emptySpaceForSecondLine = 2;
 
             Console.WriteLine($"Cимвол:  {simbol}");
             Console.Clear();
             Console.WriteLine("Ответь");
 
-            for (int i = 1; i <= (name.Length + additionToLength); i += 1)
+            for (int i = 1; i <= (name.Length + emptySpaceForSecondLine + emptySpaceForSecondLine); i += 1)
             {
                 lateral += simbol;
             }
 
             Console.WriteLine(lateral);
-            Console.WriteLine(lateral[0] + emptySpaceForSecondLine + name + emptySpaceForSecondLine + lateral[lateral.Length - 1]);
+            Console.WriteLine(simbol + " " + name + " " + simbol);
             Console.WriteLine(lateral);
         }
     }
