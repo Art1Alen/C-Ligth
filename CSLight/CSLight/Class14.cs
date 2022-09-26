@@ -12,14 +12,10 @@ namespace CSLight
         {
             Random random = new Random();
 
-            int maxNumber = 27;
-            int minNumber = 1;
-            int numberN = 3;
+            int result = random.Next(1, 27);
+            int result1 = random.Next(1, result);
 
-            for (int i = minNumber; i < maxNumber; i += numberN)
-            {
-                Console.WriteLine(random.Next(minNumber, maxNumber));
-            }
+            Console.WriteLine($"{result1} {result}");
         }
     }
 }
