@@ -12,21 +12,12 @@ namespace CSLight
         {
             Random random = new Random();
 
-            int result = random.Next(0,100);
+            int numberRandom = random.Next(0, 100);
             int doble = 2;
-      
+            int result = numberRandom * doble;
 
-            if (result >= 0)
-            {
-                while (result != 0 && result != 1)
-                {
-                    result /= doble;
-                   Console.WriteLine(result);
-                }
-            }
+            Console.WriteLine($"{numberRandom} {result}");
 
-
-         
         }
     }
 }
