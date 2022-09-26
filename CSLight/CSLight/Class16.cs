@@ -14,36 +14,44 @@ namespace CSLight
             int count = 0;
             int result = 0;
 
-            Console.WriteLine("Введите строку из символо '(' и ')'");
+            char symbolOne = '(';
+            char symbolTwo = ')';
+
+            Console.WriteLine($"Введите строку из символо '{symbolOne}' и '{symbolTwo}' ");
             string text = Console.ReadLine();
 
             for (int i = 0; i < text.Length; i++)
             {
-                if (text[i] == '(')
+                if (text[i] == symbolOne)
                 {
                     symbol++;
                 }
-                else if (text[i] == ')')
+
+                else if (text[i] == symbolTwo)
                 {
-                    if (i != text.Length - 1 && text[i + 1] != '(')
+                    if (i != text.Length - 1 && text[i + 1] != symbolOne)
                     {
                         count++;
                     }
                     symbol--;
                 }
+
                 if (symbol < 0)
                 {
                     break;
                 }
+
                 if (symbol == 0)
                 {
                     result = count;
                 }
             }
+
             if (symbol == 0)
             {
                 Console.WriteLine("Строка корректная " + text + "\n" + "Максимум глубина равняется: " + (result + 1));
             }
+
             else
             {
                 Console.WriteLine("Ошибка! Не верная строка " + text);
