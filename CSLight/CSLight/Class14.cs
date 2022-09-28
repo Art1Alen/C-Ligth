@@ -10,19 +10,24 @@ namespace CSLight
     {
         static void Main()
         {
-            Random random = new Random();
-
             int maxNumber = 27;
             int minNumber = 1;
+            int number = 10;
 
-            int numberN = random.Next(minNumber, maxNumber);
-            int multiples = random.Next(0, numberN);
-
-            for (int i = minNumber; i < numberN; i++)
+            for (int i = minNumber; i <= maxNumber; i++)
             {
-                if (numberN - i < multiples)
+                for (int j = minNumber; j < number; j++)
                 {
-                    Console.WriteLine($"{numberN} {multiples}");
+                    for (int k = 0; k < number; k++)
+                    {
+                        for (int l = 0; l < number; l++)
+                        {
+                            if (j + k + l == i)
+                            {
+                                Console.WriteLine($" {i} || {j}{k}{l}");
+                            }
+                        }
+                    }
                 }
             }
         }
