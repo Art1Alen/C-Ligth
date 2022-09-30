@@ -10,25 +10,57 @@ namespace CSLight
     {
         static void Main()
         {
+            #region variables int and string
             const string Rashamon = "2";
             const string Huganzakura = "4";
             const string DimensionalRift = "3";
             const string Fireball = "1";
 
-            Random random = new Random();
+            int minDamageNumber = 20;
+            int maxDamageNumber = 100;
+
+            int maxArmorNumber = 80;
+            int minArmorNumber = 35;
+
+            int minHealthNumber = 20;
+            int maxHealthNumber = 150;
+
+            int maxManaNumber = 150;
+            int minManaNumber = 100;
+
+            int regenerationHealth = 10;
+            int regenerationMana = 15;
+
 
             bool IsEnableGame = true;
             bool IsDimensionalRift = false;
 
             string enterSpell;
+            #endregion
+            #region spel expenses
 
-            int healthBoss = random.Next(80, 100);
-            int armorBoss = random.Next(20, 80);
-            int damageBoss = random.Next(30,50);
-            int healthShadowMage = random.Next(250, 400);
-            int armorShadowMage = random.Next(20, 50);
-            int manaPlayer = random.Next(100, 400);
+            int spelManaFireball = 30;
+            int spelManaRashamon = 50;
+            int spelManaDimensionalRift = 45;
+            int spelManaHuganzakura = 50;
+            int spelDamage = 50;
+            int spelDamageHealthBoss = 35;
+            int spelDamageHaelth = 100;
+            int spelregenerationHealth = 250;
 
+            #endregion
+            #region random int
+            Random random = new Random();
+
+            int healthBoss = random.Next(minHealthNumber, maxHealthNumber);
+            int armorBoss = random.Next(minArmorNumber, maxArmorNumber);
+            int damageBoss = random.Next(minDamageNumber, maxDamageNumber);
+
+            int healthShadowMage = random.Next(minHealthNumber, maxHealthNumber);
+            int armorShadowMage = random.Next(minDamageNumber, maxDamageNumber);
+            int manaPlayer = random.Next(minManaNumber, maxManaNumber);
+            #endregion
+            #region console
             Console.WriteLine($"Маг: здоровье:{healthShadowMage}, броня:{armorShadowMage}, урон:{manaPlayer}.");
             Console.WriteLine($"Босс: здоровье:{healthBoss}, броня:{armorBoss}, урон:{damageBoss}.");
             Console.Write("\nБитва началась! ");
@@ -39,7 +71,7 @@ namespace CSLight
                 $"\n {Rashamon} - призывает теневого духа для нанесения атаки (Отнимает 100 хп игроку)." +
                 $"\n {DimensionalRift} -  позволяет скрыться в разломе и восстановить 250 хп. Урон босса по вам не проходит" +
                 $"\n {Huganzakura} - Может быть выполнен только после призыва теневого духа, наносит 100 ед. урона");
-
+            #endregion
             while (IsEnableGame)
             {
                 if (healthBoss <= 0)
@@ -58,17 +90,17 @@ namespace CSLight
                 {
                     Console.WriteLine("Статистика Боса: \n Здоровье: {0} , Урон: {1} \n\nСтатистика игрока: \n Здоровье: {2} , Мана: {3} \n", healthBoss, damageBoss, healthShadowMage, manaPlayer);
 
-                    Console.WriteLine("Введите заклинание: ");
+                    Console.WriteLine("Введите заклинание:");
                     enterSpell = Console.ReadLine();
 
                     switch (enterSpell)
                     {
                         case Fireball:
 
-                            if (manaPlayer >= 30)
+                            if (manaPlayer >= spelManaFireball)
                             {
-                                healthBoss -= 50;
-                                manaPlayer -= 30;
+                                healthBoss -= spelDamage;
+                                manaPlayer -= spelManaFireball;
                             }
 
                             else
@@ -79,18 +111,18 @@ namespace CSLight
 
                         case Rashamon:
 
-                            if (manaPlayer >= 50)
+                            if (manaPlayer >= spelManaRashamon)
                             {
                                 for (int i = 0; i < 3; i++)
                                 {
-                                    if (healthShadowMage <= 250)
+                                    if (healthShadowMage <= spelDamageHaelth)
                                     {
-                                        healthShadowMage -= 100;                              
-                                        Console.WriteLine("Ваше текущее здоровье равно: {0}/250", healthShadowMage);
+                                        healthShadowMage -= spelDamageHaelth;
+                                        Console.WriteLine($"Ваше текущее здоровье равно: {healthShadowMage}/250");
                                         IsDimensionalRift = true;
-                                    }                                 
+                                    }
                                 }
-                                manaPlayer -= 50;
+                                manaPlayer -= spelManaRashamon;
                             }
 
                             else
@@ -101,10 +133,10 @@ namespace CSLight
 
                         case DimensionalRift:
 
-                            if (manaPlayer >= 45)
+                            if (manaPlayer >= spelManaDimensionalRift)
                             {
-                                healthShadowMage += 250;                         
-                                manaPlayer -= 45;
+                                healthShadowMage += spelregenerationHealth;
+                                manaPlayer -= spelManaDimensionalRift;
                                 Console.WriteLine($"У вас здоровя востановлена на {healthShadowMage}");
                             }
 
@@ -116,18 +148,18 @@ namespace CSLight
 
                         case Huganzakura:
 
-                            if (IsDimensionalRift != false)
+                            if (IsDimensionalRift)
                             {
-                                if (manaPlayer >= 50)
+                                if (manaPlayer >= spelManaHuganzakura)
                                 {
                                     for (int i = 0; i < 3; i++)
                                     {
-                                        healthBoss -= 35;
+                                        healthBoss -= spelDamageHealthBoss;
                                         Thread.Sleep(1000);
-                                        Console.WriteLine("Урон по босу теневыми духами: {0}", healthBoss);
+                                        Console.WriteLine($"Урон по босу теневыми духами:,{healthBoss}");
                                     }
-                                    manaPlayer -= 50;
-                                }                              
+                                    manaPlayer -= spelManaHuganzakura;
+                                }
                             }
 
                             else
@@ -135,20 +167,19 @@ namespace CSLight
                                 Console.WriteLine($"Вам надо использовать заклинание {Rashamon}");
                             }
                             break;
-                        
+
                         default:
 
-                            Console.WriteLine("Вы не знаетете {0} это заклинания или вы произнесли его не правильно.", enterSpell);
+                            Console.WriteLine($"Вы не знаетете это заклинания или вы произнесли его не правильно, {enterSpell} ");
                             break;
                     }
 
                     healthShadowMage -= damageBoss;
-                    healthBoss += 10;
-                    manaPlayer += 15;
+                    healthBoss += regenerationHealth;
+                    manaPlayer += regenerationMana;
                 }
             }
         }
     }
 }
 
-        
