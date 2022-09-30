@@ -31,6 +31,7 @@ namespace CSLight
             int regenerationHealth = 10;
             int regenerationMana = 15;
 
+
             bool IsEnableGame = true;
             bool IsDimensionalRift = false;
 
@@ -46,6 +47,8 @@ namespace CSLight
             int spelDamageHealthBoss = 35;
             int spelDamageHaelth = 100;
             int spelregenerationHealth = 250;
+
+            int loopIteration = 3;
 
             #endregion
             #region random int
@@ -112,7 +115,7 @@ namespace CSLight
 
                             if (manaPlayer >= spelManaRashamon)
                             {
-                                for (int i = 0; i < 3; i++)
+                                for (int i = 0; i < loopIteration; i++)
                                 {
                                     if (healthShadowMage <= spelDamageHaelth)
                                     {
@@ -151,7 +154,7 @@ namespace CSLight
                             {
                                 if (manaPlayer >= spelManaHuganzakura)
                                 {
-                                    for (int i = 0; i < 3; i++)
+                                    for (int i = 0; i < loopIteration; i++)
                                     {
                                         healthBoss -= spelDamageHealthBoss;
                                         Thread.Sleep(1000);
