@@ -31,7 +31,6 @@ namespace CSLight
             int regenerationHealth = 10;
             int regenerationMana = 15;
 
-
             bool IsEnableGame = true;
             bool IsDimensionalRift = false;
 
