@@ -17,21 +17,19 @@ namespace CSLight
             int minNumberArray = 10;
             int maxNumberArray = 26;
 
-            int maxNumber = 0;
+            int nullNumber = 0;
             int line = 0;
             int column = 0;
-
 
             for (int i = 0; i < array.GetLength(0); i++)
             {
                 for (int j = 0; j < array.GetLength(1); j++)
                 {
-
                     array[i, j] = random.Next(minNumberArray, maxNumberArray);
 
-                    if (array[i, j] > maxNumber)
+                    if (array[i, j] > nullNumber)
                     {
-                        maxNumber = array[i, j];
+                        nullNumber = array[i, j];
                         line = i;
                         column = j;
                     }
