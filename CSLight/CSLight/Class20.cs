@@ -36,10 +36,8 @@ namespace CSLight
 
                 if (i == array.GetLength(0) - 1)
                 {
-
                     for (int k = 1; k < array.GetLength(0) - 1; k++)
                     {
-
                         if (array[k] > array[k + plusOneNumber] && array[k] > array[k - 1])
                         {
                             localMaximaArray += array[k] + doubleQuotes;
@@ -51,11 +49,11 @@ namespace CSLight
                 {
                     localMaximaArray += doubleQuotes + array[array.GetLength(0) - 1];
                 }
+
+                Console.Clear();
+                Console.WriteLine($"\nВесть список массива {initialArray}");
+                Console.WriteLine($"Локальные максимумы: {localMaximaArray}");
             }
-
-            Console.WriteLine($"\nВесть список массива {initialArray}");
-
-            Console.WriteLine($"Локальные максимумы: {localMaximaArray}");
         }
     }
 }
