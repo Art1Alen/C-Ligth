@@ -21,9 +21,6 @@ namespace CSLight
 
             int plusOneNumber = 1;
 
-            int takeAwayOne = 1;
-            int takeAwayTwo = 2;
-
             int[] array = new int[30];
 
             for (int i = 0; i < array.GetLength(0); i++)
@@ -32,27 +29,27 @@ namespace CSLight
 
                 initialArray += Convert.ToString(array[i] + doubleQuotes);
 
-                if ((i == array.GetLength(0) - takeAwayOne) && (array[0] > array[1]))
+                if ((i == array.GetLength(0) - 1) && (array[0] > array[1]))
                 {
                     localMaximaArray += array[0] + doubleQuotes;
                 }
 
-                if (i == array.GetLength(0) - takeAwayOne)
+                if (i == array.GetLength(0) - 1)
                 {
 
-                    for (int k = 1; k < array.GetLength(0) - takeAwayOne; k++)
+                    for (int k = 1; k < array.GetLength(0) - 1; k++)
                     {
 
-                        if (array[k] > array[k + plusOneNumber] && array[k] > array[k - takeAwayOne])
+                        if (array[k] > array[k + plusOneNumber] && array[k] > array[k - 1])
                         {
                             localMaximaArray += array[k] + doubleQuotes;
                         }
                     }
                 }
 
-                if ((i == array.GetLength(0) - takeAwayOne) && (array[array.GetLength(0) - takeAwayOne] > array[array.GetLength(0) - takeAwayTwo]))
+                if ((i == array.GetLength(0) - 1) && (array[array.GetLength(0) - 1] > array[array.GetLength(0) - 2]))
                 {
-                    localMaximaArray += doubleQuotes + array[array.GetLength(0) - takeAwayOne];
+                    localMaximaArray += doubleQuotes + array[array.GetLength(0) - 1];
                 }
             }
 
