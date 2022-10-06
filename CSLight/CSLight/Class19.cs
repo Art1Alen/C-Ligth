@@ -21,38 +21,31 @@ namespace CSLight
             int line = 0;
             int column = 0;
 
-            for (int d = 0; d < array.GetLength(1); d++)
+
+            for (int i = 0; i < array.GetLength(0); i++)
             {
-                for (int i = 0; i < array.GetLength(0); i++)
+                for (int j = 0; j < array.GetLength(1); j++)
                 {
-                    for (int j = 0; j < array.GetLength(1); j++)
+
+                    array[i, j] = random.Next(minNumberArray, maxNumberArray);
+
+                    if (array[i, j] > maxNumber)
                     {
-                        if (d == 0)
-                        {
-                            array[i, j] = random.Next(minNumberArray, maxNumberArray);
-                        }
-
-                        if (array[i, j] > maxNumber)
-                        {
-                            maxNumber = array[i, j];
-                            line = i;
-                            column = j;
-                        }
-
-                        Console.Write(array[i, j] + " ");
+                        maxNumber = array[i, j];
+                        line = i;
+                        column = j;
                     }
 
-                    Console.WriteLine(" ");
+                    Console.Write(array[i, j] + " ");
                 }
 
-                if (d == 0)
-                {
-                    array[line, column] = 0;
-                    Console.WriteLine($"\nСтрока {line}. Столбец {column}.\n");
-                }
-           
-                Console.ReadKey();
+                Console.WriteLine(" ");
             }
+
+            array[line, column] = 0;
+            Console.WriteLine($"\nСтрока {line}. Столбец {column}.\n");
+
+            Console.ReadKey();
         }
     }
 }
