@@ -18,8 +18,8 @@ namespace CSLight
             int maxNumberArray = 10;
 
             int nullNumber = 0;
-            int line = 0;
-            int column = 0;
+            int line;
+            int column;
 
             for (int i = 0; i < array.GetLength(0); i++)
             {
@@ -29,9 +29,7 @@ namespace CSLight
 
                     if (array[i, j] > nullNumber)
                     {
-                        nullNumber = array[i, j];
-                        line = i;
-                        column = j;
+                        nullNumber += array[i, j];
                     }
 
                     Console.Write(array[i, j] + " ");
@@ -40,7 +38,7 @@ namespace CSLight
                 Console.WriteLine(" ");
             }
 
-            array[line, column] = 0;
+            array[line = nullNumber, column = nullNumber] = nullNumber;
             Console.WriteLine($"\nСтрока {line}. Столбец {column}.\n");
 
             Console.ReadKey();

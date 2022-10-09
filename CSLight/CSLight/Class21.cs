@@ -13,39 +13,61 @@ namespace CSLight
             const string CommandSum = "sum";
             const string CommandExit = "exit";
 
-            int[] array = new int[0];
-
             bool isWorking = true;
+
+            int lengthArray = 0;
+            int arraySum = 0;
+
+            int[] array = new int[lengthArray];
+            int[] arrayCopy = new int[lengthArray];
 
             while (isWorking)
             {
-                Console.Clear();
-                Console.WriteLine($"Введите число или команду ({CommandSum} - сложить числа, {CommandExit} - выход):");
+                Console.WriteLine($"Введите число, {CommandExit} или {CommandSum} ");
+                string Message = Console.ReadLine().ToLower();
 
-                string inputUser = Console.ReadLine().ToLower();
-
-                switch (inputUser)
+                if (Message != "sum" && Message != "exit")
                 {
-                    case CommandSum:
+                    int userInput = Convert.ToInt32(Message);
+                    lengthArray += 1;
+                    array = new int[lengthArray];
 
-                        int sum = 0;
+                    for (int i = 0; i < arrayCopy.Length; i++)
+                    {
+                        array[i] = arrayCopy[i];
+                    }
 
-                        for (int i = 0; i < array.Length; i++)
-                        {
-                            sum += array[i];
-                        }
+                    array[lengthArray - 1] = userInput;
+                    arrayCopy = new int[lengthArray];
 
-                        Console.WriteLine($"Сумма чисел: {sum}");
-                        Console.ReadLine();
+                    for (int i = 0; i < array.Length; i++)
+                    {
+                        arrayCopy[i] = array[i];
+                    }
 
-                        break;
+                    arrayCopy[lengthArray - 1] = userInput;
+                }
 
-                    case CommandExit:
+                else if (Message == "sum")
+                {
+                    for (int i = 0; i < array.Length; i++)
+                    {
+                        arraySum += array[i];
+                    }
 
-                        isWorking = false;
+                    Console.WriteLine($"Сумма массива: {arraySum} ");
+                    arraySum = 0;
+                }
 
-                        break;
-                         
+
+                else if (Message == "exit")
+                {
+                    isWorking = false;
+                }
+
+                else
+                {
+                    Console.WriteLine($"Нет такой команды ");
                 }
             }
         }

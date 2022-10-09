@@ -19,8 +19,6 @@ namespace CSLight
             int minNumber = 1;
             int maxNumber = 10;
 
-            int plusOneNumber = 1;
-
             int[] array = new int[30];
 
             for (int i = 0; i < array.GetLength(0); i++)
@@ -29,16 +27,14 @@ namespace CSLight
 
                 initialArray += Convert.ToString(array[i] + doubleQuotes);
 
-                if (i == array.GetLength(0) - 1)
+                for (int k = 1; k < array.GetLength(0) - 1; k++)
                 {
-                    for (int k = 1; k < array.GetLength(0) - 1; k++)
+                    if (array[k] > array[k + 1] && array[k] > array[k - 1])
                     {
-                        if (array[k] > array[k + plusOneNumber] && array[k] > array[k - 1])
-                        {
-                            localMaximaArray += array[k] + doubleQuotes;
-                        }
+                        localMaximaArray += array[k] + doubleQuotes;
                     }
                 }
+
                 for (int j = 0; j < array.GetLength(0); j++)
                 {
                     if ((i == array.GetLength(0) - 1) && (array[0] > array[1]))
