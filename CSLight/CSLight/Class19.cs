@@ -14,8 +14,8 @@ namespace CSLight
 
             int[,] array = new int[10, 10];
 
-            int minNumberArray = 10;
-            int maxNumberArray = 26;
+            int minNumberArray = 0;
+            int maxNumberArray = 10;
 
             int nullNumber = 0;
             int line = 0;
