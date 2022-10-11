@@ -17,9 +17,10 @@ namespace CSLight
             int minNumberArray = 0;
             int maxNumberArray = 10;
 
+            int max = 0;
             int nullNumber = 0;
-            int line;
-            int column;
+            int line = 0;
+            int column = 0;
 
             for (int i = 0; i < array.GetLength(0); i++)
             {
@@ -27,7 +28,7 @@ namespace CSLight
                 {
                     array[i, j] = random.Next(minNumberArray, maxNumberArray);
 
-                    if (array[i, j] > nullNumber)
+                    if (array[i, j] > max)
                     {
                         nullNumber += array[i, j];
                     }
@@ -35,12 +36,14 @@ namespace CSLight
                     Console.Write(array[i, j] + " ");
                 }
 
-                Console.WriteLine(" ");
+                Console.WriteLine();
             }
 
-            array[line = nullNumber, column = nullNumber] = nullNumber;
-            Console.WriteLine($"\nСтрока {line}. Столбец {column}.\n");
-
+            if (nullNumber == max)
+            {
+                array[line, column] = 0;
+                Console.WriteLine($"\nСтрока {line}. Столбец {column}.\n");
+            }
             Console.ReadKey();
         }
     }
