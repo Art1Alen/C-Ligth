@@ -12,8 +12,8 @@ namespace CSLight
         {
             Random random = new Random();
 
-            string initialArray = "";
-            string localMaximaArray = "";
+            string initialArray = " ";
+            string localMaximaArray = " ";
             string doubleQuotes = " ";
 
             int minNumber = 1;
@@ -29,22 +29,9 @@ namespace CSLight
 
                 for (int k = 1; k < array.GetLength(0) - 1; k++)
                 {
-                    if (array[k] > array[k + 1] && array[k] > array[k - 1])
+                    if (array[k] > array[k + 1])
                     {
-                        localMaximaArray += array[k] + doubleQuotes;
-                    }
-                }
-
-                for (int j = 0; j < array.GetLength(0); j++)
-                {
-                    if ((i == array.GetLength(0) - 1) && (array[0] > array[1]))
-                    {
-                        localMaximaArray += array[0] + doubleQuotes;
-                    }
-
-                    if ((i == array.GetLength(0) - 1) && (array[array.GetLength(0) - 1] > array[array.GetLength(0) - 2]))
-                    {
-                        localMaximaArray += doubleQuotes + array[array.GetLength(0) - 1];
+                        localMaximaArray = array[k] + doubleQuotes;
                     }
                 }
 
