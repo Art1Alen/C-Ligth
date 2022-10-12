@@ -25,20 +25,36 @@ namespace CSLight
             {
                 array[i] = random.Next(minNumber, maxNumber);
 
-                initialArray += Convert.ToString(array[i] + doubleQuotes);
+                initialArray += Convert.ToString(array[i] + " ");
 
-                for (int k = 1; k < array.GetLength(0) - 1; k++)
+                if ((i == array.GetLength(0) - 1) && (array[0] > array[1]))
                 {
-                    if (array[k] > array[k + 1])
-                    {
-                        localMaximaArray = array[k] + doubleQuotes;
-                    }
+                    localMaximaArray += array[0] + " ";
                 }
 
-                Console.Clear();
-                Console.WriteLine($"\nВесть список массива {initialArray}");
-                Console.WriteLine($"Локальные максимумы: {localMaximaArray}");
+                if (i == array.GetLength(0) - 1)
+                {
+
+                    for (int k = 1; k < array.GetLength(0) - 1; k++)
+                    {
+
+                        if (array[k] > array[k + 1] && array[k] > array[k - 1])
+                        {
+                            localMaximaArray += array[k] + " ";
+                        }
+
+                    }
+
+                }
+
+                if ((i == array.GetLength(0) - 1) && (array[array.GetLength(0) - 1] > array[array.GetLength(0) - 2]))
+                {
+                    localMaximaArray += "" + array[array.GetLength(0) - 1];
+                }
             }
+
+            Console.WriteLine($"Исходный массив{initialArray}");
+            Console.WriteLine($"Локальные максимумы: {localMaximaArray}");
         }
     }
 }
