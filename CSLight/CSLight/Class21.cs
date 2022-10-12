@@ -23,12 +23,13 @@ namespace CSLight
 
             while (isWorking)
             {
-                Console.WriteLine($"Введите число, {CommandExit} или {CommandSum} ");
-                string Message = Console.ReadLine().ToLower();
+                Console.WriteLine($"Введите число,{CommandExit} или {CommandSum}");
+                string message = Console.ReadLine().ToLower();
 
-                if (Message != "sum" && Message != "exit")
+                if (message != "sum" && message != "exit")
                 {
-                    int userInput = Convert.ToInt32(Message);
+                    int userInput = Convert.ToInt32(message);
+
                     lengthArray += 1;
                     array = new int[lengthArray];
 
@@ -40,15 +41,10 @@ namespace CSLight
                     array[lengthArray - 1] = userInput;
                     arrayCopy = new int[lengthArray];
 
-                    for (int i = 0; i < array.Length; i++)
-                    {
-                        arrayCopy[i] = array[i];
-                    }
-
                     arrayCopy[lengthArray - 1] = userInput;
                 }
 
-                else if (Message == "sum")
+                else if (message == "sum")
                 {
                     for (int i = 0; i < array.Length; i++)
                     {
@@ -60,11 +56,10 @@ namespace CSLight
                 }
 
 
-                else if (Message == "exit")
+                else if (message == "exit")
                 {
                     isWorking = false;
                 }
-
                 else
                 {
                     Console.WriteLine($"Нет такой команды ");
