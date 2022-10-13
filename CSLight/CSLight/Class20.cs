@@ -12,7 +12,7 @@ namespace CSLight
         {
             Random random = new Random();
 
-            string initialArray = " ";
+            string spaces = " ";
             string localMaximaArray = " ";
             string doubleQuotes = " ";
 
@@ -25,7 +25,7 @@ namespace CSLight
             {
                 array[i] = random.Next(minNumber, maxNumber);
 
-                initialArray += Convert.ToString(array[i] + " ");
+                spaces += Convert.ToString(array[i] + " ");
 
                 if ((i == array.GetLength(0) - 1) && (array[0] > array[1]))
                 {
@@ -47,13 +47,13 @@ namespace CSLight
 
                 }
 
-                if ((i == array.GetLength(0) - 1) && (array[array.GetLength(0) - 1] > array[array.GetLength(0) - 2]))
+                if ((i == array.Length) && (array[array.Length - 1] > array[array.Length - 2]))
                 {
                     localMaximaArray += "" + array[array.GetLength(0) - 1];
                 }
             }
 
-            Console.WriteLine($"Исходный массив{initialArray}");
+            Console.WriteLine($"Исходный массив{spaces}");
             Console.WriteLine($"Локальные максимумы: {localMaximaArray}");
         }
     }
