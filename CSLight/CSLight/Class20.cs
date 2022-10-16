@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CSLight
+﻿namespace CSLight
 {
     internal class Class20
     {
@@ -27,14 +21,8 @@ namespace CSLight
 
                 spaces += Convert.ToString(array[i] + " ");
 
-                if ((i == array.GetLength(0) - 1) && (array[0] > array[1]))
-                {
-                    localMaximaArray += array[0] + " ";
-                }
-
                 if (i == array.GetLength(0) - 1)
                 {
-
                     for (int k = 1; k < array.GetLength(0) - 1; k++)
                     {
 
@@ -42,12 +30,15 @@ namespace CSLight
                         {
                             localMaximaArray += array[k] + " ";
                         }
-
                     }
-
                 }
 
-                if ((i == array.Length) && (array[array.Length - 1] > array[array.Length - 2]))
+                if ((i == array.GetLength(0) - 1) && (array[0] > array[1]))
+                {
+                    localMaximaArray += array[0] + " ";
+                }
+
+                if ((i == array.GetLength(0) - 1) && (array[array.GetLength(0) - 1] > array[array.GetLength(0) - 2]))
                 {
                     localMaximaArray += "" + array[array.GetLength(0) - 1];
                 }
