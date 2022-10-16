@@ -26,7 +26,7 @@ namespace CSLight
                 Console.WriteLine($"Введите число,{CommandExit} или {CommandSum}");
                 string message = Console.ReadLine().ToLower();
 
-                if (message != "sum" && message != "exit")
+                if (message != CommandSum && message != CommandExit)
                 {
                     int userInput = Convert.ToInt32(message);
 
@@ -43,7 +43,6 @@ namespace CSLight
 
                     arrayCopy[lengthArray - 1] = userInput;
                 }
-
                 else if (message == "sum")
                 {
                     for (int i = 0; i < array.Length; i++)
@@ -54,8 +53,6 @@ namespace CSLight
                     Console.WriteLine($"Сумма массива: {arraySum} ");
                     arraySum = 0;
                 }
-
-
                 else if (message == "exit")
                 {
                     isWorking = false;
