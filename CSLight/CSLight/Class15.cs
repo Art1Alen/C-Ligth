@@ -14,13 +14,17 @@ namespace CSLight
 
             int maxNumber = 100;
             int minNumber = 1;
+            int result = 1;
+            int powersOfTwo = 2;
 
             int number = random.Next(minNumber, maxNumber);
 
-            int result = 1;
             while (number >= result)
-                result *= 2;
-            Console.WriteLine($"Число {number} в степени двойки {result}");
+            {
+                result *= powersOfTwo;
+            }
+
+            Console.WriteLine($"Число {number} двойка в степении {result}");
         }
     }
 }
