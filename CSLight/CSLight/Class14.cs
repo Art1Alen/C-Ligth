@@ -4,8 +4,8 @@
     {
         static void Main()
         {
-            int minNumberN = 1;
-            int maxNumberN = 27;
+            int minNumberN = 25;
+            int maxNumberN = 25;
             int threeDigit = 999;
 
             Random random = new Random();
