@@ -4,14 +4,14 @@
     {
         static void Main()
         {
-            int minNumberN = 1;
-            int maxNumberN = 27;
-            int threeDigit = 999;
+            int minNumber = 1;
+            int maxNumber = 27;
+            int cardboardNumber = 999;
 
             Random random = new Random();
-            int numberN = random.Next(minNumberN, maxNumberN);
+            int numberN = random.Next(minNumber, maxNumber + 1);
 
-            for (int i = 0; i < threeDigit; i += numberN)
+            for (int i = 100; i < cardboardNumber; i += numberN)
             {
                 if (i != numberN)
                 {
