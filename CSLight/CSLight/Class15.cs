@@ -15,16 +15,17 @@ namespace CSLight
             int maxNumber = 100;
             int minNumber = 1;
             int result = 1;
-            int powersOfTwo = 2;
+            int degrees = 2;
+            int degreesCount = 0;
 
             int number = random.Next(minNumber, maxNumber);
 
-            while (number >= result)
+            while (number > result)
             {
-                result *= powersOfTwo;
+                result *= degrees;
+                degreesCount++;
             }
-
-            Console.WriteLine($"Число {number} двойка в степении {result}");
+            Console.WriteLine($"{number} < {result} где {result} в {degrees} степении {degreesCount}");
         }
     }
 }
