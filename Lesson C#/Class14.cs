@@ -8,14 +8,14 @@
             int maxNumber = 28;
             int cardboardNumber = 999;
             int count = 0;
-            int three_DigitNumber = 99;
+            int threefoldNumbers = 99;
 
             Random random = new Random();
             int numberRandom = random.Next(minNumber, maxNumber);
 
             for (int i = 0; i <= cardboardNumber; i += numberRandom)
             {
-                if (i > three_DigitNumber)
+                if (i > threefoldNumbers)
                     count++;
             }
 
