@@ -2,16 +2,12 @@
 {
     internal class Class20
     {
-
-
-
         static void Main()
         {
             Random random = new Random();
 
             int minNumber = 1;
             int maxNumber = 10;
-            int localMaxNumber = 0;
 
             string space = " ";
 
