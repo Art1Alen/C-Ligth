@@ -1,41 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CSLight
+﻿namespace CSLight
 {
     internal class Class22
     {
         static void Main()
         {
-            int[] array = new int[30] { 3, 3, 3, 4, 5, 6, 7, 2, 2, 3, 2, 5, 7, 5, 7, 7, 8, 8, 8, 8, 4, 5, 8, 1, 2, 4, 5, 6, 8, 5 };
+            int[] array = new int[30] { 3, 3, 3, 4, 5, 6, 7, 2, 2, 3, 2, 5, 7, 5, 7, 7, 8, 8, 8, 8, 8, 5, 8, 1, 2, 4, 5, 6, 8, 5 };
 
-            int number = 0;
-            int repeatSubarrayNumber = 1;
-            int maxLengthRepeatSubarrayNumber = 1;
+            int numberArray = 0;
+            int repeatSubarrayNumber = 0;
+            int maxLengthRepeatSubarrayNumber = 0;
+            int plusOne = 1;
 
-            Console.Write(array[0] + " ");
+            string space = " ";
 
-            for (int i = 1; i < array.Length; i++)
+            for (int i = 1; i < array.Length - 1; i++)
             {
-                Console.Write(array[i] + " ");
+                Console.Write(array[i] + space);
 
-                if (array[i] == array[i - 1])
+                int k = i + 1;
+
+                if (array[i] == array[k])
                 {
                     repeatSubarrayNumber++;
+                    numberArray = array[i];
+                }
+                else
+                {
+                    repeatSubarrayNumber = 0;
                 }
 
                 if (repeatSubarrayNumber > maxLengthRepeatSubarrayNumber)
                 {
                     maxLengthRepeatSubarrayNumber = repeatSubarrayNumber;
-                    number = array[i];
+                    numberArray = array[i];
                 }
             }
 
-            Console.WriteLine($"\nМаксимальная длина подмассива из одинаковых чисел: {maxLengthRepeatSubarrayNumber}");
-            Console.WriteLine($"Число, которое повторяется самое большое количество раз: {number}");
+            Console.WriteLine($"\nЧисло, которое повторяется большее {numberArray}\nколичество раз {maxLengthRepeatSubarrayNumber + plusOne} : ");
             Console.ReadKey();
 
         }
