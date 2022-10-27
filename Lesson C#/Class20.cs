@@ -26,7 +26,10 @@
             {
                 if (array[i - 1] < array[i] && array[i] > array[i + 1])
                 {
-                    Console.Write(array[i] + space);
+                    if (array[i] > array[i + 1])
+                    {
+                        Console.Write(array[i] + space);
+                    }
                 }
             }
         }
