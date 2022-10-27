@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CSLight
+﻿namespace CSLight
 {
     internal class Class21
     {
@@ -15,35 +9,21 @@ namespace CSLight
 
             bool isWorking = true;
 
-            int lengthArray = 0;
             int arraySum = 0;
 
-            int[] array = new int[lengthArray];
-            int[] arrayCopy = new int[lengthArray];
+            int[] array = new int[1];
 
             while (isWorking)
             {
                 Console.WriteLine($"Введите число,{CommandExit} или {CommandSum}");
-                string message = Console.ReadLine().ToLower();
 
-                if (message != CommandSum && message != CommandExit)
+                string message = Console.ReadLine();
+
+                if (message == CommandExit)
                 {
-                    int userInput = Convert.ToInt32(message);
-
-                    lengthArray += 1;
-                    array = new int[lengthArray];
-
-                    for (int i = 0; i < arrayCopy.Length; i++)
-                    {
-                        array[i] = arrayCopy[i];
-                    }
-
-                    array[lengthArray - 1] = userInput;
-                    arrayCopy = new int[lengthArray];
-
-                    arrayCopy[lengthArray - 1] = userInput;
+                    isWorking = false;
                 }
-                else if (message == "sum")
+                else if (message == CommandSum)
                 {
                     for (int i = 0; i < array.Length; i++)
                     {
@@ -53,13 +33,20 @@ namespace CSLight
                     Console.WriteLine($"Сумма массива: {arraySum} ");
                     arraySum = 0;
                 }
-                else if (message == "exit")
-                {
-                    isWorking = false;
-                }
                 else
                 {
-                    Console.WriteLine($"Нет такой команды ");
+                    int userInput = Convert.ToInt32(message);
+
+                    int[] arrayCopy = new int[array.Length + 1];
+
+                    arrayCopy[arrayCopy.Length - 1] = userInput;
+
+                    for (int i = 0; i < array.Length; i++)
+                    {
+                        arrayCopy[i] = array[i];
+                    }
+
+                    array = arrayCopy;
                 }
             }
         }
