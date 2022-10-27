@@ -9,17 +9,14 @@
             int numberArray = 0;
             int repeatSubarrayNumber = 0;
             int maxLengthRepeatSubarrayNumber = 0;
-            int plusOne = 1;
 
             string space = " ";
 
             for (int i = 1; i < array.Length - 1; i++)
             {
                 Console.Write(array[i] + space);
-
-                int k = i + 1;
-
-                if (array[i] == array[k])
+                int timeComparison = i + 1;
+                if (array[i] == array[timeComparison])
                 {
                     repeatSubarrayNumber++;
                     numberArray = array[i];
@@ -36,7 +33,7 @@
                 }
             }
 
-            Console.WriteLine($"\nЧисло, которое повторяется большее {numberArray}\nколичество раз {maxLengthRepeatSubarrayNumber + plusOne} : ");
+            Console.WriteLine($"\nЧисло, которое повторяется большее {numberArray}\nколичество раз {maxLengthRepeatSubarrayNumber} : ");
             Console.ReadKey();
 
         }
