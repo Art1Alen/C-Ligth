@@ -24,12 +24,14 @@
 
             for (int i = 1; i < array.Length - 1; i++)
             {
+                if (array[0] > array[1])
+                {
+                    Console.Write(array[i] + space);
+                }
+
                 if (array[i - 1] < array[i] && array[i] > array[i + 1])
                 {
-                    if (array[i] > array[i + 1])
-                    {
-                        Console.Write(array[i] + space);
-                    }
+                    Console.Write(array[i] + space);
                 }
             }
         }
