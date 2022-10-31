@@ -26,7 +26,8 @@
             {
                 Console.Write(array[0] + space);
             }
-            if (array[28] > array[29])
+
+            if (array[1] > array[array.Length - 1])
             {
                 Console.Write(array[29] + space);
             }
