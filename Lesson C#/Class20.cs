@@ -22,13 +22,13 @@
             Console.WriteLine();
             Console.WriteLine("Локальный максимум");
 
+            if (array[0] > array[1])
+            {
+                Console.Write(array[0] + space);
+            }
+
             for (int i = 1; i < array.Length - 1; i++)
             {
-                if (array[0] > array[1])
-                {
-                    Console.Write(array[i] + space);
-                }
-
                 if (array[i - 1] < array[i] && array[i] > array[i + 1])
                 {
                     Console.Write(array[i] + space);
