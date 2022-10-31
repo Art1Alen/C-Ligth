@@ -26,6 +26,10 @@
             {
                 Console.Write(array[0] + space);
             }
+            if (array[28] > array[29])
+            {
+                Console.Write(array[29] + space);
+            }
 
             for (int i = 1; i < array.Length - 1; i++)
             {
