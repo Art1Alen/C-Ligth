@@ -1,50 +1,50 @@
 ﻿namespace CSLight
 {
     internal class Class26
-    { 
+    {
         static void Main()
         {
-            const string AddDossier = "1";
-            const string ShowDossier = "2";
-            const string DeleteDossier = "3";
-            const string SearchDossier = "4";
-            const string Exit = "5";
+            const string CommandAddDossier = "1";
+            const string CommandShowDossier = "2";
+            const string CommandDeleteDossier = "3";
+            const string CommandSearchDossier = "4";
+            const string CommandExit = "5";
 
             bool isWork = true;
-            
+
             string[] fullNames = new string[] { "Собакин Артемий Андреевич", "Петрова Алена Андреевна", "Сидоров Сергей Сергеевич", "Копылов Максим Юреевич", "Михайлов Владимир Николаевич", "Борисов Борис Борисович" };
             string[] jobTitle = new string[] { "Повар", "Учитель", "Босс", "Су-Шеф", "Сантехник", "Киллер" };
 
             while (isWork)
             {
                 Console.Clear();
-                Console.WriteLine($"Меню программы:\n{AddDossier} - Добавить новое досье\n{ShowDossier} - Показать все досье\n{DeleteDossier} - Удалить досье\n{SearchDossier} - Поиск досье по фамилии\n{Exit} - Выход из программы");
+                Console.WriteLine($"Меню программы:\n{CommandAddDossier} - Добавить новое досье\n{CommandShowDossier} - Показать все досье\n{CommandDeleteDossier} - Удалить досье\n{CommandSearchDossier} - Поиск досье по фамилии\n{CommandExit} - Выход из программы");
                 Console.Write("\nВведите Номер пукта: ");
 
                 string userInput = Console.ReadLine();
 
                 switch (userInput)
                 {
-                    case AddDossier:
-                        CommandAddDossier(ref fullNames, ref jobTitle);
+                    case CommandAddDossier:
+                        AddDossier(ref fullNames, ref jobTitle);
                         break;
-                    case ShowDossier:
+                    case CommandShowDossier:
                         ShowDossiers(fullNames, jobTitle);
                         break;
-                    case DeleteDossier:
-                        CommandDeleteDossier(ref fullNames, ref jobTitle);
+                    case CommandDeleteDossier:
+                        FunctionDeleteDossier(ref fullNames, ref jobTitle);
                         break;
-                    case SearchDossier:
+                    case CommandSearchDossier:
                         SearchByLastName(fullNames, jobTitle);
                         break;
-                    case Exit:
+                    case CommandExit:
                         isWork = false;
                         break;
                 }
             }
         }
 
-        static void CommandAddDossier(ref string[] fullNames, ref string[] jobTitle)
+        static void AddDossier(ref string[] fullNames, ref string[] jobTitle)
         {
             Console.SetCursorPosition(0, 9);
 
@@ -69,6 +69,8 @@
 
             tempArray[tempArray.Length - 1] = userInput;
             array = tempArray;
+
+            return;
         }
 
         static void ShowDossiers(string[] fullNames, string[] jobTitle)
@@ -95,7 +97,7 @@
             }
         }
 
-        static void CommandDeleteDossier(ref string[] fullNames, ref string[] jobTitle)
+        static void FunctionDeleteDossier(ref string[] fullNames, ref string[] jobTitle)
         {
             Console.SetCursorPosition(0, 9);
 
@@ -143,6 +145,8 @@
             }
 
             array = tempArray;
+
+            return;
         }
 
         static void SearchByLastName(string[] fullNames, string[] jobTitle)
