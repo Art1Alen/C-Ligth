@@ -55,7 +55,7 @@
             Console.ReadKey();
         }
 
-        static void AddData(string text, ref string[] array)
+        static string[] AddData(string text, ref string[] array)
         {
             Console.Write(text);
 
@@ -68,9 +68,7 @@
             }
 
             tempArray[tempArray.Length - 1] = userInput;
-            array = tempArray;
-
-            return;
+            return array = tempArray;
         }
 
         static void ShowDossiers(string[] fullNames, string[] jobTitle)
@@ -130,7 +128,7 @@
             }
         }
 
-        static void DeleteData(int userInput, ref string[] array)
+        static string[] DeleteData(int userInput, ref string[] array)
         {
             string[] tempArray = new string[array.Length - 1];
 
@@ -144,9 +142,8 @@
                 tempArray[i] = array[i + 1];
             }
 
-            array = tempArray;
+            return array = tempArray;
 
-            return;
         }
 
         static void SearchByLastName(string[] fullNames, string[] jobTitle)
