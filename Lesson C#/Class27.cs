@@ -38,7 +38,7 @@
             }
         }
 
-        static void DrawBar(int value, int maxValue, ConsoleColor color, char symbol = '#')
+        static void DrawingBar(int value, int maxValue, ConsoleColor color, char symbol = '#')
         {
             ConsoleColor defaultColor = Console.BackgroundColor;
 
