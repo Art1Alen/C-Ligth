@@ -1,28 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CSLight
+﻿namespace CSLight
 {
     internal class Class27
     {
         static void Main(string[] strings)
         {
-            int health = 4;
+            int health = 5;
             int maxHealth = 10;
 
-            while (true)
+            bool isOpenApp = true;
+
+            DrawBar(health, maxHealth, ConsoleColor.Red);
+
+            MessageBox("\nДля Выхода введите exit\nДля продолжение нажмите Enter");
+
+            string inputUser = Console.ReadLine().ToLower();
+            Console.Clear();
+
+            if (inputUser == "exit")
             {
-                DrawBar(health, maxHealth, ConsoleColor.Red);
+                isOpenApp = false;
+            }
+            else
+            {
+                while (isOpenApp)
+                {
+                    DrawBar(health, maxHealth, ConsoleColor.Red);
 
-                Console.SetCursorPosition(0, 5);
-                Console.WriteLine("Введите число, на котором измениться жизнь");
-                health += Convert.ToInt32(Console.ReadLine());
+                    Console.SetCursorPosition(0, 5);
 
-                Console.ReadKey();
-                Console.Clear();
+                    MessageBox("Введите число для изменение полоски жизньи");
+
+                    health += Convert.ToInt32(Console.ReadLine());
+
+                    Console.ReadKey();
+                    Console.Clear();
+                }
             }
         }
 
@@ -46,10 +58,16 @@ namespace CSLight
             bar = "_";
 
             for (int i = value; i < maxValue; i++)
-            {              
-                   bar += "_";                
+            {
+                bar += "_";
             }
-            Console.Write(bar + ']');
+
+            Console.Write($"{bar}]");
+        }
+
+        static void MessageBox(string text)
+        {
+            Console.WriteLine(text);
         }
     }
 }
