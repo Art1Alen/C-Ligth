@@ -10,25 +10,7 @@ namespace CSLight
     {
         static void Main()
         {
-            string userInput;
-
-            MessageOutput("Привет Введите любое число");
-
-            int conversion;
-
-            userInput = Console.ReadLine();
-
-            bool result = int.TryParse(userInput, out conversion);
-
-            if (result)
-            {
-                MessageOutput($"Преобразование прошло успешно. Число: {conversion}");
-            }
-            else
-            {
-                MessageOutput("Преобразование завершилось неудачно");
-
-            }
+            Conversion();
         }
 
         static void MessageOutput(string text)
@@ -36,6 +18,29 @@ namespace CSLight
             Console.WriteLine(text);
             Console.ReadKey();
             Console.Clear();
+        }
+
+        static int Conversion()
+        {
+            bool isWorking = true;
+            int result = 0;
+
+            while (isWorking)
+            {
+                MessageOutput("Введите число");
+                string userInput = Console.ReadLine();
+
+                if (int.TryParse(userInput, out result))
+                {
+                    MessageOutput($"Число {result}, сконвертировано");
+                    isWorking = false;
+                }
+                else
+                {
+                    MessageOutput($"{userInput} не может быть сконвертировано");
+                }
+            }
+            return result;
         }
     }
 }
