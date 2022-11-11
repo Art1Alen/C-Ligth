@@ -10,7 +10,7 @@ namespace CSLight
     {
         static void Main()
         {
-            Conversion();
+            NumberConversion();
         }
 
         static void MessageOutput(string text)
@@ -20,7 +20,7 @@ namespace CSLight
             Console.Clear();
         }
 
-        static int Conversion()
+        static int NumberConversion()
         {
             bool isWorking = true;
             int result = 0;
