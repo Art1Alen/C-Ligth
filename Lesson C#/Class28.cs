@@ -13,7 +13,7 @@ namespace CSLight
             GetNumber();
         }
 
-        static void GetWindowMessage(string text)
+        static void OutputMessage(string text)
         {
             Console.WriteLine(text);
             Console.ReadKey();
@@ -27,17 +27,17 @@ namespace CSLight
 
             while (isWorking)
             {
-                GetWindowMessage("Введите число");
+                OutputMessage("Введите число");
                 string userInput = Console.ReadLine();
 
                 if (int.TryParse(userInput, out result))
                 {
-                    GetWindowMessage($"Число {result}, сконвертировано");
+                    OutputMessage($"Число {result}, сконвертировано");
                     isWorking = false;
                 }
                 else
                 {
-                    GetWindowMessage($"{userInput} не может быть сконвертировано");
+                    OutputMessage($"{userInput} не может быть сконвертировано");
                 }
             }
             return result;
