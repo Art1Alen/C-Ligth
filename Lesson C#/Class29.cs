@@ -23,7 +23,7 @@
             int directionX = 0;
             int directionY = 0;
 
-            DrawingMap(map);
+            SetDrawMap(map);
             DrawUser(positionUserY, positionUserX);
 
             while (isPlaing)
@@ -44,7 +44,7 @@
             }
         }
 
-        static void DrawingMap(char[,] map)
+        static void SetDrawMap(char[,] map)
         {
             for (int i = 0; i < map.GetLength(0); i++)
             {
