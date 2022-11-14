@@ -4,19 +4,19 @@
     {
         static void Main(string[] strings)
         {
+            const string ExitApp = "exit";
+
             int health = 5;
             int maxHealth = 10;
 
             bool isOpenApp = true;
 
-            DrawBar(health, maxHealth, ConsoleColor.Red);
-
-            MessageBox("\nДля Выхода введите exit\nДля продолжение нажмите Enter");
+            GetMessageBox($"\nДля Выхода введите {ExitApp}\nДля продолжение нажмите Enter");
 
             string inputUser = Console.ReadLine().ToLower();
             Console.Clear();
 
-            if (inputUser == "exit")
+            if (inputUser == ExitApp)
             {
                 isOpenApp = false;
             }
@@ -24,11 +24,11 @@
             {
                 while (isOpenApp)
                 {
-                    DrawBar(health, maxHealth, ConsoleColor.Red);
+                    DrawingBar(health, maxHealth, ConsoleColor.Red);
 
                     Console.SetCursorPosition(0, 5);
 
-                    MessageBox("Введите число для изменение полоски жизньи");
+                    GetMessageBox("Введите число для изменение полоски жизньи");
 
                     health += Convert.ToInt32(Console.ReadLine());
 
@@ -65,7 +65,7 @@
             Console.Write($"{bar}]");
         }
 
-        static void MessageBox(string text)
+        static void GetMessageBox(string text)
         {
             Console.WriteLine(text);
         }
