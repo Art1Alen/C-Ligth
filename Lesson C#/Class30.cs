@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CSLight
+﻿namespace CSLight
 {
     internal class Class30
     {
@@ -12,7 +6,7 @@ namespace CSLight
         {
             int[] array = { 1, 2, 3, 4, 5 };
 
-            Shuffle(array);            
+            Shuffle(array);
         }
 
         static void Shuffle(int[] array)
@@ -21,10 +15,10 @@ namespace CSLight
 
             for (int i = array.Length - 1; i >= 1; i--)
             {
-                int j = random.Next(i + 1);
+                int arrayNumber = random.Next(i + 1);
 
-                int temp = array[j];
-                array[j] = array[i];
+                int temp = array[arrayNumber];
+                array[arrayNumber] = array[i];
                 array[i] = temp;
                 Console.WriteLine(temp);
             }
