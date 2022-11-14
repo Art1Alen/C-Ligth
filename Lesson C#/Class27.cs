@@ -11,7 +11,7 @@
 
             bool isOpenApp = true;
 
-            GetMessageBox($"\nДля Выхода введите {ExitApp}\nДля продолжение нажмите Enter");
+            Console.WriteLine($"\nДля Выхода введите {ExitApp}\nДля продолжение нажмите Enter");
 
             string inputUser = Console.ReadLine().ToLower();
             Console.Clear();
@@ -24,11 +24,11 @@
             {
                 while (isOpenApp)
                 {
-                    DrawingBar(health, maxHealth, ConsoleColor.Red);
+                    SetDrawBar(health, maxHealth, ConsoleColor.Red);
 
                     Console.SetCursorPosition(0, 5);
 
-                    GetMessageBox("Введите число для изменение полоски жизньи");
+                    Console.WriteLine("Введите число для изменение полоски жизньи");
 
                     health += Convert.ToInt32(Console.ReadLine());
 
@@ -38,7 +38,7 @@
             }
         }
 
-        static void DrawingBar(int value, int maxValue, ConsoleColor color, char symbol = '#')
+        static void SetDrawBar(int value, int maxValue, ConsoleColor color, char symbol = '#')
         {
             ConsoleColor defaultColor = Console.BackgroundColor;
 
@@ -63,11 +63,6 @@
             }
 
             Console.Write($"{bar}]");
-        }
-
-        static void GetMessageBox(string text)
-        {
-            Console.WriteLine(text);
         }
     }
 }
