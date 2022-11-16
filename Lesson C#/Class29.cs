@@ -23,7 +23,7 @@
             int directionX = 0;
             int directionY = 0;
 
-            CardDrawing(map);
+            Map(map);
             DrawUser(positionUserY, positionUserX);
 
             while (isPlaing)
@@ -44,7 +44,7 @@
             }
         }
 
-        static void CardDrawing(char[,] map)
+        static void Map(char[,] map)
         {
             for (int i = 0; i < map.GetLength(0); i++)
             {
@@ -70,8 +70,7 @@
             positionX += directionX;
             positionY += directionY;
 
-            Console.SetCursorPosition(positionY, positionX);
-            Console.Write('@');
+            DrawUser(positionY, positionX);
         }
 
         static void ChangeDirection(ConsoleKeyInfo key, ref int directionX, ref int directionY)
