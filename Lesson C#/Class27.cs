@@ -24,7 +24,7 @@
             {
                 while (isOpenApp)
                 {
-                    HealthBar(health, maxHealth, ConsoleColor.Red);
+                    CreateHealthBar(health, maxHealth, ConsoleColor.Red);
 
                     Console.SetCursorPosition(0, 5);
 
@@ -38,7 +38,7 @@
             }
         }
 
-        static void HealthBar(int value, int maxValue, ConsoleColor color, char symbol = '#')
+        static void CreateHealthBar(int value, int maxValue, ConsoleColor color, char symbol = '#')
         {
             ConsoleColor defaultColor = Console.BackgroundColor;
 
