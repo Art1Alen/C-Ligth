@@ -24,7 +24,7 @@
             int directionY = 0;
 
             Map(map);
-            DrawUser(positionUserY, positionUserX);
+            DrawingUser(positionUserY, positionUserX);
 
             while (isPlaing)
             {
@@ -56,7 +56,7 @@
             }
         }
 
-        static void DrawUser(int positionY, int positionX)
+        static void DrawingUser(int positionY, int positionX)
         {
             Console.SetCursorPosition(positionY, positionX);
             Console.Write('@');
@@ -70,7 +70,7 @@
             positionX += directionX;
             positionY += directionY;
 
-            DrawUser(positionY, positionX);
+            DrawingUser(positionY, positionX);
         }
 
         static void ChangeDirection(ConsoleKeyInfo key, ref int directionX, ref int directionY)
