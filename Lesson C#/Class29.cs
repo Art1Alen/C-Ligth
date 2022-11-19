@@ -2,6 +2,11 @@
 {
     internal class Class29
     {
+        const ConsoleKey MoveUpCommand = ConsoleKey.W;
+        const ConsoleKey MoveDownCommand = ConsoleKey.S;
+        const ConsoleKey MoveLeftCommand = ConsoleKey.A;
+        const ConsoleKey MoveRightCommand = ConsoleKey.D;
+        const ConsoleKey ExitCommand = ConsoleKey.Escape;
         public static void Main(string[] args)
         {
             Console.CursorVisible = false;
@@ -23,8 +28,8 @@
             int directionX = 0;
             int directionY = 0;
 
-            Map(map);
-            DrawingUser(positionUserY, positionUserX);
+            DrawMap(map);
+            DrawUser(positionUserY, positionUserX);
 
             while (isPlaing)
             {
@@ -37,14 +42,14 @@
                     MoveUser(ref positionUserX, ref positionUserY, directionX, directionY);
                 }
 
-                if (key.Key == ConsoleKey.Escape)
+                if (key.Key == ExitCommand)
                 {
                     isPlaing = false;
                 }
             }
         }
 
-        static void Map(char[,] map)
+        static void DrawMap(char[,] map)
         {
             for (int i = 0; i < map.GetLength(0); i++)
             {
@@ -56,10 +61,12 @@
             }
         }
 
-        static void DrawingUser(int positionY, int positionX)
+        static void DrawUser(int positionY, int positionX)
         {
+            char player = '@';
+
             Console.SetCursorPosition(positionY, positionX);
-            Console.Write('@');
+            Console.Write(player);
         }
 
         static void MoveUser(ref int positionX, ref int positionY, int directionX, int directionY)
@@ -70,26 +77,26 @@
             positionX += directionX;
             positionY += directionY;
 
-            DrawingUser(positionY, positionX);
+            DrawUser(positionY, positionX);
         }
 
         static void ChangeDirection(ConsoleKeyInfo key, ref int directionX, ref int directionY)
         {
             switch (key.Key)
             {
-                case ConsoleKey.UpArrow:
+                case MoveUpCommand:
                     directionX = -1;
                     directionY = 0;
                     break;
-                case ConsoleKey.DownArrow:
+                case MoveDownCommand:
                     directionX = 1;
                     directionY = 0;
                     break;
-                case ConsoleKey.LeftArrow:
+                case MoveLeftCommand:
                     directionX = 0;
                     directionY = -1;
                     break;
-                case ConsoleKey.RightArrow:
+                case MoveRightCommand:
                     directionX = 0;
                     directionY = 1;
                     break;
