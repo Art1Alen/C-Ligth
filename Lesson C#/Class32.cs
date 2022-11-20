@@ -1,49 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CSLight
+﻿namespace CSLight
 {
     internal class Class32
     {
-        static void Main()
-        {          
-                StoreQueue();                     
+        static void Main(string[] args)
+        {
+            Queue<int> clients = new Queue<int>();
+
+            clients.Enqueue(10);
+            clients.Enqueue(50);
+            clients.Enqueue(100);
+            clients.Enqueue(150);
+
+            int cashAmoun = 0;
+
+            Console.WriteLine("В очереди находятся следующие клиенты:");
+
+            ShowQueue(clients);
+
+            while (clients.Count > 0)
+            {
+                ServeClient(clients, ref cashAmoun);
+                ShowQueue(clients);
+            }
         }
 
-        static void StoreQueue()
+        static void ShowQueue(Queue<int> clients)
         {
-            Random random = new Random();
-
-            Queue<int> buyers = new Queue<int>();
-
-            int maxNumber = 100;
-            int minNumber = 25;
-            int cashAmount = 0;
-
-            bool isExit = false;
-
-            buyers.Enqueue(random.Next(minNumber, maxNumber));
-            buyers.Enqueue(random.Next(minNumber, maxNumber));
-            buyers.Enqueue(random.Next(minNumber, maxNumber));
-            buyers.Enqueue(random.Next(minNumber, maxNumber));
-
-            do
+            foreach (var person in clients)
             {
-                foreach (var buyer in buyers)
-                {
-                    Console.WriteLine(buyer);
-                }
+                Console.WriteLine(person);
+            }
 
-                Console.WriteLine($"на Кассе денег {cashAmount += buyers.Peek()}");
-                Console.WriteLine($"На кассе {buyers.Dequeue()}");
+            Console.WriteLine("Для продолжения нажмите Enter");
+            Console.ReadKey();
+        }
 
-                Console.ReadKey();
-                Console.Clear();
-
-            }while (isExit);                                   
+        static void ServeClient(Queue<int> clients, ref int cashAmoun)
+        {
+            Console.Clear();
+            cashAmoun += clients.Dequeue();
+            Console.WriteLine("Клиент обслужен!");
+            Console.WriteLine($"Баланс Кассы: {cashAmoun}");
         }
     }
 }
