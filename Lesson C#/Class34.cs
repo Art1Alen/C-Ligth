@@ -35,7 +35,7 @@ namespace CSLight
                         ShowDossiers(dossier);
                         break;
                     case CommandDeleteDossier:
-                        FunctionDeleteDossier(dossier, userInput);
+                        DeleteDossier(dossier, userInput);
                         break;
                     case CommandExit:
                         Console.WriteLine("Для выхода нажмите Enter");
@@ -46,15 +46,23 @@ namespace CSLight
             }
         }
 
-        static void AddDossier(Dictionary<string, string> dossier)
+        static void AddDossier(Dictionary<string, string> dossier, bool isAddDossier = false)
         {
             Console.WriteLine("Введите ФИО");
             string name = Console.ReadLine();
 
-            Console.WriteLine("Введите дольжность");
-            string jobTitle = Console.ReadLine();
+            if (dossier.ContainsKey(name) == isAddDossier)
+            {
+                Console.WriteLine("Введите дольжность");
+                string jobTitle = Console.ReadLine();
 
-            dossier.Add(name, jobTitle);
+                dossier.Add(name, jobTitle);
+            }
+            else
+            {
+                Console.WriteLine("Что-то пошло не так либо данные уже сушествуют Повторим Операции?");
+            }
+
         }
 
         static void ShowDossiers(Dictionary<string, string> dossier)
@@ -67,14 +75,21 @@ namespace CSLight
             Console.ReadKey();
         }
 
-        static void FunctionDeleteDossier(Dictionary<string, string> dossier, string name)
+        static void DeleteDossier(Dictionary<string, string> dossier, string name)
         {
             Console.WriteLine("Введите данные ФИО чтобы удалить");
             name = Console.ReadLine();
 
-            dossier.Remove(name);
+            if (dossier.ContainsKey(name))
+            {
+                dossier.Remove(name);
+            }
+            else
+            {
+                Console.WriteLine("Что-тоо пошло не так Повторим операцию?");
+            }
 
-            Console.WriteLine(" Данные Удалены");
+            Console.WriteLine("Данные Удалены");
             Console.ReadKey();
         }
     }
