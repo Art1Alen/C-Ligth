@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CSLight
+﻿namespace CSLight
 {
     internal class Class34
     {
-        const string CommandAddDossier = "1";
-        const string CommandShowDossier = "2";
-        const string CommandDeleteDossier = "3";
-        const string CommandExit = "4";
         static void Main()
         {
+            const string CommandAddDossier = "1";
+            const string CommandShowDossier = "2";
+            const string CommandDeleteDossier = "3";
+            const string CommandExit = "4";
+
             Dictionary<string, string> dossier = new Dictionary<string, string>();
 
             bool isWork = true;
@@ -39,7 +34,6 @@ namespace CSLight
                         break;
                     case CommandExit:
                         Console.WriteLine("Для выхода нажмите Enter");
-
                         isWork = false;
                         break;
                 }
@@ -62,7 +56,6 @@ namespace CSLight
             {
                 Console.WriteLine("Что-то пошло не так либо данные уже сушествуют Повторим Операции?");
             }
-
         }
 
         static void ShowDossiers(Dictionary<string, string> dossier)
@@ -71,7 +64,6 @@ namespace CSLight
             {
                 Console.WriteLine($"ФИО - {item.Key}:  Должность - {item.Value}");
             }
-
             Console.ReadKey();
         }
 
@@ -88,7 +80,6 @@ namespace CSLight
             {
                 Console.WriteLine("Что-тоо пошло не так Повторим операцию?");
             }
-
             Console.WriteLine("Данные Удалены");
             Console.ReadKey();
         }
