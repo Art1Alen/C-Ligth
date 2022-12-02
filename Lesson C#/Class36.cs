@@ -5,7 +5,7 @@
         static void Main()
         {
             Player player = new Player(100, 25, 45);
-            player.PlayerStatistics();
+            player.ShowInfo();
         }
     }
 
@@ -22,7 +22,7 @@
             _damage = damage;
         }
 
-        public void PlayerStatistics()
+        public void ShowInfo()
         {
             Console.WriteLine($"Здоровя {_health}\nБроня {_armor}\nУрон {_damage}");
         }
