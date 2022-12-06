@@ -32,21 +32,27 @@
                     case CommandAddPlayer:
                         dataBase.CreatePlayer();
                         break;
+
                     case CommandBanPlayer:
                         dataBase.BanPlayer();
                         break;
+
                     case CommandUnbanPlayer:
                         dataBase.UnBanPlayer();
                         break;
+
                     case CommandDeletePlayer:
                         dataBase.RemovePlayer();
                         break;
+
                     case CommandShowPlayers:
                         dataBase.ShowPlayers();
                         break;
+
                     case CommandExit:
                         isWorking = false;
                         break;
+
                     default:
                         Console.WriteLine("Неправильно выбран пункт меню! ");
                         break;
@@ -110,7 +116,7 @@
             {
                 if (players[i].Id == playerId)
                 {
-                    players[i].IsBanTrue();
+                    players[i].UnBan();
                 }
             }
         }
@@ -124,7 +130,7 @@
             {
                 if (players[i].Id == playerId)
                 {
-                    players[i].IsBanFalse();
+                    players[i].Ban();
                 }
             }
         }
@@ -144,17 +150,14 @@
             IsBanned = isBanned;
         }
 
-        public bool IsBanFalse()
+        public void Ban()
         {
             IsBanned = false;
-            return IsBanned;
         }
-        public bool IsBanTrue()
+        public void UnBan()
         {
             IsBanned = true;
-            return IsBanned;
         }
-
 
         public void ShowInfo()
         {
@@ -162,4 +165,3 @@
         }
     }
 }
-
