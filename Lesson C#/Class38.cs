@@ -11,8 +11,8 @@
             const string CommandShowPlayers = "5";
             const string CommandExit = "exit";
 
-            DataBase dataBase = new DataBase();
-          
+            Database dataBase = new Database();
+
             bool isWorking = true;
 
             while (isWorking)
@@ -51,16 +51,17 @@
                         Console.WriteLine("Неправильно выбран пункт меню! ");
                         break;
                 }
+
                 Console.Clear();
             }
+
             Console.ReadKey();
         }
     }
 
-    class DataBase
+    class Database
     {
-        public List<Player> players = new List<Player>();
-
+        private List<Player> players = new List<Player>();
         public void CreatePlayer()
         {
             int newId = players.Count() + 1;
@@ -72,8 +73,8 @@
             int newLevel = int.Parse(Console.ReadLine());
             Console.WriteLine("Статус VAC бан игрока  - (true)  или нет - (false)");
 
-            bool newIsBanned = Convert.ToBoolean(Console.ReadLine());
-            players.Add(new Player(newId, newName, newLevel, newIsBanned));
+            bool IsBanned = Convert.ToBoolean(Console.ReadLine());
+            players.Add(new Player(newId, newName, newLevel, IsBanned));
         }
 
         public void RemovePlayer()
@@ -96,19 +97,20 @@
             {
                 player.ShowInfo();
             }
+
             Console.ReadKey();
         }
 
         public void BanPlayer()
         {
             Console.WriteLine("Требуется id номер Игрока бля VAC бана");
-            int selectedId = int.Parse(Console.ReadLine());
+            int playerId = int.Parse(Console.ReadLine());
 
             for (int i = 0; i < players.Count; i++)
             {
-                if (players[i].Id == selectedId)
+                if (players[i].Id == playerId)
                 {
-                    players[i].IsBanned = true;
+                    players[i].IsBanTrue();
                 }
             }
         }
@@ -116,13 +118,13 @@
         public void UnBanPlayer()
         {
             Console.WriteLine("Требуется id номер Игрока бля разбана VAC");
-            int selectedId = int.Parse(Console.ReadLine());
+            int playerId = int.Parse(Console.ReadLine());
 
             for (int i = 0; i < players.Count; i++)
             {
-                if (players[i].Id == selectedId)
+                if (players[i].Id == playerId)
                 {
-                    players[i].IsBanned = false;
+                    players[i].IsBanFalse();
                 }
             }
         }
@@ -133,7 +135,7 @@
         public int Id { get; private set; }
         public string Name { get; private set; }
         public int Level { get; private set; }
-        public bool IsBanned { get; set; }
+        private bool IsBanned { get; set; }
         public Player(int id, string name, int level, bool isBanned)
         {
             Id = id;
@@ -141,6 +143,18 @@
             Level = level;
             IsBanned = isBanned;
         }
+
+        public bool IsBanFalse()
+        {
+            IsBanned = false;
+            return IsBanned;
+        }
+        public bool IsBanTrue()
+        {
+            IsBanned = true;
+            return IsBanned;
+        }
+
 
         public void ShowInfo()
         {
