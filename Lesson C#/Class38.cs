@@ -38,7 +38,7 @@
                         break;
 
                     case CommandUnbanPlayer:
-                        dataBase.UnBanPlayer();
+                        dataBase.UnbanPlayer();
                         break;
 
                     case CommandDeletePlayer:
@@ -68,6 +68,7 @@
     class Database
     {
         private List<Player> _players = new List<Player>();
+
         public void CreatePlayer()
         {
             int newId = _players.Count() + 1;
@@ -78,9 +79,9 @@
             Console.WriteLine("Введите Level");
             int newLevel = int.Parse(Console.ReadLine());
 
-            bool IsBanned = false;
+            bool isBanned = false;
 
-            _players.Add(new Player(newId, newName, newLevel, IsBanned));
+            _players.Add(new Player(newId, newName, newLevel, isBanned));
         }
 
         public void RemovePlayer()
@@ -109,30 +110,44 @@
 
         public void BanPlayer()
         {
-            Console.WriteLine("Требуется id номер Игрока бля VAC бана");
-            int playerId = int.Parse(Console.ReadLine());
-
-            for (int i = 0; i < _players.Count; i++)
+            if (TryGetPlayer(out Player player))
             {
-                if (_players[i].Id == playerId)
-                {
-                    _players[i].UnBan();
-                }
+                player.Ban();
+                Console.WriteLine("Игрок Заблокирован");
             }
         }
 
-        public void UnBanPlayer()
+        public void UnbanPlayer()
         {
-            Console.WriteLine("Требуется id номер Игрока бля разбана VAC");
-            int playerId = int.Parse(Console.ReadLine());
-
-            for (int i = 0; i < _players.Count; i++)
+            if (TryGetPlayer(out Player player))
             {
-                if (_players[i].Id == playerId)
+                player.Unban();
+                Console.WriteLine("Игрок Разблокирован");
+            }
+        }
+
+        private bool TryGetPlayer(out Player player)
+        {
+            player = null;
+            Console.WriteLine("Введите id номер Игрока");
+
+            if (int.TryParse(Console.ReadLine(), out int number))
+            {
+                for (int i = 0; i < _players.Count; i++)
                 {
-                    _players[i].Ban();
+                    if (_players[i].Id == number - 1)
+                    {
+                        player = _players[i];
+                        return true;
+                    }
                 }
             }
+            else
+            {
+                Console.WriteLine("Ошибка ввода данных");
+            }
+
+            return false;
         }
     }
 
@@ -141,7 +156,9 @@
         public int Id { get; private set; }
         public string Name { get; private set; }
         public int Level { get; private set; }
-        private bool _isBanned { get; set; }
+
+        private bool _isBanned;
+
         public Player(int id, string name, int level, bool isBanned)
         {
             Id = id;
@@ -155,7 +172,7 @@
             _isBanned = false;
         }
 
-        public void UnBan()
+        public void Unban()
         {
             _isBanned = true;
         }
