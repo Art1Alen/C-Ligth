@@ -11,7 +11,7 @@
             const string CommandShowPlayers = "5";
             const string CommandExit = "exit";
 
-            Database dataBase = new Database();
+            Database database = new Database();
 
             bool isWorking = true;
 
@@ -30,23 +30,23 @@
                 switch (inputUser)
                 {
                     case CommandAddPlayer:
-                        dataBase.CreatePlayer();
+                        database.CreatePlayer();
                         break;
 
                     case CommandBanPlayer:
-                        dataBase.BanPlayer();
+                        database.BanPlayer();
                         break;
 
                     case CommandUnbanPlayer:
-                        dataBase.UnbanPlayer();
+                        database.UnbanPlayer();
                         break;
 
                     case CommandDeletePlayer:
-                        dataBase.RemovePlayer();
+                        database.RemovePlayer();
                         break;
 
                     case CommandShowPlayers:
-                        dataBase.ShowPlayers();
+                        database.ShowPlayers();
                         break;
 
                     case CommandExit:
@@ -71,7 +71,7 @@
 
         public void CreatePlayer()
         {
-            int newId = _players.Count() + 1;
+            int newId = _players.Count();
 
             Console.WriteLine("Введите Name");
             string newName = Console.ReadLine();
@@ -87,14 +87,10 @@
         public void RemovePlayer()
         {
             Console.WriteLine("Для Удаление Требуется Ввести id номер игрока");
-            int selectedId = int.Parse(Console.ReadLine());
 
-            for (int i = 0; i < _players.Count; i++)
+            if (TryGetPlayer(out Player player))
             {
-                if (_players[i].Id == selectedId)
-                {
-                    _players.RemoveAt(i);
-                }
+                _players.Remove(player);
             }
         }
 
@@ -153,11 +149,11 @@
 
     class Player
     {
+        private bool _isBanned;
+
         public int Id { get; private set; }
         public string Name { get; private set; }
         public int Level { get; private set; }
-
-        private bool _isBanned;
 
         public Player(int id, string name, int level, bool isBanned)
         {
