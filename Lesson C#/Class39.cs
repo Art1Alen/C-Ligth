@@ -4,10 +4,11 @@
     {
         static void Main(string[] args)
         {
-            int countVariety = 4; 
-            int countMeaning = 4; 
             const string TakeCard = "1";
             const string Finish = "2";
+
+            int countVariety = 4;
+            int countMeaning = 8;
 
             bool isPlay = true;
 
@@ -16,24 +17,17 @@
             Deck deck = new Deck(cards);
             Player player = new Player();
 
-            for (int i = 0; i < countVariety; i++)
             {
-                for (int j = 0; j < countMeaning; j++)
-                {
-                    cards.Add(new Card((Variety)i,(Meaning)j));
-                }
-            }
-
             while (isPlay)
             {
                 Console.Clear();
-                Console.WriteLine($"{TakeCard} - взять карту,\n{Finish} - закончить");
+                Console.WriteLine($"{TakeCard} - взять карту,\n{Finish} - Посмотреть Карты в Руках");
                 string userInput = Console.ReadLine();
 
                 switch (userInput)
                 {
                     case TakeCard:
-                        player.ReceiveCard(deck.GetCard());
+                        player.TakeCard(deck.GiveCard());
                         break;
 
                     case Finish:
@@ -51,21 +45,24 @@
 
     class Player
     {
-        private Deck _cards;
+        private List<Card> _cards;
 
         public Player()
         {
-            _cards = new Deck(new List<Card>());
+            _cards = new List<Card>();
         }
 
-        public void ReceiveCard(Card card)
+        public void TakeCard(Card card)
         {
-            _cards.TakeCard(card);
+            _cards.Add(card);
         }
 
         public void ShowScore()
         {
-            _cards.ShowInfo();
+            foreach (Card card in _cards)
+            {
+                card.ShowInfo();
+            }
         }
     }
 
@@ -74,25 +71,24 @@
         private Random _random = new Random();
         private List<Card> _cards;
 
-        int minNumber = 0;
-
         public Deck(List<Card> cards)
         {
-            _cards = cards;
+            _cards = new List<Card>();
+            CreateCards();
         }
 
-        public Card GetCard()
+        public Card GiveCard()
         {
-            if (_cards.Count > 0)
-            {
-                int cardNumber = _random.Next(minNumber, _cards.Count);
+            int index = _random.Next(_cards.Count);
 
-                Card card = _cards[cardNumber];
-                _cards.RemoveAt(cardNumber);
-                return card;
-            }
+            Card card = _cards[index];
+            _cards.Remove(card);
+
+            return card;
+
             Console.WriteLine("карты в колоде закончились");
             Console.ReadKey();
+
             return null;
         }
 
@@ -100,46 +96,47 @@
         {
             _cards.Add(card);
         }
+
         public void ShowInfo()
         {
             Console.WriteLine("У вас на руках:");
 
-            foreach (var card in _cards)
-                Console.WriteLine(" {0}  {1} ", card.Mapping, card.Suit);
+            foreach (Card card in _cards)
+            {
+                Console.WriteLine($" {card.Name} {card.Suit}");
+            }
+        }
+
+        private void CreateCards()
+        {
+            string[] suits = { "пик", "крест", "черв", "буби" };
+            string[] names = { "6", "7", "8", "9", "10", "валент", "дама", "король", "туз" };
+
+            for (int i = 0; i < names.Length; i++)
+            {
+                for (int j = 0; j < suits.Length; j++)
+                {
+                    _cards.Add(new Card(names[i], suits[j]));
+                }
+            }
         }
     }
 
     class Card
     {
-        public Variety Suit { get; private set; }
-        public Meaning Mapping { get; private set; }
+        public string Suit { get; private set; }
+        public string Name { get; private set; }
 
-        public Card(Variety suit, Meaning mapping)
+        public Card(string suit, string name)
         {
             Suit = suit;
-            Mapping = mapping;
+            Name = name;
         }
-    }
 
-    enum Variety
-    {
-        пики,
-        крести,
-        черви,
-        буби
-    }
-
-    enum Meaning
-    {
-        шест,
-        сем,
-        восем,
-        девят,
-        десят,
-        валет,
-        дама,
-        король,
-        туз
+        public void ShowInfo()
+        {
+            Console.WriteLine($"{Name} {Suit}");
+        }
     }
 }
 
