@@ -17,7 +17,6 @@
             Deck deck = new Deck(cards);
             Player player = new Player();
 
-            {
             while (isPlay)
             {
                 Console.Clear();
