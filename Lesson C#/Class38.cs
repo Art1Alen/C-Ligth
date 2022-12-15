@@ -9,7 +9,7 @@
             const string CommandUnbanPlayer = "3";
             const string CommandDeletePlayer = "4";
             const string CommandShowPlayers = "5";
-            const string CommandExit = "exit";
+            const string CommandExit = "6";
 
             Database database = new Database();
 
@@ -69,9 +69,11 @@
     {
         private List<Player> _players = new List<Player>();
 
+        private int _lastId;
+
         public void CreatePlayer()
         {
-            int newId = _players.Count();
+            int newId = ++_lastId;
 
             Console.WriteLine("Введите Name");
             string newName = Console.ReadLine();
@@ -131,7 +133,7 @@
             {
                 for (int i = 0; i < _players.Count; i++)
                 {
-                    if (_players[i].Id == number - 1)
+                    if (_players[i].Id == number)
                     {
                         player = _players[i];
                         return true;
