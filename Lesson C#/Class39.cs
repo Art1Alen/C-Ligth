@@ -7,14 +7,9 @@
             const string TakeCard = "1";
             const string Finish = "2";
 
-            int countVariety = 4;
-            int countMeaning = 8;
-
             bool isPlay = true;
 
-            List<Card> cards = new List<Card>();
-
-            Deck deck = new Deck(cards);
+            Deck deck = new Deck();
             Player player = new Player();
 
             while (isPlay)
@@ -30,7 +25,7 @@
                         break;
 
                     case Finish:
-                        player.ShowScore();
+                        player.ShowCards();
                         isPlay = false;
                         break;
 
@@ -56,7 +51,7 @@
             _cards.Add(card);
         }
 
-        public void ShowScore()
+        public void ShowCards()
         {
             foreach (Card card in _cards)
             {
@@ -70,7 +65,7 @@
         private Random _random = new Random();
         private List<Card> _cards;
 
-        public Deck(List<Card> cards)
+        public Deck()
         {
             _cards = new List<Card>();
             CreateCards();
@@ -78,31 +73,23 @@
 
         public Card GiveCard()
         {
-            int index = _random.Next(_cards.Count);
-
-            Card card = _cards[index];
-            _cards.Remove(card);
-
-            return card;
-
-            Console.WriteLine("карты в колоде закончились");
-            Console.ReadKey();
-
-            return null;
-        }
-
-        public void TakeCard(Card card)
-        {
-            _cards.Add(card);
-        }
-
-        public void ShowInfo()
-        {
-            Console.WriteLine("У вас на руках:");
-
-            foreach (Card card in _cards)
+            if (_cards.Count > 0)
             {
-                Console.WriteLine($" {card.Name} {card.Suit}");
+                int index = _random.Next(_cards.Count);
+
+                Card card = _cards[index];
+                _cards.Remove(card);
+
+                return card;
+            }
+            else
+            {
+                Console.WriteLine("карты в колоде закончились");
+                Console.ReadKey();
+
+                Card card = null;
+
+                return card;
             }
         }
 
@@ -134,7 +121,7 @@
 
         public void ShowInfo()
         {
-            Console.WriteLine($"{Name} {Suit}");
+            Console.WriteLine($"{Name} {Suit} ");
         }
     }
 }
