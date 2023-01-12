@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CSLight
+﻿namespace CSLight
 {
     internal class Class42
     {
@@ -13,16 +7,16 @@ namespace CSLight
             const string BuyItem = "1";
             const string ShowSellerDesk = "2";
             const string ShowCustomerRucksackAndMoney = "3";
-            const string MenuExit = "exit";
+            const string MenuExit = "4";
 
             Seller seller = new Seller();
-            Customer customer = new Customer(300);
+            Player player = new Player(300);
 
             bool isWorking = true;
 
             while (isWorking)
             {
-                if (customer.Money > 0)
+                if (player.Money > 0)
                 {
                     Console.WriteLine($"{BuyItem} - купить товар. " +
                     $"\n{ShowSellerDesk} - показать товары продавца" +
@@ -35,15 +29,15 @@ namespace CSLight
                     switch (input)
                     {
                         case BuyItem:
-                            customer.Buy(seller.GiveItem(customer.ChooseItem(), customer.Money, out Goods item), item);
+                            player.Buy(seller.GiveItem(player.ShowAllProduct(), player.Money, out Products item), item);
                             break;
 
                         case ShowSellerDesk:
-                            seller.ShowStackAndMoney();
+                            seller.OnCounter();
                             break;
 
                         case ShowCustomerRucksackAndMoney:
-                            customer.ShowRucksackAndMoney();
+                            player.OnPlayer();
                             break;
 
                         case MenuExit:
@@ -51,7 +45,7 @@ namespace CSLight
                             break;
 
                         default:
-                            Console.WriteLine("Неправильно выбран пункт меню! "); 
+                            Console.WriteLine("Неправильно выбран пункт меню! ");
                             Console.ReadKey();
                             break;
                     }
@@ -62,7 +56,7 @@ namespace CSLight
                 {
                     Console.WriteLine("У вас нет денег");
                     isWorking = false;
-                    customer.ShowRucksackAndMoney();
+                    player.OnPlayer();
                 }
             }
 
@@ -70,51 +64,48 @@ namespace CSLight
         }
     }
 
-    class Customer
+    class Player
     {
         public int Money { get; private set; }
-        private List<Goods> _rucksack = new List<Goods> { };
 
-        public Customer(int money)
+        private List<Products> _rucksack = new List<Products>();
+
+        public Player(int money)
         {
             Money = money;
         }
 
-        public int ToPay(Goods item)
+        public int ToPay(Products item)
         {
             Money -= item.Price;
             return Money;
         }
 
-        public string ChooseItem()
+        public string ShowAllProduct()
         {
             Console.WriteLine("Введите наименование товара, который вы решили купить");
             string input = Console.ReadLine();
-            return input;
+
+            return Console.ReadLine();
         }
 
-        public void Buy(bool isBuying, Goods item)
+        public void Buy(bool isBuying, Products item)
         {
             if (isBuying)
             {
                 _rucksack.Add(item);
                 ToPay(item);
             }
-            else
-            {
-                return;
-            }
-
         }
 
-        public void ShowRucksackAndMoney()
+        public void OnPlayer()
         {
             Console.WriteLine($"Ваше количество денег - {Money}");
             Console.WriteLine("В вашем рюкзаке:");
 
             foreach (var item in _rucksack)
             {
-                item.ShowItem();
+                item.ShowProduct();
             }
 
             Console.ReadKey();
@@ -123,17 +114,38 @@ namespace CSLight
 
     class Seller
     {
-        private List<Goods> _stack = new List<Goods> { new Goods("хлеб", 40), new Goods("чай", 70), new Goods("вода", 30), new Goods("мясо", 200), new Goods("яйца", 100) };
+        private List<Products> _stack = new List<Products>();
+
         private int _money = 0;
 
-        public bool GiveItem(string choosenItem, int money, out Goods item)
+        public Seller()
+        {
+            ListProduct();
+        }
+
+        public bool GiveItem(string choosenItem, int money, out Products item)
         {
             bool isGiveItem = false;
+
             isGiveItem = Sell(choosenItem, money, out item);
+
             return isGiveItem;
         }
 
-        public bool Sell(string choosenItem, int money, out Goods item)
+        public void OnCounter()
+        {
+            Console.WriteLine($"У продавца количество денег - {_money}");
+            Console.WriteLine("У продавца на прилавке:");
+
+            foreach (Products products in _stack)
+            {
+                products.ShowProduct();
+            }
+
+            Console.ReadKey();
+        }
+
+        public bool Sell(string choosenItem, int money, out Products item)
         {
             bool isSell = false;
             bool isCorrectChoice = TryFindItem(choosenItem);
@@ -143,7 +155,7 @@ namespace CSLight
             {
                 for (int i = 0; i < _stack.Count; i++)
                 {
-                    if (_stack[i].Item.ToLower() == choosenItem.ToLower())
+                    if (_stack[i].Product.ToLower() == choosenItem.ToLower())
                     {
                         if (money >= _stack[i].Price)
                         {
@@ -176,7 +188,7 @@ namespace CSLight
 
             for (int i = 0; i < _stack.Count; i++)
             {
-                if (_stack[i].Item.ToLower() == choosenItem.ToLower())
+                if (_stack[i].Product.ToLower() == choosenItem.ToLower())
                 {
                     isCorrectChoice = true;
                 }
@@ -185,50 +197,30 @@ namespace CSLight
             return isCorrectChoice;
         }
 
-        private bool CheckMoney(int money)
+        private void ListProduct()
         {
-            bool isPlayerHasMoney = false;
-
-            for (int i = 0; i < _stack.Count; i++)
-            {
-                if (_stack[i].Price <= money)
-                {
-                    isPlayerHasMoney = true;
-                    break;
-                }
-            }
-
-            return isPlayerHasMoney;
-        }
-
-        public void ShowStackAndMoney()
-        {
-            Console.WriteLine($"У продавца количество денег - {_money}");
-            Console.WriteLine("У продавца на прилавке:");
-
-            foreach (var item in _stack)
-            {
-                item.ShowItem();
-            }
-
-            Console.ReadKey();
+            _stack.Add(new Products("Сыр", 40));
+            _stack.Add(new Products("чай", 70));
+            _stack.Add(new Products("вода", 30));
+            _stack.Add(new Products("мясо", 200));
+            _stack.Add(new Products("яйца", 100));
         }
     }
 
-    class Goods
+    class Products
     {
-        public string Item { get; private set; }
+        public string Product { get; private set; }
         public int Price { get; private set; }
 
-        public Goods(string goods, int price)
+        public Products(string product, int price)
         {
-            Item = goods;
+            Product = product;
             Price = price;
         }
 
-        public void ShowItem()
+        public void ShowProduct()
         {
-            Console.WriteLine($"Предмет - {Item}, стоимость - {Price} рублей");
+            Console.WriteLine($"Предмет - {Product}, стоимость - {Price} рублей");
         }
     }
 }
