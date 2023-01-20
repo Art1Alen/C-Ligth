@@ -4,73 +4,115 @@
     {
         public static void Main()
         {
-            const string BuyItem = "1";
-            const string ShowSellerDesk = "2";
-            const string ShowCustomerRucksackAndMoney = "3";
-            const string MenuExit = "4";
+            Market market = new Market();
+            market.Work();
+        }
 
-            Seller seller = new Seller();
-            Player player = new Player(300);
+        class Market
+        {
+            private Seller _seller;
+            private Player _player;
 
-            bool isWorking = true;
-
-            while (isWorking)
+            public Market()
             {
-                if (player.Money > 0)
-                {
-                    Console.WriteLine($"{BuyItem} - купить товар. " +
-                    $"\n{ShowSellerDesk} - показать товары продавца" +
-                    $"\n{ShowCustomerRucksackAndMoney} - показать ваш рюкзак и деньги," +
-                    $"\n{MenuExit} - выход.");
-                    Console.WriteLine("Выберите пункт меню ");
-
-                    string input = Console.ReadLine();
-
-                    switch (input)
-                    {
-                        case BuyItem:
-                            player.Buy(seller.GiveItem(player.ShowAllProduct(), player.Money, out Products item), item);
-                            break;
-
-                        case ShowSellerDesk:
-                            seller.OnCounter();
-                            break;
-
-                        case ShowCustomerRucksackAndMoney:
-                            player.OnPlayer();
-                            break;
-
-                        case MenuExit:
-                            isWorking = false;
-                            break;
-
-                        default:
-                            Console.WriteLine("Неправильно выбран пункт меню! ");
-                            Console.ReadKey();
-                            break;
-                    }
-
-                    Console.Clear();
-                }
-                else
-                {
-                    Console.WriteLine("У вас нет денег");
-                    isWorking = false;
-                    player.OnPlayer();
-                }
+                _seller = new Seller(0, GetListProducts());
+                _player = new Player(300, new List<Products>());
             }
 
-            Console.ReadKey();
+            public void Work()
+            {
+                const string BuyItem = "1";
+                const string ShowSellerDesk = "2";
+                const string ShowCustomerRucksackAndMoney = "3";
+                const string MenuExit = "4";
+
+                bool isWorking = true;
+
+                while (isWorking)
+                {
+                    if (_player.Money > 0)
+                    {
+                        Console.WriteLine($"{BuyItem} - купить товар. " +
+                        $"\n{ShowSellerDesk} - показать товары продавца" +
+                        $"\n{ShowCustomerRucksackAndMoney} - показать ваш рюкзак и деньги," +
+                        $"\n{MenuExit} - выход.");
+                        Console.WriteLine("Выберите пункт меню ");
+
+                        string input = Console.ReadLine();
+
+                        switch (input)
+                        {
+                            case BuyItem:
+                                Trade();
+                                break;
+
+                            case ShowSellerDesk:
+                                _seller.OnCounter();
+                                break;
+
+                            case ShowCustomerRucksackAndMoney:
+                                _player.OnPlayer();
+                                break;
+
+                            case MenuExit:
+                                isWorking = false;
+                                break;
+
+                            default:
+                                Console.WriteLine("Неправильно выбран пункт меню! ");
+                                Console.ReadKey();
+                                break;
+                        }
+
+                        Console.Clear();
+                    }
+                    else
+                    {
+                        Console.WriteLine("У вас нет денег");
+                        isWorking = false;
+                        _player.OnPlayer();
+                    }
+                }
+
+                Console.ReadKey();
+            }
+
+            private void Trade()
+            {
+                _player.Buy(_seller.GiveItem(_player.ShowAllProduct(), _player.Money, out Products item), item);
+            }
+
+            private List<Products> GetListProducts()
+            {
+                List<Products> products = new List<Products>();
+
+                products.Add(new Products("Сыр", 40));
+                products.Add(new Products("чай", 70));
+                products.Add(new Products("вода", 30));
+                products.Add(new Products("мясо", 200));
+                products.Add(new Products("яйца", 100));
+
+                return products;
+            }
         }
     }
 
-    class Player
+    class People
     {
-        public int Money { get; private set; }
+        public int Money { get; set; }
 
-        private List<Products> _rucksack = new List<Products>();
+        public List<Products> _products = new List<Products>();
 
-        public Player(int money)
+        public People(int money, List<Products> products)
+        {
+            Money = money;
+            _products = products;
+        }
+    }
+
+    class Player : People
+    {
+        public Player(int money, List<Products> products) : base(money, products)
         {
             Money = money;
         }
@@ -93,7 +135,7 @@
         {
             if (isBuying)
             {
-                _rucksack.Add(item);
+                _products.Add(item);
                 ToPay(item);
             }
         }
@@ -103,7 +145,7 @@
             Console.WriteLine($"Ваше количество денег - {Money}");
             Console.WriteLine("В вашем рюкзаке:");
 
-            foreach (var item in _rucksack)
+            foreach (var item in _products)
             {
                 item.ShowProduct();
             }
@@ -112,15 +154,12 @@
         }
     }
 
-    class Seller
+    class Seller : People
     {
-        private List<Products> _stack = new List<Products>();
-
-        private int _money = 0;
-
-        public Seller()
+        public Seller(int money, List<Products> products) : base(money, products)
         {
-            ListProduct();
+            Money = money;
+            _products = products;
         }
 
         public bool GiveItem(string choosenItem, int money, out Products item)
@@ -134,10 +173,10 @@
 
         public void OnCounter()
         {
-            Console.WriteLine($"У продавца количество денег - {_money}");
+            Console.WriteLine($"У продавца количество денег - {Money}");
             Console.WriteLine("У продавца на прилавке:");
 
-            foreach (Products products in _stack)
+            foreach (Products products in _products)
             {
                 products.ShowProduct();
             }
@@ -153,16 +192,16 @@
 
             if (isCorrectChoice)
             {
-                for (int i = 0; i < _stack.Count; i++)
+                for (int i = 0; i < _products.Count; i++)
                 {
-                    if (_stack[i].Product.ToLower() == choosenItem.ToLower())
+                    if (_products[i].Product.ToLower() == choosenItem.ToLower())
                     {
-                        if (money >= _stack[i].Price)
+                        if (money >= _products[i].Price)
                         {
-                            item = _stack[i];
-                            _money += _stack[i].Price;
-                            money -= _stack[i].Price;
-                            _stack.RemoveAt(i);
+                            item = _products[i];
+                            Money += _products[i].Price;
+                            money -= _products[i].Price;
+                            _products.RemoveAt(i);
                             return true;
                         }
                         else
@@ -186,24 +225,15 @@
         {
             bool isCorrectChoice = false;
 
-            for (int i = 0; i < _stack.Count; i++)
+            for (int i = 0; i < _products.Count; i++)
             {
-                if (_stack[i].Product.ToLower() == choosenItem.ToLower())
+                if (_products[i].Product.ToLower() == choosenItem.ToLower())
                 {
                     isCorrectChoice = true;
                 }
             }
 
             return isCorrectChoice;
-        }
-
-        private void ListProduct()
-        {
-            _stack.Add(new Products("Сыр", 40));
-            _stack.Add(new Products("чай", 70));
-            _stack.Add(new Products("вода", 30));
-            _stack.Add(new Products("мясо", 200));
-            _stack.Add(new Products("яйца", 100));
         }
     }
 
