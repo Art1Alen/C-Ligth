@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CSLight
+﻿namespace CSLight
 {
     internal class Class43
     {
         static void Main(string[] args)
         {
-            Logistician logistician = new Logistician();
+            Dispatcher dispatcher = new Dispatcher();
 
             bool isWork = true;
 
             while (isWork)
             {
-                logistician.OpenMenu();
+                dispatcher.Work();
             }
         }
     }
@@ -24,14 +18,11 @@ namespace CSLight
     class Train
     {
         private Wagons _wagons = new Wagons();
-        public void CreateTrain()
+
+        public void Create()
         {
             _wagons.CreateNumberOfWagons();
             _wagons.CreateCapacity();
-        }
-        public void ShowTrain()
-        {
-            Console.WriteLine($"Поезд создан, количество вагонов - {_wagons.NumberOfWagons}, вместимость вагонов - {_wagons.CapacityOfWagon}.");
         }
 
         public bool TryBuildTrain(int passengerCount)
@@ -48,6 +39,11 @@ namespace CSLight
                 return false;
             }
         }
+
+        public void ShowTrain()
+        {
+            Console.WriteLine($"Поезд создан, количество вагонов - {_wagons.NumberOfWagons}, вместимость вагонов - {_wagons.CapacityOfWagon}.");
+        }
     }
 
     class Wagons
@@ -58,13 +54,14 @@ namespace CSLight
         public void CreateCapacity()
         {
             int maxCapacityOfwagons = 100;
-            int minCapacityOfwagons = 5;         
-     
+            int minCapacityOfwagons = 5;
+
             Console.Write("Введите вместимость вагонов вагонов:");
             string userInput = Console.ReadLine();
-            bool isNumber = int.TryParse(userInput, out int capacityOfWagon);
 
-            if (isNumber)
+            bool isNumber;
+
+            if (isNumber = int.TryParse(userInput, out int capacityOfWagon))
             {
                 CapacityOfWagon = capacityOfWagon;
                 Console.WriteLine($"Вместимость вагонов создано - {CapacityOfWagon}.");
@@ -82,13 +79,14 @@ namespace CSLight
         public void CreateNumberOfWagons()
         {
             int maxCountWagon = 10;
-            int minCountWagon = 1;          
+            int minCountWagon = 1;
 
             Console.Write("Введите количество вагонов:");
             string userInput = Console.ReadLine();
-            bool isNumber = int.TryParse(userInput, out int numberOfWagons);
 
-            if (isNumber)
+            bool isNumber;
+
+            if (isNumber = int.TryParse(userInput, out int numberOfWagons))
             {
                 NumberOfWagons = numberOfWagons;
                 Console.WriteLine($"Количество вагонов создано - {NumberOfWagons}.");
@@ -104,22 +102,24 @@ namespace CSLight
         }
     }
 
-    class Logistician
+    class Dispatcher
     {
         private Queue<Direction> _directions = new Queue<Direction>();
         private Train _train = new Train();
-        public void OpenMenu()
+
+        public void Work()
         {
             bool isWork = true;
 
             while (isWork == true)
             {
                 FillInPath();
+
                 Console.Clear();
 
-                int passengerCount = SellBeletov();
+                int passengerCount = TicketSelling();
 
-                _train.CreateTrain();
+                _train.Create();
 
                 if (_train.TryBuildTrain(passengerCount))
                 {
@@ -142,7 +142,7 @@ namespace CSLight
         }
 
         private void FillInPath()
-        {      
+        {
             Console.Write("Введите начальный пункт отправления:");
             string beginningOfPath = Console.ReadLine();
 
@@ -152,7 +152,7 @@ namespace CSLight
             _directions.Enqueue(new Direction(beginningOfPath, endOfRoad));
         }
 
-        private int SellBeletov()
+        private int TicketSelling()
         {
             int maxNumber = 500;
             int minNumber = 0;
@@ -174,19 +174,19 @@ namespace CSLight
             {
                 Console.WriteLine($"Начальный пункт - {direction.BeginningOfPath}, Конечный пункт - {direction.EndOfRoad}.");
             }
-        }       
+        }
     }
 
     class Direction
     {
-        public string BeginningOfPath { get; private set; }
-        public string EndOfRoad { get; private set; }
-
         public Direction(string beginningOfPath, string endOfRoad)
         {
             BeginningOfPath = beginningOfPath;
             EndOfRoad = endOfRoad;
         }
+
+        public string BeginningOfPath { get; private set; }
+        public string EndOfRoad { get; private set; }
     }
 }
 
