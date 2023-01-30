@@ -16,7 +16,7 @@
             public Market()
             {
                 _seller = new Seller(0, GetListProducts());
-                _player = new Player(300, new List<Product>());
+                _player = new Player(100, new List<Product>());
             }
 
             public void Work()
@@ -47,11 +47,11 @@
                                 break;
 
                             case ShowSellerDesk:
-                                _seller.OnCounter();
+                                _seller.Cashbox();
                                 break;
 
                             case ShowCustomerRucksackAndMoney:
-                                _player.OnPlayer();
+                                _player.PlayerBackpack();
                                 break;
 
                             case MenuExit:
@@ -70,7 +70,7 @@
                     {
                         Console.WriteLine("У вас нет денег");
                         isWorking = false;
-                        _player.OnPlayer();
+                        _player.PlayerBackpack();
                     }
                 }
 
@@ -78,7 +78,7 @@
             }
 
             private void Trade()
-            {               
+            {
                 _seller.ShowProducts();
 
                 Console.WriteLine("Введите наименование товара, который вы решили купить");
@@ -90,12 +90,12 @@
                 if (product != null)
                 {
                     price = product.Price;
-                }
 
-                if (_player.Money >= price)
-                {
-                    _player.Buy(product);
-                    _seller.Sell(product);
+                    if (_player.Money >= price)
+                    {
+                        _player.Buy(product);
+                        _seller.Sell(product);
+                    }
                 }
                 else
                 {
@@ -112,8 +112,8 @@
                 products.Add(new Product("Сыр", 40));
                 products.Add(new Product("чай", 70));
                 products.Add(new Product("вода", 30));
-                products.Add(new Product("мясо", 200));
-                products.Add(new Product("яйца", 100));
+                products.Add(new Product("мясо", 90));
+                products.Add(new Product("яйца", 80));
 
                 return products;
             }
@@ -121,15 +121,15 @@
     }
     class Human
     {
-        public int Money { get; protected set; }
-
-        protected List<Product> _products = new List<Product>();
-
         public Human(int money, List<Product> products)
         {
             Money = money;
             _products = products;
         }
+
+        public int Money { get; protected set; }
+
+        protected List<Product> _products = new List<Product>();
 
         public void ShowProducts()
         {
@@ -151,7 +151,7 @@
         {
             Money -= item.Price;
             return Money;
-        }       
+        }
 
         public void Buy(Product item)
         {
@@ -159,15 +159,12 @@
             ToPay(item);
         }
 
-        public void OnPlayer()
+        public void PlayerBackpack()
         {
             Console.WriteLine($"Ваше количество денег - {Money}");
             Console.WriteLine("В вашем рюкзаке:");
 
-            foreach (var item in _products)
-            {
-                item.ShowInfo();
-            }
+            ShowProducts();
 
             Console.ReadKey();
         }
@@ -200,75 +197,20 @@
             return product;
         }
 
-        public void OnCounter()
+        public void Cashbox()
         {
             Console.WriteLine($"У продавца количество денег - {Money}");
             Console.WriteLine("У продавца на прилавке:");
 
-            foreach (Product products in _products)
-            {
-                products.ShowInfo();
-            }
+            ShowProducts();
 
             Console.ReadKey();
-        }
-
-        public bool Sell(string choosenItem, int money, out Product item)
-        {
-            bool isSell = false;
-            bool isCorrectChoice = TryFindItem(choosenItem);
-            item = null;
-
-            if (isCorrectChoice)
-            {
-                for (int i = 0; i < _products.Count; i++)
-                {
-                    if (_products[i].Name.ToLower() == choosenItem.ToLower())
-                    {
-                        if (money >= _products[i].Price)
-                        {
-                            item = _products[i];
-                            Money += _products[i].Price;
-                            money -= _products[i].Price;
-                            _products.RemoveAt(i);
-                            return true;
-                        }
-                        else
-                        {
-                            Console.WriteLine("У игрока не достаточно денег");
-                            Console.ReadKey();
-                        }
-                    }
-                }
-            }
-            else if (isCorrectChoice != true)
-            {
-                Console.WriteLine("У продавца в наличии нет данного товара!");
-                Console.ReadKey();
-            }
-
-            return false;
         }
 
         public void Sell(Product product)
         {
             Money += product.Price;
             _products.Remove(product);
-        }
-
-        private bool TryFindItem(string choosenItem)
-        {
-            bool isCorrectChoice = false;
-
-            for (int i = 0; i < _products.Count; i++)
-            {
-                if (_products[i].Name.ToLower() == choosenItem.ToLower())
-                {
-                    isCorrectChoice = true;
-                }
-            }
-
-            return isCorrectChoice;
         }
     }
 
