@@ -17,24 +17,24 @@
 
     class Train
     {
-        private Wagons _wagons = new Wagons();
+        private Wagon _wagon = new Wagon();
 
         public void Create()
         {
-            _wagons.CreateNumberOfWagons();
-            _wagons.CreateCapacity();
+            _wagon.CreateNumberOfWagons();
+            _wagon.CreateCapacity();
         }
 
-        public bool TryBuildTrain(int passengerCount)
+        public bool Applaud(int passengerCount)
         {
-            if (_wagons.CapacityOfWagon * _wagons.NumberOfWagons > passengerCount)
+            if (_wagon.CapacityOfWagon * _wagon.NumberOfWagons > passengerCount)
             {
                 Console.WriteLine("Поезд успешно создан и укомплексован");
                 return true;
             }
             else
             {
-                passengerCount -= _wagons.CapacityOfWagon * _wagons.NumberOfWagons;
+                passengerCount -= _wagon.CapacityOfWagon * _wagon.NumberOfWagons;
                 Console.WriteLine($"Ошибка!!! Поезду не хватило мест - {passengerCount} мест.");
                 return false;
             }
@@ -42,11 +42,11 @@
 
         public void ShowTrain()
         {
-            Console.WriteLine($"Поезд создан, количество вагонов - {_wagons.NumberOfWagons}, вместимость вагонов - {_wagons.CapacityOfWagon}.");
+            Console.WriteLine($"Поезд создан, количество вагонов - {_wagon.NumberOfWagons}, вместимость вагонов - {_wagon.CapacityOfWagon}.");
         }
     }
 
-    class Wagons
+    class Wagon
     {
         public int CapacityOfWagon { get; private set; }
         public int NumberOfWagons { get; private set; }
@@ -117,11 +117,11 @@
 
                 Console.Clear();
 
-                int passengerCount = TicketSelling();
+                int passengerCount = TicketSale();
 
                 _train.Create();
 
-                if (_train.TryBuildTrain(passengerCount))
+                if (_train.Applaud(passengerCount))
                 {
                     _train.ShowTrain();
 
@@ -152,7 +152,7 @@
             _directions.Enqueue(new Direction(beginningOfPath, endOfRoad));
         }
 
-        private int TicketSelling()
+        private int TicketSale()
         {
             int maxNumber = 500;
             int minNumber = 0;
