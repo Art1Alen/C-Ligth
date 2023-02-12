@@ -21,7 +21,7 @@
 
         public void Create()
         {
-            _wagon.CreateNumberOfWagons();
+            _wagon.WagonExpansion();
             _wagon.CreateCapacity();
         }
 
@@ -40,7 +40,7 @@
             }
         }
 
-        public void ShowTrain()
+        public void ShowInfo()
         {
             Console.WriteLine($"Поезд создан, количество вагонов - {_wagon.NumberOfWagons}, вместимость вагонов - {_wagon.CapacityOfWagon}.");
         }
@@ -76,7 +76,7 @@
             }
         }
 
-        public void CreateNumberOfWagons()
+        public void WagonExpansion()
         {
             int maxCountWagon = 10;
             int minCountWagon = 1;
@@ -123,7 +123,7 @@
 
                 if (_train.Applaud(passengerCount))
                 {
-                    _train.ShowTrain();
+                    _train.ShowInfo();
 
                     Console.WriteLine("Поезд отправился в путь");
                     Console.ReadKey();
