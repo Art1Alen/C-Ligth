@@ -19,22 +19,24 @@
     {
         private Wagon _wagon = new Wagon();
 
+        public int WagonsCount { get; private set; }
+
         public void Create()
         {
-            _wagon.WagonExpansion();
+            WagonExpansion();
             _wagon.CreateCapacity();
         }
 
         public bool Applaud(int passengerCount)
         {
-            if (_wagon.CapacityOfWagon * _wagon.NumberOfWagons > passengerCount)
+            if (_wagon.CapacityOfWagon * WagonsCount > passengerCount)
             {
                 Console.WriteLine("Поезд успешно создан и укомплексован");
                 return true;
             }
             else
             {
-                passengerCount -= _wagon.CapacityOfWagon * _wagon.NumberOfWagons;
+                passengerCount -= _wagon.CapacityOfWagon * WagonsCount;
                 Console.WriteLine($"Ошибка!!! Поезду не хватило мест - {passengerCount} мест.");
                 return false;
             }
@@ -42,14 +44,38 @@
 
         public void ShowInfo()
         {
-            Console.WriteLine($"Поезд создан, количество вагонов - {_wagon.NumberOfWagons}, вместимость вагонов - {_wagon.CapacityOfWagon}.");
+            Console.WriteLine($"Поезд создан, количество вагонов - {WagonsCount}, вместимость вагонов - {_wagon.CapacityOfWagon}.");
+        }
+
+        public void WagonExpansion()
+        {
+            int maxCountWagon = 10;
+            int minCountWagon = 1;
+
+            Console.Write("Введите количество вагонов:");
+            string userInput = Console.ReadLine();
+
+            bool isNumber;
+
+            if (isNumber = int.TryParse(userInput, out int numberOfWagons))
+            {
+                WagonsCount = numberOfWagons;
+                Console.WriteLine($"Количество вагонов создано - {WagonsCount}.");
+            }
+            else if (numberOfWagons < minCountWagon || numberOfWagons > maxCountWagon)
+            {
+                Console.WriteLine("Ошибка!!! Столько вагонов не может быть!");
+            }
+            else
+            {
+                Console.WriteLine("Не верный ввод!!!");
+            }
         }
     }
 
     class Wagon
     {
         public int CapacityOfWagon { get; private set; }
-        public int NumberOfWagons { get; private set; }
 
         public void CreateCapacity()
         {
@@ -68,32 +94,7 @@
             }
             else if (capacityOfWagon < minCapacityOfwagons || capacityOfWagon > maxCapacityOfwagons)
             {
-                Console.WriteLine("Ошибка!!! Столько человек не может вместить один вагон!");
-            }
-            else
-            {
-                Console.WriteLine("Не верный ввод!!!");
-            }
-        }
-
-        public void WagonExpansion()
-        {
-            int maxCountWagon = 10;
-            int minCountWagon = 1;
-
-            Console.Write("Введите количество вагонов:");
-            string userInput = Console.ReadLine();
-
-            bool isNumber;
-
-            if (isNumber = int.TryParse(userInput, out int numberOfWagons))
-            {
-                NumberOfWagons = numberOfWagons;
-                Console.WriteLine($"Количество вагонов создано - {NumberOfWagons}.");
-            }
-            else if (numberOfWagons < minCountWagon || numberOfWagons > maxCountWagon)
-            {
-                Console.WriteLine("Ошибка!!! Столько вагонов не может быть!");
+                Console.WriteLine("Ошибка!!! Столько человек не может вместить один вагон!");// DO TO
             }
             else
             {
@@ -117,11 +118,11 @@
 
                 Console.Clear();
 
-                int passengerCount = TicketSale();
+                int passengersCount = SaleTickets();
 
                 _train.Create();
 
-                if (_train.Applaud(passengerCount))
+                if (_train.Applaud(passengersCount))
                 {
                     _train.ShowInfo();
 
@@ -152,20 +153,20 @@
             _directions.Enqueue(new Direction(beginningOfPath, endOfRoad));
         }
 
-        private int TicketSale()
+        private int SaleTickets()
         {
             int maxNumber = 500;
-            int minNumber = 0;
+            int minNumber = 300;
 
             Random _random = new Random();
-            int numberOfBelets = _random.Next(minNumber, maxNumber);
+            int ticketsCount = _random.Next(minNumber, maxNumber);
 
             Console.WriteLine("Продажа белетов:");
-            Console.Write($"Белетов купило {numberOfBelets} человек, на рейс ");
+            Console.Write($"Белетов купило {ticketsCount} человек, на рейс ");
 
             DeclatePath();
 
-            return numberOfBelets;
+            return ticketsCount;
         }
 
         private void DeclatePath()
