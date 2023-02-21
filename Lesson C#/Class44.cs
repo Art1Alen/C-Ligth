@@ -20,8 +20,6 @@ namespace CSLight
                     arena.Battle();
                     arena.ShowBattleResult();
                 }
-
-                
             }
         }
     }
@@ -31,6 +29,15 @@ namespace CSLight
         private Fighter _firstFighter;
         private Fighter _secondFighter;
         private List<Fighter> _fighters = new List<Fighter>();
+
+        public Arena()
+        {
+            _fighters.Add(new Archer("Лучник", 100, 100, 40));
+            _fighters.Add(new Wizard("Маг", 100, 100, 15));
+            _fighters.Add(new Knight("Рыцарь", 100, 100, 50));
+            _fighters.Add(new Barbarian("Варвар", 90, 100, 30));
+            _fighters.Add(new Mystic("Мистик", 100, 100, 22));
+        }
 
         public bool TryCreativeBattle()
         {
@@ -50,15 +57,6 @@ namespace CSLight
                 Console.WriteLine("Бойцы выбраны");
                 return true;
             }
-        }
-
-        public Arena()
-        {
-            _fighters.Add(new Archer("Лучник", 100, 100, 40));
-            _fighters.Add(new Wizard("Маг", 100, 100, 15));
-            _fighters.Add(new Knight("Рыцарь", 100, 100, 50));
-            _fighters.Add(new Barbarian("Варвар", 90, 100, 30));
-            _fighters.Add(new Mystic("Мистик", 100, 100, 22));
         }
 
         public void ShowBattleResult()
