@@ -4,33 +4,33 @@
     {
         static void Main(string[] args)
         {
-            const string CreateQueue = "1";
-            const string Server = "2";
-            const string Exit = "3";
+            const string CommandCreateQueue = "1";
+            const string CommandServiceQueue = "2";
+            const string CommandLeaveStore = "3";
 
             Supermarket supermarket = new Supermarket();
             bool isWork = true;
 
             while (isWork)
             {
-                Console.WriteLine($"{CreateQueue} - создать очередь клиентов." +
-                    $"\n{Server} - обслужить очередь клиентов" +
-                    $"\n{Exit} - выйти");
+                Console.WriteLine($"{CommandCreateQueue} - создать очередь клиентов." +
+                    $"\n{CommandServiceQueue} - обслужить очередь клиентов" +
+                    $"\n{CommandLeaveStore} - Покинуть Магазин");
                 string userInput = Console.ReadLine();
 
                 switch (userInput)
                 {
-                    case CreateQueue:
+                    case CommandCreateQueue:
                         supermarket.CreateClientQueue();
                         Console.WriteLine("Очередь создана.");
                         break;
 
-                    case Server:
+                    case CommandServiceQueue:
                         supermarket.ServeClients();
                         Console.WriteLine("Очередь обслужена");
                         break;
 
-                    case Exit:
+                    case CommandLeaveStore:
                         isWork = false;
                         break;
 
@@ -54,12 +54,12 @@
 
         public Supermarket()
         {
-            _products.Add(new Product("Молоко", ShowInfo()));
-            _products.Add(new Product("Яблоко", ShowInfo()));
-            _products.Add(new Product("Сой", ShowInfo()));
-            _products.Add(new Product("Хлеб", ShowInfo()));
-            _products.Add(new Product("Яйцо", ShowInfo()));
-            _products.Add(new Product("Булочка", ShowInfo()));
+            _products.Add(new Product("Молоко", ProductPrice()));
+            _products.Add(new Product("Яблоко", ProductPrice()));
+            _products.Add(new Product("Сой", ProductPrice()));
+            _products.Add(new Product("Хлеб", ProductPrice()));
+            _products.Add(new Product("Яйцо", ProductPrice()));
+            _products.Add(new Product("Булочка", ProductPrice()));
         }
 
         public void CreateClientQueue()
@@ -103,15 +103,15 @@
             return new Client(countMoney, products);
         }
 
-        private int ShowInfo()
+        private int ProductPrice()
         {
-            int minimumCostProduct = 5;
-            int maximumCostProduct = 25;
+            int minCostProduct = 5;
+            int maxCostProduct = 25;
 
-            int costProduct = _random.Next(minimumCostProduct, maximumCostProduct);
+            int costProduct = _random.Next(minCostProduct, maxCostProduct);
 
             return costProduct;
-        }      
+        }
     }
 
     class Product
@@ -139,8 +139,6 @@
 
         public void PurchaseProducts()
         {
-            Random random = new Random();
-
             int purchaseAmount = GetEntireBasketCost();
 
             ShowProductsBasket();
@@ -161,7 +159,7 @@
 
         private void RemoveUnnecessaryProductsClient()
         {
-            while (GetEntireBasketCost() >= _money)
+            while (GetEntireBasketCost() > _money)
             {
                 RemoveProduct();
             }
