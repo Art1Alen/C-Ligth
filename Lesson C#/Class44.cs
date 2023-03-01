@@ -197,32 +197,38 @@ namespace CSLight
             Console.WriteLine($"{Name} Урон и броня увелечены");
             Damage += _damageBuff;
             Armor += _armorBuff;
+
         }
     }
 
     class Knight : Fighter
     {
         private int _healthBuff = 60;
+        private int _armorBuff = 60;
 
         public Knight(string name, int health, int armor, int damage) : base(name, health, damage, armor) { }
 
         protected override void UsePower()
         {
-            Console.WriteLine($"{Name} ипользовал молитву. Здоровье увелечено");
+            Console.WriteLine($"{Name} ипользовал молитву. Здоровье и броня увелечено");
             Health += _healthBuff;
+            Armor += _armorBuff;
         }
     }
 
     class Wizard : Fighter
     {
         private int _damageBuff = 20;
+        private int _heaithBuff = 5;
 
         public Wizard(string name, int health, int armor, int damage) : base(name, health, damage, armor) { }
 
         protected override void UsePower()
         {
-            Console.WriteLine($"{Name} ипользовал зелья силы. Урон увелечено");
+            Console.WriteLine($"{Name} ипользовал зелья силы. Урон увелечено здоровя увиличен");
             Damage += _damageBuff;
+            Health += _heaithBuff;
+
         }
     }
 
@@ -235,8 +241,7 @@ namespace CSLight
 
         protected override void UsePower()
         {
-            Console.WriteLine($"{Name} укрепил свои мышцы. Урон и броня увеличены");
-            Armor += _armorBuff;
+            Console.WriteLine($"{Name} укрепил свои мышцы. Урон увиличен");
             Damage += _damageBuff;
         }
     }
@@ -244,14 +249,17 @@ namespace CSLight
     class Mystic : Fighter
     {
         private int _armorBuff = 50;
+        private int _damageBuff = 6;
 
         public Mystic(string name, int health, int armor, int damage) : base(name, health, damage, armor) { }
 
         protected override void UsePower()
         {
-            Console.WriteLine($"{Name} использует мистическую силу. Броня увеличена");
+            Console.WriteLine($"{Name} использует мистическую силу. Броня увеличена Урон уменшился");
             Armor += _armorBuff;
+            Damage -= _damageBuff;
         }
+
     }
 }
 
