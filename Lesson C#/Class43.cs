@@ -1,194 +1,144 @@
 ﻿namespace CSLight
 {
-    internal class Class43
-    {
-        static void Main(string[] args)
-        {
-            Dispatcher dispatcher = new Dispatcher();
+	internal class Class43
+	{
+		private static void Main(string[] args)
+		{
+			Dispatcher dispatcher = new Dispatcher();
 
-            bool isWork = true;
+			Console.WriteLine("Введите количество поездов");
+			int.TryParse(Console.ReadLine(), out int quantityTrains);
 
-            while (isWork)
-            {
-                dispatcher.Work();
-            }
-        }
-    }
+			while (quantityTrains > 0)
+			{
+				Console.Clear();
 
-    class Train
-    {
-        private Wagon _wagon = new Wagon();
+				dispatcher.CreateTrain();
 
-        public int WagonsCount { get; private set; }
+				quantityTrains--;
+			}
+		}
+	}
 
-        public void Create()
-        {
-            WagonExpansion();
-            _wagon.CreateCapacity();
-        }
+	class Train
+	{
+		private int _universalNumber;
+		private string _direction;
+		private int _purchasedTickets;
+		private int _maxPeopleInCar;
+		private int _trainCars;
 
-        public bool Applaud(int passengerCount)
-        {
-            if (_wagon.CapacityOfWagon * WagonsCount > passengerCount)
-            {
-                Console.WriteLine("Поезд успешно создан и укомплексован");
-                return true;
-            }
-            else
-            {
-                passengerCount -= _wagon.CapacityOfWagon * WagonsCount;
-                Console.WriteLine($"Ошибка!!! Поезду не хватило мест - {passengerCount} мест.");
-                return false;
-            }
-        }
+		public Train(int universalNumber, string direction, int purchasedTickets, int maxPeopleInCar, int traincars)
+		{
+			_universalNumber = universalNumber;
+			_direction = direction;
+			_purchasedTickets = purchasedTickets;
+			_maxPeopleInCar = maxPeopleInCar;
+			_trainCars = traincars;
+		}
 
-        public void ShowInfo()
-        {
-            Console.WriteLine($"Поезд создан, количество вагонов - {WagonsCount}, вместимость вагонов - {_wagon.CapacityOfWagon}.");
-        }
+		public void Show()
+		{
+			Console.WriteLine($"Поезд под номером {_universalNumber}, направляется {_direction}, с {_purchasedTickets} пассажиров, максималный человек в одном вагоне поезда - {_maxPeopleInCar}, Имет {_trainCars} вагонов в поезде !");
+		}
+	}
 
-        public void WagonExpansion()
-        {
-            int maxCountWagon = 10;
-            int minCountWagon = 1;
+	class Dispatcher
+	{
+		private int _universalNumber = 0;
+		private int maxPeopleInTrainCar = 100;
 
-            Console.Write("Введите количество вагонов:");
-            string userInput = Console.ReadLine();
+		private List<string> _sheetDirections = new List<string>();
 
-            bool isNumber;
+		public Dispatcher()
+		{
+			CreateRosterDirection();
+		}
 
-            if (isNumber = int.TryParse(userInput, out int numberOfWagons))
-            {
-                WagonsCount = numberOfWagons;
-                Console.WriteLine($"Количество вагонов создано - {WagonsCount}.");
-            }
-            else if (numberOfWagons < minCountWagon || numberOfWagons > maxCountWagon)
-            {
-                Console.WriteLine("Ошибка!!! Столько вагонов не может быть!");
-            }
-            else
-            {
-                Console.WriteLine("Не верный ввод!!!");
-            }
-        }
-    }
+		public void CreateTrain()
+		{
+			_universalNumber++;
 
-    class Wagon
-    {
-        public int CapacityOfWagon { get; private set; }
+			string direction = _sheetDirections[ChoiceDirection()];
 
-        public void CreateCapacity()
-        {
-            int maxCapacityOfwagons = 100;
-            int minCapacityOfwagons = 5;
+			int purchasedTickets = SellTicket();
+			int traincars = CreateTrainSize(purchasedTickets);
 
-            Console.Write("Введите вместимость вагонов вагонов:");
-            string userInput = Console.ReadLine();
+			Train train = new Train(_universalNumber, direction, purchasedTickets, maxPeopleInTrainCar, traincars);
 
-            bool isNumber;
+			Console.SetCursorPosition(0, 6);
+			train.Show();
 
-            if (isNumber = int.TryParse(userInput, out int capacityOfWagon))
-            {
-                CapacityOfWagon = capacityOfWagon;
-                Console.WriteLine($"Вместимость вагонов создано - {CapacityOfWagon}.");
-            }
-            else if (capacityOfWagon < minCapacityOfwagons || capacityOfWagon > maxCapacityOfwagons)
-            {
-                Console.WriteLine("Ошибка!!! Столько человек не может вместить один вагон!");// DO TO
-            }
-            else
-            {
-                Console.WriteLine("Не верный ввод!!!");
-            }
-        }
-    }
+			Console.ReadKey();
+		}
 
-    class Dispatcher
-    {
-        private Queue<Direction> _directions = new Queue<Direction>();
-        private Train _train = new Train();
+		public int ChoiceDirection()
+		{
+			bool IsChoice = false;
 
-        public void Work()
-        {
-            bool isWork = true;
+			int choiceNumber = 0;
 
-            while (isWork == true)
-            {
-                FillInPath();
+			Console.WriteLine("Ни один поезд не готов");
 
-                Console.Clear();
+			while (IsChoice != true)
+			{
+				Console.WriteLine("Выбор направления:\n");
 
-                int passengersCount = SaleTickets();
+				foreach (var Direction in _sheetDirections)
+				{
+					Console.WriteLine(Direction);
+				}
 
-                _train.Create();
+				string userChoice = Console.ReadLine();
 
-                if (_train.Applaud(passengersCount))
-                {
-                    _train.ShowInfo();
+				int.TryParse(userChoice, out int result);
 
-                    Console.WriteLine("Поезд отправился в путь");
-                    Console.ReadKey();
-                    Console.Clear();
-                }
-                else
-                {
-                    _directions.Clear();
+				if (result > 0 && _sheetDirections.Count >= result)
+				{
+					IsChoice = true;
+					choiceNumber = result - 1;
+				}
+			}
 
-                    isWork = false;
+			Console.Clear();
+			Console.WriteLine($"Поезд под номером {_universalNumber} поедить {_sheetDirections[choiceNumber]}");
 
-                    Console.ReadKey();
-                    Console.Clear();
-                }
-            }
-        }
+			return choiceNumber;
+		}
 
-        private void FillInPath()
-        {
-            Console.Write("Введите начальный пункт отправления:");
-            string beginningOfPath = Console.ReadLine();
+		public int SellTicket()
+		{
+			Random random = new Random();
 
-            Console.Write("Введите конечный пункт прибытия:");
-            string endOfRoad = Console.ReadLine();
+			int minPeopleToStart = 100;
+			int maxPeopleToStart = 300;
 
-            _directions.Enqueue(new Direction(beginningOfPath, endOfRoad));
-        }
+			int SelledTicket = random.Next(minPeopleToStart, maxPeopleToStart);
 
-        private int SaleTickets()
-        {
-            int maxNumber = 500;
-            int minNumber = 300;
+			Console.WriteLine($"В Поезде под номером {_universalNumber} продона {SelledTicket} билетов");
 
-            Random _random = new Random();
-            int ticketsCount = _random.Next(minNumber, maxNumber);
+			return SelledTicket;
+		}
 
-            Console.WriteLine("Продажа белетов:");
-            Console.Write($"Белетов купило {ticketsCount} человек, на рейс ");
+		public int CreateTrainSize(int purchasedTickets)
+		{
+			int traincars;
 
-            DeclatePath();
+			double trainLength = Math.Ceiling(Convert.ToDouble(purchasedTickets) / Convert.ToDouble(maxPeopleInTrainCar));
+			traincars = Convert.ToInt32(trainLength);
 
-            return ticketsCount;
-        }
+			Console.WriteLine($"В Поезде под номером {_universalNumber} имеет  {traincars} вагона");
 
-        private void DeclatePath()
-        {
-            foreach (var direction in _directions)
-            {
-                Console.WriteLine($"Начальный пункт - {direction.BeginningOfPath}, Конечный пункт - {direction.EndOfRoad}.");
-            }
-        }
-    }
+			return traincars;
+		}
 
-    class Direction
-    {
-        public Direction(string beginningOfPath, string endOfRoad)
-        {
-            BeginningOfPath = beginningOfPath;
-            EndOfRoad = endOfRoad;
-        }
-
-        public string BeginningOfPath { get; private set; }
-        public string EndOfRoad { get; private set; }
-    }
+		private void CreateRosterDirection()
+		{
+			_sheetDirections.Add("Москва - Италия");
+			_sheetDirections.Add("Италия - Франция");
+			_sheetDirections.Add("Франция - Германия");
+		}
+	}
 }
 
 
