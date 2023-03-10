@@ -1,4 +1,7 @@
-﻿namespace CSharpLight
+﻿using System;
+using System.Collections.Generic;
+
+namespace CSharpLight
 {
     internal class Program
     {
@@ -13,7 +16,9 @@
 
             while (isWork)
             {
-                Console.WriteLine($"{CommandCreateQueue} - создать очередь клиентов." +
+                Console.WriteLine(
+                    $"В кассе {supermarket.Money} денег" +
+                    $"\n{CommandCreateQueue} - создать очередь клиентов." +
                     $"\n{CommandServiceQueue} - обслужить очередь клиентов" +
                     $"\n{CommandLeaveStore} - Покинуть Магазин");
                 string userInput = Console.ReadLine();
@@ -45,7 +50,7 @@
         }
     }
 
-    class Supermarket
+    public class Supermarket
     {
         private Queue<Client> _clients = new Queue<Client>();
         private List<Product> _products = new List<Product>();
@@ -61,6 +66,8 @@
             _products.Add(new Product("Яйцо", ProductPrice()));
             _products.Add(new Product("Булочка", ProductPrice()));
         }
+
+        public int Money { get; private set; }
 
         public void CreateClientQueue()
         {
@@ -83,6 +90,11 @@
             }
         }
 
+        public void GetMoney(int money)
+        {
+            Money += money;
+        }
+
         private Client GetClient()
         {
             List<Product> products = new List<Product>();
@@ -100,7 +112,7 @@
                 products.Add(_products[_random.Next(0, _products.Count - 1)]);
             }
 
-            return new Client(countMoney, products);
+            return new Client(countMoney, products, this);
         }
 
         private int ProductPrice()
@@ -112,9 +124,10 @@
 
             return costProduct;
         }
+
     }
 
-    class Product
+    public class Product
     {
         public Product(string name, int cost)
         {
@@ -126,15 +139,17 @@
         public int Cost { get; private set; }
     }
 
-    class Client
+    public class Client
     {
         private List<Product> _productsInBasket;
         private int _money;
+        private Supermarket _supermarket;
 
-        public Client(int money, List<Product> productsInBasket)
+        public Client(int money, List<Product> productsInBasket, Supermarket supermarket)
         {
             _money = money;
             _productsInBasket = productsInBasket;
+            _supermarket = supermarket;
         }
 
         public void PurchaseProducts()
@@ -144,11 +159,16 @@
             ShowProductsBasket();
             Console.WriteLine($"Сумма товаров {purchaseAmount}. У клиента {_money}");
 
-            if (_money >= purchaseAmount)
+            if (_productsInBasket.Count < 1)
+            {
+                Console.WriteLine("Всего доброго");
+            }
+            else if (_money >= purchaseAmount)
             {
                 Console.WriteLine($"Клиент оплатил товары на сумму {purchaseAmount} и покинул магазин");
+                _supermarket.GetMoney(purchaseAmount);
             }
-            else
+            else if (_productsInBasket.Count > 0)
             {
                 RemoveUnnecessaryProductsClient();
             }
@@ -163,6 +183,8 @@
             {
                 RemoveProduct();
             }
+
+            PurchaseProducts();
         }
 
         private void RemoveProduct()
@@ -196,6 +218,5 @@
                 Console.WriteLine($"{item.Name}, цена: {item.Cost}");
             }
         }
-
     }
 }
