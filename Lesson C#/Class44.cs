@@ -32,20 +32,20 @@ namespace CSLight
 
         public Arena()
         {
-            _fighters.Add(new Archer("Лучник", 100, 100, 40));
-            _fighters.Add(new Wizard("Маг", 100, 100, 15));
-            _fighters.Add(new Knight("Рыцарь", 100, 100, 50));
-            _fighters.Add(new Barbarian("Варвар", 90, 100, 30));
-            _fighters.Add(new Mystic("Мистик", 100, 100, 22));
+            _fighters.Add(new Archer("Лучник", 100, 100, 40, 8));
+            _fighters.Add(new Wizard("Маг", 100, 100, 15, 8));
+            _fighters.Add(new Knight("Рыцарь", 100, 100, 50, 8));
+            _fighters.Add(new Barbarian("Варвар", 90, 100, 30, 8));
+            _fighters.Add(new Mystic("Мистик", 100, 100, 22, 8));
         }
 
         public bool TryCreativeBattle()
         {
             Console.WriteLine("Боец 1");
-            ChooseFighter(out _firstFighter);
+            ChooseFighter(ref _firstFighter);
 
             Console.WriteLine("Боец 2");
-            ChooseFighter(out _secondFighter);
+            ChooseFighter(ref _secondFighter);
 
             if (_firstFighter == null || _secondFighter == null)
             {
@@ -80,17 +80,23 @@ namespace CSLight
             while (_firstFighter.Health > 0 && _secondFighter.Health > 0)
             {
                 _firstFighter.ShowStats();
+                _firstFighter.CoolDownSpecialAttack(_secondFighter.MinutesLeft);
+
                 _secondFighter.ShowStats();
-                _firstFighter.TakeDamege(_secondFighter.Damage);
-                _secondFighter.TakeDamege(_firstFighter.Damage);
+                _secondFighter.CoolDownSpecialAttack(_firstFighter.MinutesLeft);
+
+                _firstFighter.Attack(_secondFighter.Damage);
+                _secondFighter.Attack(_firstFighter.Damage);
+
                 _firstFighter.UseSpecialAttack();
                 _secondFighter.UseSpecialAttack();
+
                 Console.ReadKey();
                 Console.Clear();
             }
         }
 
-        private void ChooseFighter(out Fighter fighter)
+        private void ChooseFighter(ref Fighter fighter)
         {
             ShowFighters();
 
@@ -114,6 +120,8 @@ namespace CSLight
                 Console.WriteLine("Бойца с таким номером отсутствует.");
                 fighter = null;
             }
+
+            Console.Clear();
         }
 
         private void ShowFighters()
@@ -130,18 +138,26 @@ namespace CSLight
 
     class Fighter
     {
-        public Fighter(string name, int health, int damage, int armor)
+        public Fighter(string name, int health, int damage, int armor, int minutesLeft)
         {
             Name = name;
             Health = health;
             Damage = damage;
             Armor = armor;
+            MinutesLeft = minutesLeft;
         }
 
         public string Name { get; protected set; }
         public float Health { get; protected set; }
         public float Armor { get; protected set; }
         public float Damage { get; protected set; }
+        public int MinutesLeft { get; protected set; }
+
+        public void Attack(float damage)
+        {
+            Health -= damage - Armor;
+            TakeDamege(damage);
+        }
 
         public void TakeDamege(float damageFighter)
         {
@@ -162,21 +178,28 @@ namespace CSLight
             Console.WriteLine($"{Name} нанес {finalDamage} урона");
         }
 
+        public void CoolDownSpecialAttack(int minutesLeft)
+        {
+            int _coolDown = 8;
+
+            MinutesLeft--;
+
+            if (MinutesLeft <= 0)
+            {
+                MinutesLeft = _coolDown;
+            }
+        }
+
         public void ShowStats()
         {
-            Console.WriteLine($" {Name}. Здоровье: {Health}. Броня: {Armor} Урон {Damage}");
+            Console.WriteLine($" {Name}. Здоровье: {Health}. Броня: {Armor} Урон {Damage} Время до Супер атаки {MinutesLeft}");
         }
 
         public void UseSpecialAttack()
         {
-            Random random = new Random();
-            int maxNumbers = 80;
-            int minNumbers = 10;
+            int chanceAbility = 0;
 
-            int chanceUsingAbility = random.Next(minNumbers, maxNumbers);
-            int chanceAbility = 20;
-
-            if (chanceUsingAbility < chanceAbility)
+            if (MinutesLeft == chanceAbility)
             {
                 UsePower();
             }
@@ -190,14 +213,13 @@ namespace CSLight
         private int _damageBuff = 55;
         private int _armorBuff = 45;
 
-        public Archer(string name, int health, int armor, int damage) : base(name, health, damage, armor) { }
+        public Archer(string name, int health, int armor, int damage, int minutesLeft) : base(name, health, damage, armor, minutesLeft) { }
 
         protected override void UsePower()
         {
             Console.WriteLine($"{Name} Урон и броня увелечены");
             Damage += _damageBuff;
             Armor += _armorBuff;
-
         }
     }
 
@@ -206,7 +228,7 @@ namespace CSLight
         private int _healthBuff = 60;
         private int _armorBuff = 60;
 
-        public Knight(string name, int health, int armor, int damage) : base(name, health, damage, armor) { }
+        public Knight(string name, int health, int armor, int damage, int minutesLeft) : base(name, health, damage, armor, minutesLeft) { }
 
         protected override void UsePower()
         {
@@ -221,14 +243,13 @@ namespace CSLight
         private int _damageBuff = 20;
         private int _heaithBuff = 5;
 
-        public Wizard(string name, int health, int armor, int damage) : base(name, health, damage, armor) { }
+        public Wizard(string name, int health, int armor, int damage, int minutesLeft) : base(name, health, damage, armor, minutesLeft) { }
 
         protected override void UsePower()
         {
             Console.WriteLine($"{Name} ипользовал зелья силы. Урон увелечено здоровя увиличен");
             Damage += _damageBuff;
             Health += _heaithBuff;
-
         }
     }
 
@@ -237,11 +258,11 @@ namespace CSLight
         private int _damageBuff = 60;
         private int _armorBuff = 50;
 
-        public Barbarian(string name, int health, int armor, int damage) : base(name, health, damage, armor) { }
+        public Barbarian(string name, int health, int armor, int damage, int minutesLeft) : base(name, health, damage, armor, minutesLeft) { }
 
         protected override void UsePower()
         {
-            Console.WriteLine($"{Name} укрепил свои мышцы. Урон увиличен");
+            Console.WriteLine($"{Name} Использовал руну DoubleDamade. Урон увиличен");
             Damage += _damageBuff;
         }
     }
@@ -251,15 +272,14 @@ namespace CSLight
         private int _armorBuff = 50;
         private int _damageBuff = 6;
 
-        public Mystic(string name, int health, int armor, int damage) : base(name, health, damage, armor) { }
+        public Mystic(string name, int health, int armor, int damage, int minutesLeft) : base(name, health, damage, armor, minutesLeft) { }
 
         protected override void UsePower()
         {
-            Console.WriteLine($"{Name} использует мистическую силу. Броня увеличена Урон уменшился");
+            Console.WriteLine($"{Name} использует Bloodlast силу. Броня увеличена Урон уменшился");
             Armor += _armorBuff;
             Damage -= _damageBuff;
         }
-
     }
 }
 
