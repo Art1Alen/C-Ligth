@@ -80,13 +80,10 @@ namespace CSLight
             while (_firstFighter.Health > 0 && _secondFighter.Health > 0)
             {
                 _firstFighter.ShowStats();
-                _firstFighter.CoolDownSpecialAttack(_secondFighter.MinutesLeft);
-
                 _secondFighter.ShowStats();
-                _secondFighter.CoolDownSpecialAttack(_firstFighter.MinutesLeft);
 
-                _firstFighter.Attack(_secondFighter.Damage);
-                _secondFighter.Attack(_firstFighter.Damage);
+                _firstFighter.Attack(_secondFighter);
+                _secondFighter.Attack(_firstFighter);
 
                 _firstFighter.UseSpecialAttack();
                 _secondFighter.UseSpecialAttack();
@@ -153,24 +150,24 @@ namespace CSLight
         public float Damage { get; protected set; }
         public int MinutesLeft { get; protected set; }
 
-        public void Attack(float damage)
+        public void Attack(Fighter enemy)
         {
-            Health -= damage - Armor;
-            TakeDamege(damage);
+            CoolDownSpecialAttack(MinutesLeft);
+            TakeDamege(Damage);
         }
 
-        public void TakeDamege(float damageFighter)
+        public void TakeDamege(float damage)
         {
             float finalDamage = 0;
             int absorbedArmorFactor = 100;
 
             if (Armor == 0)
             {
-                Health -= damageFighter;
+                Health -= damage;
             }
             else
             {
-                finalDamage = damageFighter / absorbedArmorFactor * Armor;
+                finalDamage = damage / absorbedArmorFactor * Armor;
                 Armor -= finalDamage;
                 Health -= finalDamage;
             }
@@ -186,7 +183,7 @@ namespace CSLight
 
             if (MinutesLeft <= 0)
             {
-                MinutesLeft = _coolDown;
+                MinutesLeft = MinutesLeft;
             }
         }
 
