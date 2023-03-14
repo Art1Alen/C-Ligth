@@ -14,7 +14,7 @@
 
             while (isWork)
             {
-                aquarium.ShowAquarium();
+                aquarium.ShowInfo();
                 Console.WriteLine($"\nАквариум \n{CommandAddFish}. Добавить Рыбу  \n{CommandRemoveFish}. Убрать рыбу из аквариума\n{CommandExit}. Выход. ");
                 Console.WriteLine("Выберите Комманду");
 
@@ -40,7 +40,7 @@
                         break;
                 }
 
-                aquarium.TimeAgeFish();
+                aquarium.LifeTimeFish();
                 aquarium.RemoveDeadFish();
                 Console.Clear();
             }
@@ -50,11 +50,11 @@
     class Aquarium
     {
         private int _countOfFish = 5;
-        private List<Fish> _fishes = new List<Fish>();
+        private List<Fishes> _fishes = new List<Fishes>();
 
         public Aquarium()
         {
-            _fishes.Add(new Fish(2, "Толстая Камбола"));
+            _fishes.Add(new Fishes(2, "Толстая Камбола"));
         }
 
         public void AddFish()
@@ -76,31 +76,31 @@
                 Console.Write("Введите возраст рыбы: ");
                 age = GetInputAge();
 
-                if (name == null || age == 0)
+                if (name == null || age <= 0)
                 {
                     Console.WriteLine("Ошибка. Введены не коректные данные");
                 }
                 else
                 {
-                    _fishes.Add(new Fish(age, name));
+                    _fishes.Add(new Fishes(age, name));
                 }
             }
         }
 
         public void RemoveFish()
         {
-            if (TryGetFish(out Fish fish))
+            if (TryGetFish(out Fishes fish))
             {
                 _fishes.Remove(fish);
             }
         }
 
-        public void ShowAquarium()
+        public void ShowInfo()
         {
             int numberFish = 1;
             Console.WriteLine($"\nКоличество Рыб в Аквариуме - {_fishes.Count}");
 
-            foreach (Fish fish in _fishes)
+            foreach (Fishes fish in _fishes)
             {
                 Console.WriteLine($"{numberFish++}. {fish.Name}, возраст {fish.Age - 1}");
             }
@@ -108,27 +108,25 @@
 
         public void RemoveDeadFish()
         {
-            for (int i = 0; i < _fishes.Count; i++)
+            if (_fishes[0].IsALive == false)
             {
-                if (_fishes[i].IsALive == false)
-                {
-                    _fishes.Remove(_fishes[i]);
-                }
+                Fishes fish = _fishes[0];
+                _fishes.Remove(fish);
             }
         }
 
-        public void TimeAgeFish()
+        public void LifeTimeFish()
         {
-            foreach (Fish fish in _fishes)
+            foreach (Fishes fish in _fishes)
             {
                 fish.Live();
             }
         }
 
-        private bool TryGetFish(out Fish fish)
+        private bool TryGetFish(out Fishes fish)
         {
             Console.Write("Введите номер рыбы: ");
-            bool isNumber = int.TryParse(Console.ReadLine(), out int inputNumberFish);
+            bool isNumber = int.TryParse(Console.ReadLine().ToLower(), out int inputNumberFish);
 
             if (isNumber == false)
             {
@@ -163,8 +161,7 @@
             }
             else
             {
-                Console.WriteLine("Введены некоретные данный поторите попытку.");
-                age = 0;
+                Console.WriteLine("Введены некоретные данный");
                 return age;
             }
         }
@@ -187,9 +184,11 @@
 
     }
 
-    class Fish
+    class Fishes
     {
-        public Fish(int age, string name)
+        private int _lethalAge = 10;
+
+        public Fishes(int age, string name)
         {
             Age = age;
             Name = name;
@@ -197,8 +196,6 @@
 
         public int Age { get; private set; }
         public string Name { get; private set; }
-
-        private int _lethalAge = 10;
 
         public bool IsALive
         {
