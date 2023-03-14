@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace CSLight
+﻿namespace CSLight
 {
-    internal class Program
+    internal class Class46
     {
         static void Main(string[] args)
         {
@@ -22,8 +19,6 @@ namespace CSLight
         private Platoon _platoonRussia = new Platoon();
         private Platoon _platoonGermany = new Platoon();
 
-        private Random _random = new Random();
-
         private Soldier _firstSolider;
         private Soldier _secondSolider;
 
@@ -34,8 +29,8 @@ namespace CSLight
                 _firstSolider = _platoonRussia.GetSoldierFromPlatoon();
                 _secondSolider = _platoonGermany.GetSoldierFromPlatoon();
 
-                _platoonRussia.ShowPlatoon();
-                _platoonGermany.ShowPlatoon();
+                _platoonRussia.ShowInfo();
+                _platoonGermany.ShowInfo();
 
                 _firstSolider.TakeDamege(_secondSolider.Damage);
                 _secondSolider.TakeDamege(_firstSolider.Damage);
@@ -71,6 +66,7 @@ namespace CSLight
             {
                 _platoonRussia.RemoveSoldierFromPlatoon(_firstSolider);
             }
+
             if (_secondSolider.Health <= 0)
             {
                 _platoonGermany.RemoveSoldierFromPlatoon(_secondSolider);
@@ -86,10 +82,10 @@ namespace CSLight
 
         public Platoon()
         {
-            CreateNewPlatoon(10, _soldiers);
+            CreateNew(10, _soldiers);
         }
 
-        public void ShowPlatoon()
+        public void ShowInfo()
         {
             Console.WriteLine(" Взвод");
             foreach (var solider in _soldiers)
@@ -113,7 +109,7 @@ namespace CSLight
             return _soldiers.Count;
         }
 
-        private void CreateNewPlatoon(int numberOfSoldiers, List<Soldier> soldier)
+        private void CreateNew(int numberOfSoldiers, List<Soldier> soldier)
         {
             for (int i = 0; i < numberOfSoldiers; i++)
             {
@@ -174,13 +170,13 @@ namespace CSLight
 
             if (chanceUsingAbility < chanceAbility)
             {
-                UsePower();   
+                UsePower();
             }
         }
 
         protected virtual void UsePower() { }
-        protected virtual void HealthPlatoon() { }                 
-        
+        protected virtual void HealthPlatoon() { }
+
     }
 
     class Sniper : Soldier
@@ -206,7 +202,7 @@ namespace CSLight
         {
             Console.WriteLine($"{Name} Увеличивает Урон и востонавливает часть танка ");
             Damage += _damageBuff;
-            Health +=_healthBuff;
+            Health += _healthBuff;
         }
     }
 
@@ -222,8 +218,8 @@ namespace CSLight
             Console.WriteLine($"{Name} Востонавливает часть здоровя звода");
             Damage *= _damageBuff;
             HealthPlatoon();
-        } 
-        
+        }
+
         protected override void HealthPlatoon()
         {
             Health *= _healthBuff;
