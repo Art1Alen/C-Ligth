@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace CSLight
+﻿namespace CSLight
 {
     internal class Program
     {
@@ -42,10 +39,10 @@ namespace CSLight
         public bool TryCreativeBattle()
         {
             Console.WriteLine("Боец 1");
-            ChooseFighter(ref _firstFighter);
+            ChooseFighter(_firstFighter);
 
             Console.WriteLine("Боец 2");
-            ChooseFighter(ref _secondFighter);
+            ChooseFighter(_secondFighter);
 
             if (_firstFighter == null || _secondFighter == null)
             {
@@ -93,7 +90,7 @@ namespace CSLight
             }
         }
 
-        private void ChooseFighter(ref Fighter fighter)
+        private void ChooseFighter(Fighter fighter)
         {
             ShowFighters();
 
@@ -104,6 +101,7 @@ namespace CSLight
             {
                 Console.WriteLine("Ошибка! Вы ввели не коректные данные.");
                 fighter = null;
+                return;
             }
             else if (fighterID > 0 && fighterID - 1 < _fighters.Count)
             {
@@ -116,6 +114,7 @@ namespace CSLight
             {
                 Console.WriteLine("Бойца с таким номером отсутствует.");
                 fighter = null;
+                return;
             }
 
             Console.Clear();
@@ -152,8 +151,8 @@ namespace CSLight
 
         public void Attack(Fighter enemy)
         {
-            CoolDownSpecialAttack(MinutesLeft);
-            TakeDamege(Damage);
+            CoolDownSpecialAttacks(MinutesLeft);
+            TakeDamege(enemy.Damage);
         }
 
         public void TakeDamege(float damage)
@@ -175,9 +174,9 @@ namespace CSLight
             Console.WriteLine($"{Name} нанес {finalDamage} урона");
         }
 
-        public void CoolDownSpecialAttack(int minutesLeft)
+        public void CoolDownSpecialAttacks(int minutesLeft)
         {
-            int _coolDown = 8;
+            int coolDown = 8;
 
             MinutesLeft--;
 
@@ -252,8 +251,7 @@ namespace CSLight
 
     class Barbarian : Fighter
     {
-        private int _damageBuff = 60;
-        private int _armorBuff = 50;
+        private int _damageBuff = 60;       
 
         public Barbarian(string name, int health, int armor, int damage, int minutesLeft) : base(name, health, damage, armor, minutesLeft) { }
 
