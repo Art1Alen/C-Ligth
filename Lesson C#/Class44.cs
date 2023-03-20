@@ -5,6 +5,7 @@
         static void Main(string[] args)
         {
             bool isWork = true;
+            int stepBeweenSpecialAtteck = 8;
 
             while (isWork)
             {
@@ -14,8 +15,9 @@
                 {
                     Console.ReadKey();
                     Console.Clear();
-                    arena.Battle();
+                    arena.Battle(stepBeweenSpecialAtteck);
                     arena.ShowBattleResult();
+                    isWork = false;
                 }
             }
         }
@@ -36,13 +38,14 @@
             _fighters.Add(new Mystic("Мистик", 100, 100, 22, 8));
         }
 
+
         public bool TryCreativeBattle()
         {
             Console.WriteLine("Боец 1");
-            ChooseFighter(_firstFighter);
+            _firstFighter = ChooseFighter();
 
             Console.WriteLine("Боец 2");
-            ChooseFighter(_secondFighter);
+            _secondFighter = ChooseFighter();
 
             if (_firstFighter == null || _secondFighter == null)
             {
@@ -72,52 +75,71 @@
             }
         }
 
-        public void Battle()
+        public void Battle(int stepBetweenSpecialAtteck)
         {
+            int MinutesLeft = stepBetweenSpecialAtteck;
+
             while (_firstFighter.Health > 0 && _secondFighter.Health > 0)
             {
+                Console.WriteLine($"Осталось времяни до суперудар {MinutesLeft}");
+
                 _firstFighter.ShowStats();
                 _secondFighter.ShowStats();
 
-                _firstFighter.Attack(_secondFighter);
-                _secondFighter.Attack(_firstFighter);
+                MinutesLeft--;
 
-                _firstFighter.UseSpecialAttack();
-                _secondFighter.UseSpecialAttack();
+                if (MinutesLeft <= 0)
+                {
+                    _firstFighter.UseSpecialAttack();
+                    _secondFighter.UseSpecialAttack();
+
+                    MinutesLeft = stepBetweenSpecialAtteck;
+                }
+                else
+                {
+                    _firstFighter.Attack(_secondFighter);
+                    _secondFighter.Attack(_firstFighter);
+                }
 
                 Console.ReadKey();
                 Console.Clear();
             }
         }
 
-        private void ChooseFighter(Fighter fighter)
+        private Fighter ChooseFighter()
         {
             ShowFighters();
 
-            Console.Write("Введите номер бойца: ");
-            bool isNumber = int.TryParse(Console.ReadLine(), out int fighterID);
+            bool isCorretNumber = false;
 
-            if (isNumber == false)
-            {
-                Console.WriteLine("Ошибка! Вы ввели не коректные данные.");
-                fighter = null;
-                return;
-            }
-            else if (fighterID > 0 && fighterID - 1 < _fighters.Count)
-            {
-                fighter = _fighters[fighterID - 1];
-                _fighters.Remove(fighter);
+            Fighter templatefighter = null;
 
-                Console.WriteLine("Боец успешно выбран.");
-            }
-            else
+            while (isCorretNumber == false)
             {
-                Console.WriteLine("Бойца с таким номером отсутствует.");
-                fighter = null;
-                return;
+                Console.Write("Введите номер бойца: ");
+                bool isNumber = int.TryParse(Console.ReadLine(), out int fighterID);
+
+                if (isNumber == false)
+                {
+                    Console.WriteLine("Ошибка! Вы ввели не коректные данные.");
+                }
+                else if (fighterID > 0 && fighterID - 1 < _fighters.Count)
+                {
+                    templatefighter = _fighters[fighterID - 1];
+                    _fighters.Remove(templatefighter);
+
+                    Console.WriteLine("Боец успешно выбран.");
+                    isCorretNumber = true;
+                }
+                else
+                {
+                    Console.WriteLine("Бойца с таким номером отсутствует.");
+                }
+
+                Console.Clear();
             }
 
-            Console.Clear();
+            return templatefighter;
         }
 
         private void ShowFighters()
@@ -134,24 +156,21 @@
 
     class Fighter
     {
-        public Fighter(string name, int health, int damage, int armor, int minutesLeft)
+        public Fighter(string name, int health, int damage, int armor)
         {
             Name = name;
             Health = health;
             Damage = damage;
             Armor = armor;
-            MinutesLeft = minutesLeft;
         }
 
         public string Name { get; protected set; }
         public float Health { get; protected set; }
         public float Armor { get; protected set; }
         public float Damage { get; protected set; }
-        public int MinutesLeft { get; protected set; }
 
         public void Attack(Fighter enemy)
         {
-            CoolDownSpecialAttacks(MinutesLeft);
             TakeDamege(enemy.Damage);
         }
 
@@ -174,31 +193,14 @@
             Console.WriteLine($"{Name} нанес {finalDamage} урона");
         }
 
-        public void CoolDownSpecialAttacks(int minutesLeft)
-        {
-            int coolDown = 8;
-
-            MinutesLeft--;
-
-            if (MinutesLeft <= 0)
-            {
-                MinutesLeft = MinutesLeft;
-            }
-        }
-
         public void ShowStats()
         {
-            Console.WriteLine($" {Name}. Здоровье: {Health}. Броня: {Armor} Урон {Damage} Время до Супер атаки {MinutesLeft}");
+            Console.WriteLine($" {Name}. Здоровье: {Health}. Броня: {Armor} Урон {Damage}");
         }
 
         public void UseSpecialAttack()
         {
-            int chanceAbility = 0;
-
-            if (MinutesLeft == chanceAbility)
-            {
-                UsePower();
-            }
+            UsePower();
         }
 
         protected virtual void UsePower() { }
@@ -209,7 +211,7 @@
         private int _damageBuff = 55;
         private int _armorBuff = 45;
 
-        public Archer(string name, int health, int armor, int damage, int minutesLeft) : base(name, health, damage, armor, minutesLeft) { }
+        public Archer(string name, int health, int armor, int damage, int minutesLeft) : base(name, health, damage, armor) { }
 
         protected override void UsePower()
         {
@@ -224,7 +226,7 @@
         private int _healthBuff = 60;
         private int _armorBuff = 60;
 
-        public Knight(string name, int health, int armor, int damage, int minutesLeft) : base(name, health, damage, armor, minutesLeft) { }
+        public Knight(string name, int health, int armor, int damage, int minutesLeft) : base(name, health, damage, armor) { }
 
         protected override void UsePower()
         {
@@ -239,7 +241,7 @@
         private int _damageBuff = 20;
         private int _heaithBuff = 5;
 
-        public Wizard(string name, int health, int armor, int damage, int minutesLeft) : base(name, health, damage, armor, minutesLeft) { }
+        public Wizard(string name, int health, int armor, int damage, int minutesLeft) : base(name, health, damage, armor) { }
 
         protected override void UsePower()
         {
@@ -251,9 +253,9 @@
 
     class Barbarian : Fighter
     {
-        private int _damageBuff = 60;       
+        private int _damageBuff = 60;
 
-        public Barbarian(string name, int health, int armor, int damage, int minutesLeft) : base(name, health, damage, armor, minutesLeft) { }
+        public Barbarian(string name, int health, int armor, int damage, int minutesLeft) : base(name, health, damage, armor) { }
 
         protected override void UsePower()
         {
@@ -267,7 +269,7 @@
         private int _armorBuff = 50;
         private int _damageBuff = 6;
 
-        public Mystic(string name, int health, int armor, int damage, int minutesLeft) : base(name, health, damage, armor, minutesLeft) { }
+        public Mystic(string name, int health, int armor, int damage, int minutesLeft) : base(name, health, damage, armor) { }
 
         protected override void UsePower()
         {
