@@ -1,222 +1,285 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace CSharpLight
+﻿class Program
 {
-    internal class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
+        Supermarket supermarket = new Supermarket();
+
+        supermarket.Work();
+    }
+}
+
+class Supermarket
+{
+    private int _money = 0;
+
+    private Random _random = new Random();
+    private Queue<Client> clients = new Queue<Client>();
+    private List<Product> _products = new List<Product>();
+
+    public Supermarket()
+    {
+        _products = new List<Product>
         {
-            const string CommandCreateQueue = "1";
-            const string CommandServiceQueue = "2";
-            const string CommandLeaveStore = "3";
-
-            Supermarket supermarket = new Supermarket();
-            bool isWork = true;
-
-            while (isWork)
-            {
-                Console.WriteLine(
-                    $"В кассе {supermarket.Money} денег" +
-                    $"\n{CommandCreateQueue} - создать очередь клиентов." +
-                    $"\n{CommandServiceQueue} - обслужить очередь клиентов" +
-                    $"\n{CommandLeaveStore} - Покинуть Магазин");
-                string userInput = Console.ReadLine();
-
-                switch (userInput)
-                {
-                    case CommandCreateQueue:
-                        supermarket.CreateClientQueue();
-                        Console.WriteLine("Очередь создана.");
-                        break;
-
-                    case CommandServiceQueue:
-                        supermarket.ServeClients();
-                        Console.WriteLine("Очередь обслужена");
-                        break;
-
-                    case CommandLeaveStore:
-                        isWork = false;
-                        break;
-
-                    default:
-                        Console.WriteLine("Неверный ввод.");
-                        break;
-                }
-
-                Console.ReadKey();
-                Console.Clear();
-            }
-        }
+                    new Product("молоко", 5),
+                    new Product("хлеб", 10),
+                    new Product("пиво", 30),
+                    new Product("водка", 130),
+                    new Product("вода", 20),
+                    new Product("мед", 50),
+                    new Product("макароны", 35),
+                    new Product("яблоки", 40),
+        };
     }
 
-    public class Supermarket
+    public void Work()
     {
-        private Queue<Client> _clients = new Queue<Client>();
-        private List<Product> _products = new List<Product>();
+        const string CommandOpenRegister = "1";
+        const string CommandNextClient = "2";
+        const string CommandCloseShop = "3";
 
-        private Random _random = new Random();
+        bool isOpen = true;
 
-        public Supermarket()
+        while (isOpen)
         {
-            _products.Add(new Product("Молоко", ProductPrice()));
-            _products.Add(new Product("Яблоко", ProductPrice()));
-            _products.Add(new Product("Сой", ProductPrice()));
-            _products.Add(new Product("Хлеб", ProductPrice()));
-            _products.Add(new Product("Яйцо", ProductPrice()));
-            _products.Add(new Product("Булочка", ProductPrice()));
-        }
+            Console.WriteLine($"Магазин работает\nВ кассе {_money} $\n");
+            Console.WriteLine("Выберите, что хотите сделать:");
+            Console.WriteLine($"{CommandOpenRegister}. Открыть кассу;");
+            Console.WriteLine($"{CommandNextClient}. Обслужить покупателя в очереди;");
+            Console.WriteLine($"{CommandCloseShop}. Закрыть магазин;");
+            Console.Write("\nВведите команду: ");
 
-        public int Money { get; private set; }
+            string userInput = Console.ReadLine();
 
-        public void CreateClientQueue()
-        {
-            int minCountClient = 2;
-            int maxCountClient = 10;
-
-            int countClient = _random.Next(minCountClient, maxCountClient);
-
-            for (int i = 0; i < countClient; i++)
+            switch (userInput)
             {
-                _clients.Enqueue(GetClient());
-            }
-        }
+                case CommandOpenRegister:
+                    AddClientsToQueue();
+                    break;
 
-        public void ServeClients()
-        {
-            while (_clients.Count > 0)
-            {
-                _clients.Dequeue().PurchaseProducts();
-            }
-        }
+                case CommandNextClient:
+                    ServeClient();
+                    break;
 
-        public void GetMoney(int money)
-        {
-            Money += money;
-        }
+                case CommandCloseShop:
+                    isOpen = false;
+                    break;
 
-        private Client GetClient()
-        {
-            List<Product> products = new List<Product>();
-
-            int minCountProduct = 2;
-            int maxCountProduct = 6;
-            int minCountMoney = 10;
-            int maxCountMoney = 100;
-
-            int countMoney = _random.Next(minCountMoney, maxCountMoney);
-            int countProduct = _random.Next(minCountProduct, maxCountProduct);
-
-            for (int i = 0; i < countProduct; i++)
-            {
-                products.Add(_products[_random.Next(0, _products.Count - 1)]);
-            }
-
-            return new Client(countMoney, products, this);
-        }
-
-        private int ProductPrice()
-        {
-            int minCostProduct = 5;
-            int maxCostProduct = 25;
-
-            int costProduct = _random.Next(minCostProduct, maxCostProduct);
-
-            return costProduct;
-        }
-
-    }
-
-    public class Product
-    {
-        public Product(string name, int cost)
-        {
-            Name = name;
-            Cost = cost;
-        }
-
-        public string Name { get; private set; }
-        public int Cost { get; private set; }
-    }
-
-    public class Client
-    {
-        private List<Product> _productsInBasket;
-        private int _money;
-        private Supermarket _supermarket;
-
-        public Client(int money, List<Product> productsInBasket, Supermarket supermarket)
-        {
-            _money = money;
-            _productsInBasket = productsInBasket;
-            _supermarket = supermarket;
-        }
-
-        public void PurchaseProducts()
-        {
-            int purchaseAmount = GetEntireBasketCost();
-
-            ShowProductsBasket();
-            Console.WriteLine($"Сумма товаров {purchaseAmount}. У клиента {_money}");
-
-            if (_productsInBasket.Count < 1)
-            {
-                Console.WriteLine("Всего доброго");
-            }
-            else if (_money >= purchaseAmount)
-            {
-                Console.WriteLine($"Клиент оплатил товары на сумму {purchaseAmount} и покинул магазин");
-                _supermarket.GetMoney(purchaseAmount);
-            }
-            else if (_productsInBasket.Count > 0)
-            {
-                RemoveUnnecessaryProductsClient();
+                default:
+                    Console.WriteLine("\nЕще раз попробуйте");
+                    break;
             }
 
             Console.ReadKey();
             Console.Clear();
         }
+    }
 
-        private void RemoveUnnecessaryProductsClient()
+    private void AddClientsToQueue()
+    {
+        int minCountClients = 5;
+        int maxCountClients = 21;
+        int countClients = _random.Next(minCountClients, maxCountClients);
+
+        for (int i = 0; i < countClients; i++)
         {
-            while (GetEntireBasketCost() > _money)
-            {
-                RemoveProduct();
-            }
-
-            PurchaseProducts();
+            clients.Enqueue(new Client(_random));
         }
 
-        private void RemoveProduct()
+        AddProductsToClients();
+    }
+
+    private void AddProductsToClients()
+    {
+        int minCountProducts = 1;
+        int maxCountProducts = 3;
+        int countProducts;
+
+        if (clients.Count > 0)
         {
-            Random random = new Random();
-            int index = random.Next(0, _productsInBasket.Count);
-
-            Product productToRemove = _productsInBasket[index];
-            Console.WriteLine($"Клиент отказаться от товара {productToRemove.Name} стоимостью {productToRemove.Cost}");
-            _productsInBasket.Remove(productToRemove);
-        }
-
-        private int GetEntireBasketCost()
-        {
-            int purchaseAmount = 0;
-
-            foreach (Product product in _productsInBasket)
+            foreach (Client client in clients)
             {
-                purchaseAmount += product.Cost;
-            }
+                countProducts = _random.Next(minCountProducts, maxCountProducts);
 
-            return purchaseAmount;
-        }
-
-        private void ShowProductsBasket()
-        {
-            Console.WriteLine("Корзина клиента");
-
-            foreach (Product item in _productsInBasket)
-            {
-                Console.WriteLine($"{item.Name}, цена: {item.Cost}");
+                for (int i = 0; i < countProducts; i++)
+                {
+                    client.TakeProduct(GiveProductToClient(_products));
+                }
             }
         }
+        else
+        {
+            Console.WriteLine("\nНикого нету");
+        }
+    }
+
+    private Product GiveProductToClient(List<Product> products)
+    {
+        int minCountProducts = 0;
+        int maxCountProducts = products.Count;
+
+        return products[_random.Next(minCountProducts, maxCountProducts)];
+    }
+
+    private void ServeClient()
+    {
+        Console.WriteLine("");
+
+        if (clients.Count > 0)
+        {
+            clients.Peek().ShowInfo();
+
+            if (TrySellProducts(clients.Peek()) == true)
+            {
+                clients.Peek().GiveMoney();
+                TakeMoney(clients.Peek().GetCostAllProductsInBasket());
+
+                Console.WriteLine($"\nКлиент Обслужен у него осталось денег {clients.Peek().Money} $");
+
+                clients.Dequeue();
+            }
+        }
+        else
+        {
+            Console.WriteLine("Никого нету");
+        }
+    }
+
+    private bool TrySellProducts(Client сlient)
+    {
+        while (сlient.TryBuyProducts() != true)
+        {
+            сlient.TakeOutProduct(_random);
+        }
+
+        return true;
+    }
+
+    private void TakeMoney(int money)
+    {
+        _money += money;
+    }
+}
+
+class Client
+{
+    private List<Product> _products = new List<Product>();
+
+    public Client(Random random)
+    {
+        Wallet(random);
+    }
+
+    public int Money { get; private set; }
+
+    public void TakeOutProduct(Random random)
+    {
+        int indexProduct;
+
+        if (_products.Count > 0)
+        {
+            indexProduct = random.Next(0, _products.Count);
+
+            Console.WriteLine($"\nПокупатель убрал c корзины{_products[indexProduct].Name}");
+
+            _products.RemoveAt(indexProduct);
+        }
+        else
+        {
+            Console.WriteLine("Корзина пуста");
+        }
+
+        ShowInfo();
+    }
+
+    public void TakeProduct(Product product)
+    {
+        _products.Add(product.Clone());
+    }
+
+
+    private string GetListProducts()
+    {
+        string listProducts = "";
+
+        if (_products.Count > 0)
+        {
+            foreach (Product product in _products)
+            {
+                listProducts += product.ShowInfo() + "/";
+            }
+
+            return listProducts;
+        }
+        else
+        {
+            return "пусто";
+        }
+    }
+
+    public int GetCostAllProductsInBasket()
+    {
+        int costAllProductsInBasket = 0;
+
+        foreach (Product product in _products)
+        {
+            costAllProductsInBasket += product.Price;
+        }
+
+        return costAllProductsInBasket;
+    }
+
+    public bool TryBuyProducts()
+    {
+        if (Money >= GetCostAllProductsInBasket())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void GiveMoney()
+    {
+        if (TryBuyProducts() == true)
+        {
+            Money -= GetCostAllProductsInBasket();
+        }
+    }
+
+    public void ShowInfo()
+    {
+        Console.WriteLine($"Деньги у клиента : {Money} ; В корзине: {GetListProducts()} Итого: {GetCostAllProductsInBasket()}");
+    }
+
+    private void Wallet(Random random)
+    {
+        int minValue = 20;
+        int maxValue = 150;
+
+        Money = random.Next(minValue, maxValue);
+    }
+}
+
+class Product
+{
+    public Product(string name, int price)
+    {
+        Name = name;
+        Price = price;
+    }
+
+    public string Name { get; set; }
+    public int Price { get; private set; }
+
+    public string ShowInfo()
+    {
+        return $"{Name} (цена: {Price} $)";
+    }
+
+    public Product Clone()
+    {
+        return new Product(Name, Price);
     }
 }
