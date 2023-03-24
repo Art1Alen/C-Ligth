@@ -26,8 +26,8 @@
         {
             while (_platoonRussia.GetCountSoliders() > 0 && _platoonGermany.GetCountSoliders() > 0)
             {
-                _firstSolider = _platoonRussia.GetSoldierFromPlatoon();
-                _secondSolider = _platoonGermany.GetSoldierFromPlatoon();
+                _firstSolider = _platoonRussia.GetSoldier();
+                _secondSolider = _platoonGermany.GetSoldier();
 
                 _platoonRussia.ShowInfo();
                 _platoonGermany.ShowInfo();
@@ -38,7 +38,7 @@
                 _firstSolider.UseSpecialAttack();
                 _secondSolider.UseSpecialAttack();
 
-                RemoveSolider();
+                RemoveDeadSoldiers();
                 System.Threading.Thread.Sleep(1000);
                 Console.Clear();
             }
@@ -60,16 +60,15 @@
             }
         }
 
-        private void RemoveSolider()
+        private void RemoveDeadSoldiers()
         {
             if (_firstSolider.Health <= 0)
             {
-                _platoonRussia.RemoveSoldierFromPlatoon(_firstSolider);
+                _platoonRussia.RemoveSoldier(_firstSolider);
             }
-
             if (_secondSolider.Health <= 0)
             {
-                _platoonGermany.RemoveSoldierFromPlatoon(_secondSolider);
+                _platoonGermany.RemoveSoldier(_secondSolider);
             }
         }
     }
@@ -77,7 +76,6 @@
     class Platoon
     {
         private List<Soldier> _soldiers = new List<Soldier>();
-        private Soldier soldier;
         private Random _random = new Random();
 
         public Platoon()
@@ -88,18 +86,19 @@
         public void ShowInfo()
         {
             Console.WriteLine(" Взвод");
-            foreach (var solider in _soldiers)
+
+            foreach (Soldier solider in _soldiers)
             {
                 Console.WriteLine($"{solider.Name}. Здоровье: {solider.Health}. Урон: {solider.Damage}.");
             }
         }
 
-        public void RemoveSoldierFromPlatoon(Soldier soldier)
+        public void RemoveSoldier(Soldier soldier)
         {
             _soldiers.Remove(soldier);
         }
 
-        public Soldier GetSoldierFromPlatoon()
+        public Soldier GetSoldier()
         {
             return _soldiers[_random.Next(0, _soldiers.Count)];
         }
@@ -113,11 +112,11 @@
         {
             for (int i = 0; i < numberOfSoldiers; i++)
             {
-                soldier.Add(GetSoldier());
+                soldier.Add(Get());
             }
         }
 
-        private Soldier GetSoldier()
+        private Soldier Get()
         {
             int minNumber = 0;
             int maxNumber = 3;
