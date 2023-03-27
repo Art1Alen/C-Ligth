@@ -230,14 +230,7 @@ class Client
 
     public bool TryBuyProducts()
     {
-        if (Money >= GetCostAllProductsInBasket())
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return true;
     }
 
     public void GiveMoney()
