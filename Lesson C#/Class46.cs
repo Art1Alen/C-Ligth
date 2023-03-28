@@ -66,6 +66,7 @@
             {
                 _platoonRussia.RemoveSoldier(_firstSolider);
             }
+
             if (_secondSolider.Health <= 0)
             {
                 _platoonGermany.RemoveSoldier(_secondSolider);
