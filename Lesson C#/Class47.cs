@@ -40,7 +40,7 @@
                         break;
                 }
 
-                aquarium.LifeTimeFish();
+                aquarium.SkipTime();
                 aquarium.RemoveDeadFish();
                 Console.Clear();
             }
@@ -49,7 +49,7 @@
 
     class Aquarium
     {
-        private int _countOfFish = 5;
+        private int _maxCountOfFish = 5;
         private List<Fishes> _fishes = new List<Fishes>();
 
         public Aquarium()
@@ -62,7 +62,7 @@
             string name;
             int age;
 
-            if (_countOfFish <= _fishes.Count)
+            if (_maxCountOfFish <= _fishes.Count)
             {
                 Console.Clear();
                 Console.WriteLine("В аквариуме нету места");
@@ -108,14 +108,17 @@
 
         public void RemoveDeadFish()
         {
-            if (_fishes[0].IsALive == false)
+            for (int i = _fishes.Count - 1; i >= 0; i--)
             {
-                Fishes fish = _fishes[0];
-                _fishes.Remove(fish);
+                if (_fishes[i].IsALive == false)
+                {
+                    Fishes fish = _fishes[i];
+                    _fishes.Remove(fish);
+                }
             }
         }
 
-        public void LifeTimeFish()
+        public void SkipTime()
         {
             foreach (Fishes fish in _fishes)
             {
@@ -196,7 +199,6 @@
 
         public int Age { get; private set; }
         public string Name { get; private set; }
-
         public bool IsALive
         {
             get
