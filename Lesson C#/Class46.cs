@@ -32,8 +32,8 @@
                 _platoonRussia.ShowInfo();
                 _platoonGermany.ShowInfo();
 
-                _firstSolider.TakeDamege(_secondSolider.Damage);
-                _secondSolider.TakeDamege(_firstSolider.Damage);
+                _firstSolider.Attack(_secondSolider);
+                _secondSolider.Attack(_firstSolider);
 
                 _firstSolider.UseSpecialAttack();
                 _secondSolider.UseSpecialAttack();
@@ -46,15 +46,15 @@
 
         public void ShowBattleResult()
         {
-            if (_platoonRussia.GetCountSoliders() > 0 && _platoonGermany.GetCountSoliders() > 0)
+            if (_platoonRussia.GetCountSoliders() == 0 && _platoonGermany.GetCountSoliders() == 0)
             {
                 Console.WriteLine("Ничья, оба страны погибли");
             }
-            else if (_platoonRussia.GetCountSoliders() <= 0)
+            else if (_platoonRussia.GetCountSoliders() > 0)
             {
                 Console.WriteLine("Взвод страны Россия победил!");
             }
-            else if (_platoonGermany.GetCountSoliders() <= 0)
+            else
             {
                 Console.WriteLine("Взвод страны Германие победил!");
             }
@@ -152,12 +152,17 @@
         public int Damage { get; protected set; }
         public string Name { get; protected set; }
 
-        public void TakeDamege(int damageSolider)
+        private void TakeDamege(int damageSolider)
         {
             Health -= damageSolider;
 
             Console.WriteLine();
             Console.WriteLine($"{Name} нанес {damageSolider} урона");
+        }
+
+        public void Attack(Soldier enemy)
+        {
+            enemy.TakeDamege(Damage);
         }
 
         public void UseSpecialAttack()

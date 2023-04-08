@@ -13,7 +13,7 @@ class Supermarket
     private int _money = 0;
 
     private Random _random = new Random();
-    private Queue<Client> clients = new Queue<Client>();
+    private Queue<Client> _clients = new Queue<Client>();
     private List<Product> _products = new List<Product>();
 
     public Supermarket()
@@ -82,7 +82,7 @@ class Supermarket
 
         for (int i = 0; i < countClients; i++)
         {
-            clients.Enqueue(new Client(_random));
+            _clients.Enqueue(new Client(_random));
         }
 
         AddProductsToClients();
@@ -94,9 +94,9 @@ class Supermarket
         int maxCountProducts = 3;
         int countProducts;
 
-        if (clients.Count > 0)
+        if (_clients.Count > 0)
         {
-            foreach (Client client in clients)
+            foreach (Client client in _clients)
             {
                 countProducts = _random.Next(minCountProducts, maxCountProducts);
 
@@ -124,18 +124,20 @@ class Supermarket
     {
         Console.WriteLine("");
 
-        if (clients.Count > 0)
+        if (_clients.Count > 0)
         {
-            clients.Peek().ShowInfo();
+            Client client = _clients.Peek();
 
-            if (TrySellProducts(clients.Peek()) == true)
+            client.ShowInfo();
+
+            if (TrySellProducts(client) == true)
             {
-                clients.Peek().GiveMoney();
-                TakeMoney(clients.Peek().GetCostAllProductsInBasket());
+                client.GetMoney();
+                TakeGetMoney(client.GetCostAllProductsInBasket());
 
-                Console.WriteLine($"\nКлиент Обслужен у него осталось денег {clients.Peek().Money} $");
+                Console.WriteLine($"\nКлиент Обслужен у него осталось денег {client.Money} $");
 
-                clients.Dequeue();
+                _clients.Dequeue();
             }
         }
         else
@@ -146,15 +148,12 @@ class Supermarket
 
     private bool TrySellProducts(Client сlient)
     {
-        while (сlient.TryBuyProducts() != true)
-        {
-            сlient.TakeOutProduct(_random);
-        }
+        сlient.TakeOutProduct(_random);
 
         return true;
     }
 
-    private void TakeMoney(int money)
+    private void TakeGetMoney(int money)
     {
         _money += money;
     }
@@ -196,14 +195,15 @@ class Client
         _products.Add(product.Clone());
     }
 
-
     private string GetListProducts()
     {
+        List<Product> products = new List<Product>(_products);
+
         string listProducts = "";
 
         if (_products.Count > 0)
         {
-            foreach (Product product in _products)
+            foreach (Product product in products)
             {
                 listProducts += product.ShowInfo() + "/";
             }
@@ -228,17 +228,9 @@ class Client
         return costAllProductsInBasket;
     }
 
-    public bool TryBuyProducts()
+    public void GetMoney()
     {
-        return true;
-    }
-
-    public void GiveMoney()
-    {
-        if (TryBuyProducts() == true)
-        {
-            Money -= GetCostAllProductsInBasket();
-        }
+        Money -= GetCostAllProductsInBasket();
     }
 
     public void ShowInfo()
