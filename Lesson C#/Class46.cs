@@ -16,27 +16,24 @@
 
     class Field
     {
-        private Platoon _platoonRussia = new Platoon();
-        private Platoon _platoonGermany = new Platoon();
+        private Platoon _russia = new Platoon();
+        private Platoon _germany = new Platoon();
 
         private Soldier _firstSolider;
         private Soldier _secondSolider;
 
         public void Battle()
         {
-            while (_platoonRussia.GetCountSoliders() > 0 && _platoonGermany.GetCountSoliders() > 0)
+            while (_russia.GetCountSoliders() > 0 && _germany.GetCountSoliders() > 0)
             {
-                _firstSolider = _platoonRussia.GetSoldier();
-                _secondSolider = _platoonGermany.GetSoldier();
+                _firstSolider = _russia.GetSoldier();
+                _secondSolider = _germany.GetSoldier();
 
-                _platoonRussia.ShowInfo();
-                _platoonGermany.ShowInfo();
+                _russia.ShowInfo();
+                _germany.ShowInfo();
 
                 _firstSolider.Attack(_secondSolider);
                 _secondSolider.Attack(_firstSolider);
-
-                _firstSolider.UseSpecialAttack();
-                _secondSolider.UseSpecialAttack();
 
                 RemoveDeadSoldiers();
                 System.Threading.Thread.Sleep(1000);
@@ -46,11 +43,11 @@
 
         public void ShowBattleResult()
         {
-            if (_platoonRussia.GetCountSoliders() == 0 && _platoonGermany.GetCountSoliders() == 0)
+            if (_russia.GetCountSoliders() == 0 && _germany.GetCountSoliders() == 0)
             {
                 Console.WriteLine("Ничья, оба страны погибли");
             }
-            else if (_platoonRussia.GetCountSoliders() > 0)
+            else if (_russia.GetCountSoliders() > 0)
             {
                 Console.WriteLine("Взвод страны Россия победил!");
             }
@@ -64,12 +61,12 @@
         {
             if (_firstSolider.Health <= 0)
             {
-                _platoonRussia.RemoveSoldier(_firstSolider);
+                _russia.RemoveSoldier(_firstSolider);
             }
 
             if (_secondSolider.Health <= 0)
             {
-                _platoonGermany.RemoveSoldier(_secondSolider);
+                _germany.RemoveSoldier(_secondSolider);
             }
         }
     }
@@ -113,121 +110,103 @@
         {
             for (int i = 0; i < numberOfSoldiers; i++)
             {
-                soldier.Add(Get());
+                soldier.Add(Create());
             }
         }
 
-        private Soldier Get()
+        private Soldier Create()
         {
+            List<Soldier> soldiers = new List<Soldier>()
+            {
+                 new Sniper("Снайпер", 100, 50),
+                 new Tankis("Танкис", 100, 45),
+                 new Medic("Медик", 100, 40),
+            };
+
             int minNumber = 0;
-            int maxNumber = 3;
+            int maxNumber = soldiers.Count;
 
-            int newSolider = _random.Next(minNumber, maxNumber);
+            int number = _random.Next(minNumber, maxNumber);
 
-            if (newSolider == 1)
-            {
-                return new Sniper("Снайпер", 100, 50);
-            }
-            else if (newSolider == 2)
-            {
-                return new Tankis("Танкис", 100, 45);
-            }
-            else
-            {
-                return new Medic("Медик", 100, 40);
-            }
-        }
-    }
-
-    class Soldier
-    {
-        public Soldier(int health, int damage, string name)
-        {
-            Name = name;
-            Health = health;
-            Damage = damage;
-        }
-
-        public int Health { get; protected set; }
-        public int Damage { get; protected set; }
-        public string Name { get; protected set; }
-
-        private void TakeDamege(int damageSolider)
-        {
-            Health -= damageSolider;
-
-            Console.WriteLine();
-            Console.WriteLine($"{Name} нанес {damageSolider} урона");
-        }
-
-        public void Attack(Soldier enemy)
-        {
-            enemy.TakeDamege(Damage);
-        }
-
-        public void UseSpecialAttack()
-        {
-            Random random = new Random();
-
-            int rangeMaxima = 100;
-            int chanceAbility = 10;
-            int chanceUsingAbility = random.Next(rangeMaxima);
-
-            if (chanceUsingAbility < chanceAbility)
-            {
-                UsePower();
-            }
-        }
-
-        protected virtual void UsePower() { }
-        protected virtual void HealthPlatoon() { }
-
-    }
-
-    class Sniper : Soldier
-    {
-        private int _damageBuff = 10;
-        public Sniper(string name, int health, int damage) : base(health, damage, name) { }
-
-        protected override void UsePower()
-        {
-            Console.WriteLine($"{Name} Стреляет большим критическим уроном ");
-            Damage += _damageBuff;
-        }
-    }
-
-    class Tankis : Soldier
-    {
-        private int _damageBuff = 1000;
-        private int _healthBuff = 25;
-
-        public Tankis(string name, int health, int damage) : base(health, damage, name) { }
-
-        protected override void UsePower()
-        {
-            Console.WriteLine($"{Name} Увеличивает Урон и востонавливает часть танка ");
-            Damage += _damageBuff;
-            Health += _healthBuff;
-        }
-    }
-
-    class Medic : Soldier
-    {
-        private int _damageBuff = 100;
-        private int _healthBuff = 50;
-
-        public Medic(string name, int health, int damage) : base(health, damage, name) { }
-
-        protected override void UsePower()
-        {
-            Console.WriteLine($"{Name} Востонавливает часть здоровя звода");
-            Damage *= _damageBuff;
-            HealthPlatoon();
-        }
-
-        protected override void HealthPlatoon()
-        {
-            Health *= _healthBuff;
+            return soldiers[number];
         }
     }
 }
+
+class Soldier
+{
+    public Soldier(int health, int damage, string name)
+    {
+        Name = name;
+        Health = health;
+        Damage = damage;
+    }
+
+    public int Health { get; protected set; }
+    public int Damage { get; protected set; }
+    public string Name { get; protected set; }
+
+    public void TakeDamege(int damageSolider)
+    {
+        Health -= damageSolider;
+
+        Console.WriteLine();
+        Console.WriteLine($"{Name} нанес {damageSolider} урона");
+    }
+
+    public virtual void Attack(Soldier enemy) { }
+
+}
+
+class Sniper : Soldier
+{
+    private int _damageBuff = 10;
+    public Sniper(string name, int health, int damage) : base(health, damage, name) { }
+
+    public override void Attack(Soldier enemy)
+    {
+        enemy.TakeDamege(Damage);
+        Console.WriteLine($"{Name} Стреляет большим критическим уроном ");
+        Damage += _damageBuff;
+    }
+}
+
+class Tankis : Soldier
+{
+    private int _damageBuff = 1000;
+    private int _healthBuff = 25;
+
+    public Tankis(string name, int health, int damage) : base(health, damage, name) { }
+
+    public override void Attack(Soldier enemy)
+    {
+        enemy.TakeDamege(Damage);
+
+        Console.WriteLine($"{Name} Увеличивает Урон и востонавливает часть танка ");
+        Damage += _damageBuff;
+        Health += _healthBuff;
+    }
+}
+
+class Medic : Soldier
+{
+    private int _damageBuff = 100;
+    private int _healthBuff = 50;
+
+    public Medic(string name, int health, int damage) : base(health, damage, name) { }
+
+    protected void HealthPlatoon()
+    {
+        Health *= _healthBuff;
+    }
+
+    public override void Attack(Soldier enemy)
+    {
+        enemy.TakeDamege(Damage);
+
+        Console.WriteLine($"{Name} Востонавливает часть здоровя звода");
+        Damage *= _damageBuff;
+        HealthPlatoon();
+    }
+}
+
