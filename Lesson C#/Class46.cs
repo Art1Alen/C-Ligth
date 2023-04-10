@@ -16,21 +16,21 @@
 
     class Field
     {
-        private Platoon _russia = new Platoon();
-        private Platoon _germany = new Platoon();
+        private Platoon _firstPlatoon = new Platoon();
+        private Platoon _secondPlatoon = new Platoon();
 
         private Soldier _firstSolider;
         private Soldier _secondSolider;
 
         public void Battle()
         {
-            while (_russia.GetCountSoliders() > 0 && _germany.GetCountSoliders() > 0)
+            while (_firstPlatoon.GetCountSoliders() > 0 && _secondPlatoon.GetCountSoliders() > 0)
             {
-                _firstSolider = _russia.GetSoldier();
-                _secondSolider = _germany.GetSoldier();
+                _firstSolider = _firstPlatoon.GetSoldier();
+                _secondSolider = _secondPlatoon.GetSoldier();
 
-                _russia.ShowInfo();
-                _germany.ShowInfo();
+                _firstPlatoon.ShowInfo();
+                _secondPlatoon.ShowInfo();
 
                 _firstSolider.Attack(_secondSolider);
                 _secondSolider.Attack(_firstSolider);
@@ -43,11 +43,11 @@
 
         public void ShowBattleResult()
         {
-            if (_russia.GetCountSoliders() == 0 && _germany.GetCountSoliders() == 0)
+            if (_firstPlatoon.GetCountSoliders() == 0 && _secondPlatoon.GetCountSoliders() == 0)
             {
                 Console.WriteLine("Ничья, оба страны погибли");
             }
-            else if (_russia.GetCountSoliders() > 0)
+            else if (_firstPlatoon.GetCountSoliders() > 0)
             {
                 Console.WriteLine("Взвод страны Россия победил!");
             }
@@ -61,12 +61,12 @@
         {
             if (_firstSolider.Health <= 0)
             {
-                _russia.RemoveSoldier(_firstSolider);
+                _firstPlatoon.RemoveSoldier(_firstSolider);
             }
 
             if (_secondSolider.Health <= 0)
             {
-                _germany.RemoveSoldier(_secondSolider);
+                _secondPlatoon.RemoveSoldier(_secondSolider);
             }
         }
     }
@@ -123,12 +123,9 @@
                  new Medic("Медик", 100, 40),
             };
 
-            int minNumber = 0;
-            int maxNumber = soldiers.Count;
+            int index = _random.Next(soldiers.Count);
 
-            int number = _random.Next(minNumber, maxNumber);
-
-            return soldiers[number];
+            return soldiers[index];
         }
     }
 }
@@ -190,12 +187,12 @@ class Tankis : Soldier
 
 class Medic : Soldier
 {
+    public Medic(string name, int health, int damage) : base(health, damage, name) { }
+
     private int _damageBuff = 100;
     private int _healthBuff = 50;
 
-    public Medic(string name, int health, int damage) : base(health, damage, name) { }
-
-    protected void HealthPlatoon()
+    protected void PlatoonHealt()
     {
         Health *= _healthBuff;
     }
@@ -206,7 +203,7 @@ class Medic : Soldier
 
         Console.WriteLine($"{Name} Востонавливает часть здоровя звода");
         Damage *= _damageBuff;
-        HealthPlatoon();
+        PlatoonHealt();
     }
 }
 
