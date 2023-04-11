@@ -190,12 +190,6 @@ class Medic : Soldier
     public Medic(string name, int health, int damage) : base(health, damage, name) { }
 
     private int _damageBuff = 100;
-    private int _healthBuff = 50;
-
-    protected void PlatoonHealt()
-    {
-        Health *= _healthBuff;
-    }
 
     public override void Attack(Soldier enemy)
     {
@@ -203,7 +197,6 @@ class Medic : Soldier
 
         Console.WriteLine($"{Name} Востонавливает часть здоровя звода");
         Damage *= _damageBuff;
-        PlatoonHealt();
     }
 }
 
