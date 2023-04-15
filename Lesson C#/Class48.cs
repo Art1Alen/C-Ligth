@@ -1,6 +1,5 @@
 ﻿namespace CSLight
 {
-
     internal class Program
     {
         static void Main(string[] args)
@@ -13,13 +12,13 @@
 
     class Zoo
     {
-        const string CommandStart = "1";
-        const string CommandExit = "2";
+        private const string CommandStart = "1";
+        private const string CommandExit = "2";
         private List<Aviary> _aviaries = new List<Aviary>();
 
         public void StartExcursion()
         {
-            CreativeAviary(5);
+            CreateAviary(5);
             bool isWork = true;
 
             while (isWork)
@@ -47,7 +46,7 @@
             }
         }
 
-        private void CreativeAviary(int numberOfAviary)
+        private void CreateAviary(int numberOfAviary)
         {
             for (int i = 0; i < numberOfAviary; i++)
             {
@@ -56,17 +55,22 @@
         }
 
         private void ShowAviary()
-        {           
-            Console.Write("На какой вольер вы хотите посмотреть?: Введите номер от 1 до 4\n");
-            bool isNumber = int.TryParse(Console.ReadLine(), out int inputNumberAviary);
+        {
+            bool isNumber;
 
-            if (isNumber == false)
+            foreach (Aviary aviary in _aviaries)
+            {
+                Console.WriteLine($"{_aviaries.Count}");
+            }
+
+            Console.Write("На какой вольер вы хотите посмотреть?: Введите номер от 1 до 4\n");
+            if (isNumber = int.TryParse(Console.ReadLine(), out int inputNumberAviary))
             {
                 Console.WriteLine("Ошибка! Вы ввели не коректные данные.");
             }
             else if (inputNumberAviary > 0 && inputNumberAviary < _aviaries.Count)
             {
-                _aviaries[inputNumberAviary - 1].ShowAnimal();
+                _aviaries[inputNumberAviary - 1].ShowAnimals();
             }
             else
             {
@@ -84,10 +88,10 @@
 
         public Aviary()
         {
-            CreativeAnimal(5);
+            CreateAnimal(5);
         }
 
-        public void ShowAnimal()
+        public void ShowAnimals()
         {
             Console.WriteLine($"\nКоличиство животных в вольере - {_animals.Count}");
 
@@ -97,7 +101,7 @@
             }
         }
 
-        private void CreativeAnimal(int numberOfAnimals)
+        private void CreateAnimal(int numberOfAnimals)
         {
             int animalId = _random.Next(0, _listAnimals.Length);
 
