@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace CSLight
 {
     internal class Class49
-    {       
+    {
         internal class Program
         {
             static void Main(string[] args)
@@ -21,14 +21,14 @@ namespace CSLight
         {
             private Storage _details;
             private Queue<Car> _cars;
-            private int _money;
+            private int _money = 2000;
+
 
             public CarService()
             {
-                _money = 2000;
                 _details = new Storage();
                 _cars = new Queue<Car>();
-                СreateCar(5);
+                СreateCars(5);
             }
 
             public void Work()
@@ -38,7 +38,7 @@ namespace CSLight
 
                 bool isWork = true;
 
-                while (isWork && 0 <= _cars.Count)
+                while (isWork)
                 {
                     Console.WriteLine($"\nБаланс автомастерской - {_money} монет.");
                     Console.Write($"В мастерской {_cars.Count} машин, стоят на ремонт. " +
@@ -56,15 +56,11 @@ namespace CSLight
                         case CommandExit:
                             isWork = false;
                             break;
-
-                        default:
-                            Console.WriteLine("Хм.. Такой команды нету.");
-                            break;
                     }
                 }
             }
 
-            private void СreateCar(int numberOfCar)
+            private void СreateCars(int numberOfCar)
             {
                 for (int i = 0; i < numberOfCar; i++)
                 {
@@ -139,8 +135,7 @@ namespace CSLight
 
         class Car
         {
-            private string[] _numbersBreakdown = new string[] { "2", "3",
-            "4", "5", "6" };
+            private string[] _numbersBreakdown = new string[] { "2", "3", "4", "5", "6" };
             private Random _random = new Random();
 
             public Car()
@@ -158,17 +153,23 @@ namespace CSLight
 
             private string GetBreakdown(int breakdownId)
             {
+                const string NumberTwo = "2";
+                const string NumberThree = "3";
+                const string NumberFour = "4";
+                const string NumberаFive = "5";
+                const string NumberSix = "6";
+
                 switch (_numbersBreakdown[breakdownId])
                 {
-                    case "2":
+                    case NumberTwo:
                         return "Колесо";
-                    case "3":
+                    case NumberThree:
                         return "Стекло";
-                    case "4":
+                    case NumberFour:
                         return "Фары";
-                    case "5":
+                    case NumberаFive:
                         return "Бампер";
-                    case "6":
+                    case NumberSix:
                         return "Замок";
                 }
 
@@ -178,22 +179,24 @@ namespace CSLight
 
         class Storage
         {
-            private List<Detail> _storage = new List<Detail>();
+            private List<Detail> _details = new List<Detail>();
             private Random _random = new Random();
             private string[] _listDetail = new string[] { "Колесо", "Стекло", "Фары", "Бампер", "Замок" };
 
             public Storage()
             {
-                СreateDetail(10);
+                СreateDetail(1);
+                GetDetail();
             }
+
 
             public void ShowStorage()
             {
                 Console.WriteLine("На складе есть такие детали: ");
 
-                for (int i = 0; i < _storage.Count; i++)
+                for (int i = 0; i < _details.Count; i++)
                 {
-                    Console.WriteLine($"{i + 1}. Название - {_storage[i].Name}. Стоимость - {_storage[i].Cost}");
+                    Console.WriteLine($"{i + 1}. Название - {_details[i].Name}. Стоимость - {_details[i].Cost}");
                 }
             }
 
@@ -202,7 +205,7 @@ namespace CSLight
                 int repairPrice = 0;
                 int costWork = 10;
 
-                foreach (var detail in _storage)
+                foreach (var detail in _details)
                 {
                     if (car.BreakdownDetail == detail.Name)
                     {
@@ -225,10 +228,10 @@ namespace CSLight
                     Console.WriteLine("Ошибка! Вы ввели не коректные данные.");
                     return false;
                 }
-                else if (inputNumberDetail > 0 && inputNumberDetail - 1 < _storage.Count && car.BreakdownDetail == _storage[inputNumberDetail - 1].Name)
+                else if (inputNumberDetail > 0 && inputNumberDetail - 1 < _details.Count && car.BreakdownDetail == _details[inputNumberDetail - 1].Name)
                 {
                     int indexDetail = inputNumberDetail - 1;
-                    _storage.RemoveAt(indexDetail);
+                    _details.RemoveAt(indexDetail);
                     return true;
                 }
                 else
@@ -242,29 +245,16 @@ namespace CSLight
             {
                 for (int i = 0; i < numberOfDetails; i++)
                 {
-                    _storage.Add(GetDetail());
+                    GetDetail();
                 }
             }
-
-            private Detail GetDetail()
+            private void GetDetail()
             {
-                int detailId = _random.Next(0, _listDetail.Length);
-
-                switch (_listDetail[detailId])
-                {
-                    case "Колесо":
-                        return new Detail("Колесо", 60);
-                    case "Стекло":
-                        return new Detail("Стекло", 80);
-                    case "Фары":
-                        return new Detail("Фары", 40);
-                    case "Бампер":
-                        return new Detail("Бампер", 30);
-                    case "Замок":
-                        return new Detail("Замок", 50);
-                }
-
-                return null;
+                _details.Add(new Detail("Колесо", 60));
+                _details.Add(new Detail("Стекло", 80));
+                _details.Add(new Detail("Фары", 40));
+                _details.Add(new Detail("Бампер", 30));
+                _details.Add(new Detail("Замок", 50));
             }
         }
 
