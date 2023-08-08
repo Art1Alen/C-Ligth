@@ -42,7 +42,7 @@
 
                 foreach (var detail in _details)
                 {
-                    if (detail.IsNotBroken == false)
+                    if (detail.IsBroken == false)
                     {
                         filmedDetails.Add(detail);
                     }
@@ -59,13 +59,13 @@
             public void InstallDetails(Detail[] details) =>
                 _details.AddRange(details);
 
-            public bool CheckBrokenDetail()
+            public bool FixedBrokenDetail()
             {
                 bool isWork = true;
 
                 foreach (var detail in _details)
                 {
-                    if (detail.IsNotBroken == false)
+                    if (detail.IsBroken == false)
                     {
                         isWork = false;
                     }
@@ -158,7 +158,7 @@
                     _storage.ShowInfo();
                     Console.WriteLine($"ваши деньги {_money}\n\n\n\n");
                     Console.WriteLine("Управление");
-                    Console.WriteLine($"\n{CommandFixCar}<---Поченить машину ");
+                    Console.WriteLine($"\n{CommandFixCar}<---Починить машину ");
                     Console.WriteLine($"\n{CommandNextClient}<---Вернуть машину и взять следуюшего клиента");
 
                     ConsoleKey key = Console.ReadKey().Key;
@@ -194,7 +194,7 @@
 
             private void CheckRepairQuality()
             {
-                if (_car.CheckBrokenDetail() == false)
+                if (_car.FixedBrokenDetail() == false)
                 {
                     _money -= _fine;
                     Console.WriteLine($"Вы получили штраф в размере : {_fine}. Так как не починили автомобиль! ");
@@ -212,7 +212,7 @@
             private void StartWorkingOnCar()
             {
                 DiagnoseDetails();
-                Repair(FixCar());
+                Repair(SelectionDetails());
             }
 
             private void DiagnoseDetails()
@@ -245,7 +245,7 @@
                 }
             }
 
-            private List<Detail> FixCar()
+            private List<Detail> SelectionDetails()
             {
                 List<Detail> newDetails = new List<Detail>();
 
@@ -302,11 +302,11 @@
 
             public int Price { get; }
             public string Name { get; }
-            public bool IsNotBroken { get; private set; } = true;
+            public bool IsBroken { get; private set; } = true;
 
             public void Brake()
             {
-                IsNotBroken = false;
+                IsBroken = false;
             }
         }
 
@@ -408,13 +408,13 @@
 
                 foreach (var part in _partsConfig.GetParts())
                 {
-                    containers.Add(part.Name, Create(part));
+                    containers.Add(part.Name, CreateLot(part));
                 }
 
                 return containers;
             }
 
-            private Container Create(Part part)
+            private Container CreateLot(Part part)
             {
                 Container container = new Container();
 
@@ -440,7 +440,7 @@
             {
                 int count = Utils.GetRandomNumber(minValue, maxValue);
 
-                return AddPersons(count);
+                return CreateQueue(count);
             }
 
             private Order CreatePerson()
@@ -450,7 +450,7 @@
                 return new Order(car);
             }
 
-            private Queue<Order> AddPersons(int value)
+            private Queue<Order> CreateQueue(int value)
             {
                 Queue<Order> persons = new Queue<Order>();
 
