@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Linq
+﻿namespace Linq
 {
     internal class Class4
     {
@@ -23,7 +17,9 @@ namespace Linq
         public Warehouse()
         {
             _currentYear = 2011;
+
             _products = new List<Product>();
+
             _products.Add(new Product("Говяжья Тушёнка", 2003, 3));
             _products.Add(new Product("Свиная Тушёнка", 2003, 2));
             _products.Add(new Product("Куриная Тушёнка", 2001, 4));
@@ -40,7 +36,7 @@ namespace Linq
 
         private void ShowSpoiledProducts()
         {
-            _products = _products.Where(product => product.YearProduction + product.ShelfLife <= _currentYear).ToList();
+            _products = _products.Where(product => product.YearProduction + product.ShelfLife <= _currentYear).OrderBy(_products => _products.ShelfLife).ToList();
             ShowProductsInfo(_products);
         }
 
