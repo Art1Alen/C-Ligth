@@ -97,7 +97,7 @@ namespace CSharpLight
             int maxLength = 3;
             bool isNumber = int.TryParse(Console.ReadLine(), out int inputNumber);
 
-            if (isNumber == true && inputNumber >= maxLength)
+            if (isNumber == true && inputNumber > maxLength)
             {
                 return inputNumber;
             }
