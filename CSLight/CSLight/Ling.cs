@@ -128,6 +128,10 @@ namespace CSharpLight
 
     class Criminal
     {
+        private string _surname;
+        private string _name;
+        private string _patronymic;
+
         public Criminal(string surname, string name, string patronymic, bool isPrisoner, int growth, int wight, string nationality)
         {
             _surname = surname;
@@ -138,10 +142,6 @@ namespace CSharpLight
             Weight = wight;
             Nationality = nationality;
         }
-
-        private string _surname;
-        private string _name;
-        private string _patronymic;
 
         public bool IsPrisoner { get; private set; }
         public int Growth { get; private set; }
