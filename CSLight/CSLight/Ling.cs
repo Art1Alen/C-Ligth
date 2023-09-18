@@ -55,7 +55,6 @@ namespace CSharpLight
 
                 Console.Clear();
             }
-
         }
 
         private void SearchPeople()
@@ -94,10 +93,9 @@ namespace CSharpLight
 
         private int GetInputNumber()
         {
-            int maxLength = 3;
             bool isNumber = int.TryParse(Console.ReadLine(), out int inputNumber);
 
-            if (isNumber == true && inputNumber > maxLength)
+            if (isNumber == true)
             {
                 return inputNumber;
             }
@@ -124,7 +122,6 @@ namespace CSharpLight
             return text;
         }
     }
-
 
     class Criminal
     {
