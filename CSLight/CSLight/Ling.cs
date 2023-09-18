@@ -9,13 +9,15 @@ namespace CSharpLight
         static void Main(string[] args)
         {
             Database database = new Database();
-            database.SearchPeople();
+            database.Work();
         }
     }
 
     class Database
     {
         private List<Criminal> _criminals;
+
+        bool isWork = true;
 
         public Database()
         {
@@ -27,48 +29,67 @@ namespace CSharpLight
             _criminals.Add(new Criminal("Трофимов", "Сергей", "Иванович", false, 179, 81, "Русский"));
         }
 
-        public void SearchPeople()
+        public void Work()
         {
-            int growth;
-            int weight;
-            string nationality;
+            const string CommandWork = "1";
+            const string CommandExit = "2";
 
-            Console.WriteLine("Поиск человека");
-            
-            Console.Write("Введиет рост: ");
-            growth = GetInputNumber();
-
-            Console.Write("Введиет вес: ");
-            weight = GetInputNumber();
-
-            Console.Write("Введиет национальность: ");
-            nationality = GetInputText();
-
-            while (true)
+            while (isWork)
             {
-                if (growth == 0 || weight == 0 || nationality == null)
-                {
+                Console.WriteLine("Поиск человека");
+                Console.WriteLine($"Для начала работы Введите кнопку {CommandWork}");
+                Console.WriteLine($"Для выхода из работы Введите кнопку {CommandExit}");
 
-                    Console.WriteLine("Ошибка. Введены не коректные данные");
-                }
-                else
-                {
-                    var filterPeople = from people in _criminals
-                                       where people.Growth <= growth
-                                       && people.Weight <= weight
-                                       && people.Nationality.ToUpper() == nationality.ToUpper()
-                                       && people.IsPrisoner == false
-                                       select people;
+                string userInput = Console.ReadLine();
 
-                    foreach (var people in filterPeople)
-                    {
-                        people.ShowCriminal();
-                    }
+                switch (userInput)
+                {
+                    case CommandWork:
+                        SearchPeople();
+                        break;
+
+                    case CommandExit:
+                        isWork = false;
+                        break;
                 }
 
-                Console.ReadKey();
+                Console.Clear();
             }
 
+        }
+
+        private void SearchPeople()
+        {
+            Console.Write("Введиет рост: ");
+            int growth = GetInputNumber();
+
+            Console.Write("Введиет вес: ");
+            int weight = GetInputNumber();
+
+            Console.Write("Введиет национальность: ");
+            string nationality = GetInputText().ToLower();
+
+            if (growth == 0 || weight == 0 || nationality == null)
+            {
+
+                Console.WriteLine("Ошибка. Введены не коректные данные");
+            }
+            else
+            {
+                var filterPeople = from people in _criminals
+                                   where people.Growth <= growth
+                                   && people.Weight <= weight
+                                   && people.Nationality.ToUpper() == nationality.ToUpper()
+                                   && people.IsPrisoner == false
+                                   select people;
+
+                foreach (var people in filterPeople)
+                {
+                    people.ShowCriminal();
+                }
+            }
+
+            Console.ReadKey();
         }
 
         private int GetInputNumber()
@@ -83,7 +104,6 @@ namespace CSharpLight
             else
             {
                 Console.WriteLine("Введены некоретные данный поторите попытку.");
-                inputNumber = 0;
                 return inputNumber;
             }
         }
